@@ -1093,6 +1093,22 @@ article
     vertical-align: middle;
     width: 100%;
 }
-
+/*reward*/
+.bg_title{
+	background:#000;
+}
+.small_reward{
+	color:#fff;
+	padding: 15px 18px;
+	font-weight:bold;
+}
+#submite{
+	border: medium none;
+	padding: 8px 10px;
+	color: #FFF;
+	float: left;
+	width:100px;
+	margin: 0px;
+}
 /*end*/
 }
