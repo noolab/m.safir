@@ -1,0 +1,66 @@
+<template name="details">
+	    <article>
+                  <section class="shadow_bottom">
+                	<div class="wrapper">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <h3 class="pull-right">{{title}}</h3>
+                          </div>
+                          <div class="pull-left space-top-detail">
+                             <div class="slide-to-left">
+                               <img src="/img/detail-sm.png" class="/img-responsive">  
+                             </div>
+                             <div class="slide-to-left">
+                               <img src="/img/detail-sm1.png" class="/img-responsive space-img-detail">
+                             </div>
+                          </div>
+                          <div class="space-top-detail1">
+                              <img src="/upload/{{getImg image}}" class="/img-responsive">
+                          </div>
+                          <div class="col-sm-12">
+                            <button class="btn_addtocard pull-left">Add to cart</button>
+                            <h2 class="pull-right">{{price}}</h2>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                         <div class="col-sm-12">
+                           <div class="well-deatail">
+                                <p class="text-center text-detail">{{{description}}}</p>
+                            </div>
+                         </div>
+                        </div>
+                    </div>
+                   </section>
+
+                   <section class="shadow_bottom">
+                    <div class="wrapper">
+                        <div class="row space-top-filter">
+                            <div class="filter_set">
+                                <div class="pull-right">
+                                    <button type="button" id="input">
+                                     <h5 class="md-text"><i class="fa fa-search fa-2x"></i>&nbsp;FILTER REVIEWS</h5></button>    
+                                </div>
+                            </div>
+                          
+                        </div>
+                        
+
+                        <div class="clear-fix"></div>
+					
+						{{>addreview}}
+					
+						{{#each getReviews review filterReview removeFilter}}
+							{{>review}}
+						{{else}}
+	                        <i>No reviews</i>
+						{{/each}}
+                        
+                       
+
+                        
+
+                     </div>
+                   </section>
+                </article>
+</template>

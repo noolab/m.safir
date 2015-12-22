@@ -1,0 +1,18 @@
+<template name="tutonew">
+	<!-- Start contain -->
+            <div class="container">	
+		  <div class="clearfix"></div>
+           <div class="space_cont_top">
+           	 <div class="row">
+           	  {{#each getTutoCategory  }}
+				<div class="col-lg-4 col-sm-4"><a href="/tutolisting/{{_id}}" id="linkTotulisting">
+					<h1 class="text-center txt-color">{{title}}</h1></a><a href="/tutolisting/{{_id}}" id="linkTotulisting">
+					<img src="/uploads/{{getImg image}}" class="img-circle center-block" alt="Cinque Terre" width="250" height="250"></a>
+				</div>
+			 {{/each}}
+			</div>
+		  </div>
+	</div>
+	<div class="clearfix"></div>
+ <!-- end contain -->
+</template>
