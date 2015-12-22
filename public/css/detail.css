@@ -132,10 +132,10 @@ a, a:visited, a:hover, a:link {
     font-weight: 700;
     text-decoration: none;
 }
-.nav > li > a:hover, .nav > li > a:focus {
+/*.nav > li > a:hover, .nav > li > a:focus {
     background-color:#fff;
     text-decoration: none;
-}
+}*/
 .nav {
     list-style: outside none none;
     margin-bottom: 0;
