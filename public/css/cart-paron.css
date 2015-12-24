@@ -46,7 +46,8 @@ ul.dropdown-box{
 ul.cart-dropdown{
   border: 5px solid #000;
   border-radius: 0;
-  background: red;
+  color:black;
+  /*background: red;*/
   position:absolute;
   z-index:99999!important;
 }

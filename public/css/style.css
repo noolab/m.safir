@@ -801,7 +801,7 @@ article
 
 /*----------------Background Login--------------*/
 .wrapper{
-	background: url('../images/bg_popup-01.png') no-repeat;
+	/*background: url('../images/bg_popup-01.png') no-repeat;*/
 	background-size: 100% 100%;
 	background-position: center center;
 	overflow: hidden;
@@ -1111,4 +1111,25 @@ article
 	margin: 0px;
 }
 /*end*/
+}
+.choose_color{
+		width: 13%;
+		height: 50px;
+		box-shadow: -1px 4px 5px #888;
+		background-color: rgba(5, 4, 4, 0);
+		padding: 15px;
+	}
+
+	.choose_size{
+		width: 13%;
+		height: 50px;
+		box-shadow: -1px 4px 5px #888;
+		background-color: rgba(5, 4, 4, 0);
+		padding: 15px;
+	}
+.hide_color_size{
+	display: none;
+}
+.hideiconlike{
+	display: none!important;
 }
