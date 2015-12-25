@@ -1,11 +1,11 @@
 <template name="headermobile">
-    	<section id="page-wrapper">
+        <section id="page-wrapper">
 
-        	<section id="menu-wrapper">
+            <section id="menu-wrapper">
 
                 <div id="menu-search">
-                	<input id="menu-search-input-text" type="text" placeholder="Search..." />
-					<input id="menu-search-input-submit" class="validSearch" type="submit" value="" />
+                    <input id="menu-search-input-text" type="text" placeholder="Search..." />
+                    <input id="menu-search-input-submit" class="validSearch" type="submit" value="" />
                 </div>
 
                 <ul id="menu-lateral" class="menu">
@@ -79,7 +79,7 @@
 
             <section id="sidebar-wrapper">
                 <div class="widget">
-                	<!--<h4>Contact widget</h4>-->
+                    <!--<h4>Contact widget</h4>-->
 
                     <ul>
                         <li class="item"><a href="#" id="price_range">Price Range</a>
@@ -144,7 +144,7 @@
 
             </section> <!-- #sidebar-wrapper -->
 
-        	<section id="content-wrapper">
+            <section id="content-wrapper">
 
                 <section id="header">
 
@@ -162,7 +162,9 @@
                                         {{#each getCartshow}}
                                         <li class="item-cart">
                                             <div class="col-lg-6">
-                                                {{#with getProduct id_product}}<img src="{{getImg img}}"> {{/with}} 
+                                                
+                                                <img src="{{getproductimage id_product}}" alt="image" class="img-thumbnail col-sm-12 col-xs-12"> 
+                                               
                                                 
                                             </div>
                                             <div class="col-lg-6">
@@ -190,7 +192,7 @@
                                                     <p class="bolder">Total:</p>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <p class="bolder text-right">your total</p>
+                                                    <p class="bolder text-right">{{getTotol}}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -217,13 +219,13 @@
                     </div>
 
                 </section> <!-- #header -->
-				
-				<section id="refine_menu" >
+                
+                <section id="refine_menu" >
                     {{#with currentCategory}}
                     <div class="col-xs-12">
                         <div class="hold_refine">
                             <div class="row">
-    					        <div class="col-xs-4"><a href="#" id="refineCateg" class="active">{{title}}<span></span></a></div>
+                                <div class="col-xs-4"><a href="#" id="refineCateg" class="active">{{title}}<span></span></a></div>
                                 <div class="col-xs-4" ><a href="" id="refineAll">All {{title}}<span></span></a></div>
                                 <div class="col-xs-4"><a href="">{{title}}</a></div>
                             </div>
@@ -287,12 +289,12 @@
                         </div>
                     </div>
                     {{/with}}
-				</section> <!-- #refine menu -->
-				
+                </section> <!-- #refine menu -->
+                
   {{>yield}}
 
               
 
             </section> <!-- #content-wrapper -->
-    	</section> <!-- #page-wrapper -->
+        </section> <!-- #page-wrapper -->
 </template>

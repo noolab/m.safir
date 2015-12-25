@@ -62,7 +62,6 @@ h3.price a span{
 h3.price a:hover span{
    color: #dd2a1b;
 }
-
 .wrapper div.thumbnail {
     display: block;
     padding: 4px;
@@ -70,7 +69,7 @@ h3.price a:hover span{
     margin-bottom: 20px;
     line-height: 1.42857;
     background-color: #FFF;
-  
+    border: 0px solid #ccc;
     border-radius: 0px;
     transition: all 0.2s ease-in-out 0s;
 }
@@ -78,7 +77,6 @@ h3.price a:hover span{
 .wrapper div.thumbnail img {
     border: 8px solid #000;
 }
-
 
 /* refine_menu */
 #refine_menu{
@@ -198,8 +196,7 @@ ul.sub_dropdown{
     background: #000;          
 }
 #sidebar-wrapper .widget h4{
-    background: #333;  
-    width:150px;        
+    background: #333;          
 }
 #sidebar-wrapper .widget ul li
             {
