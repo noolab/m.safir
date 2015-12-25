@@ -153,16 +153,18 @@
                             <ul class="nav nav-pills">
                                 <!-- {{#each getCartView}} -->
                                 <li>
-                                     <p id="a-menu"><img src="/img/icons/menu.png" alt="menu" /></p>
+                                     <a href="#" id="a-menu"><img src="/img/icons/menu.png" alt="menu" /></a>
                                 </li>
                                 <li class="dropdown">
-                                    <p class="dropdown-toggle" style="margin:0px;padding:0px;" href="#" data-toggle="dropdown">
-                                        <img src="/images/cart3-01.png" style="margin:0px;padding:0px;" alt=""/> <strong class="caret"></strong></p>
+                                    <a class="dropdown-toggle" style="margin:0px;padding:0px;" href="#" data-toggle="dropdown">
+                                        <img src="/images/cart3-01.png" style="margin:0px;padding:0px;" alt=""/> <strong class="caret"></strong></a>
                                     <ul class="dropdown-menu cart-dropdown">
                                         {{#each getCartshow}}
                                         <li class="item-cart">
                                             <div class="col-lg-6">
-                                                {{#with getProduct id_product}}<img src="{{getImg img}}"> {{/with}} 
+                                                
+                                                <img src="{{getproductimage id_product}}" alt="image" class="img-thumbnail col-sm-12 col-xs-12"> 
+                                               
                                                 
                                             </div>
                                             <div class="col-lg-6">
@@ -190,7 +192,7 @@
                                                     <p class="bolder">Total:</p>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <p class="bolder text-right">your total</p>
+                                                    <p class="bolder text-right">{{getTotol}}</p>
                                                 </div>
                                             </div>
                                         </li>

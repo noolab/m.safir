@@ -22,5 +22,8 @@ Meteor.methods({
 	},
 	removecart: function(id){
 		cart.remove(id);
+	},
+	updatCart:function(id,obj){
+		cart.update({_id:id},{$set:obj});
 	}
 });

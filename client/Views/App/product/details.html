@@ -1,40 +1,76 @@
 <template name="details">
-	    <article>
-                  <section class="shadow_bottom">
-                	<div class="wrapper">
+   <article >
+                <section class="shadow_bottom">
+                  <div class="wrapper">
                         <div class="row">
-                          <div class="col-sm-12">
-                            <h3 class="pull-right">{{title}}</h3>
+                          <div style="" class="col-sm-12">
+                            <h3 style="padding:20px;" class="pull-right">{{title}}</h3>
                           </div>
-                          <div class="pull-left space-top-detail">
-                             <div class="slide-to-left">
-                               <img src="/img/detail-sm.png" class="/img-responsive">  
-                             </div>
-                             <div class="slide-to-left">
-                               <img src="/img/detail-sm1.png" class="/img-responsive space-img-detail">
-                             </div>
-                          </div>
-                          <div class="space-top-detail1">
-                              <img src="/upload/{{getImg image}}" class="/img-responsive">
-                          </div>
-                          <div class="col-sm-12">
-                            <button class="btn_addtocard pull-left">Add to cart</button>
-                            <h2 class="pull-right">{{price}}</h2>
-                          </div>
+                      <div class="test_color">
+                    <div class="choose_color col-xs-12  col-sm-12">
+                            <section class="sky-form" style="padding-left:15px;">
+                                <button  id="btn_color" class="btn-default btn col-sm-3 col-xs-3">COLOR</button>
+                                <ul id="ul_color" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" >
+                                    <li><a class="color1" href="#"></a></li>
+                                    <li><a class="color2" href="#"></a></li>
+                                    <li><a class="color3" href="#"></a></li>
+                                    <li><a class="color4" href="#"></a></li>
+                                    <li><a class="color5" href="#"></a></li>
+                                    <li><a class="color6" href="#"></a></li>
+                                    <li><a class="color7" href="#"></a></li>
+                                    <li><a class="color8" href="#"></a></li>
+                                </ul>
+                            </section>       
+                        </div><br>
+                    <div class="choose_size col-lg-12 col-xs-12 col-md-12 col-sm-12">
+                            <section class="sky-form" style="padding-left:15px;">
+                                <button id="btn_size" style="margin-top:15px;" class="btn-default btn col-sm-3 col-xs-3">SIZE</button>
+                                <ul id="ul_size" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" style="color:black; font-weight:bold; padding-top:15px;">
+                                    <li><a class="color" href="#">50 cl</a></li>
+                                    <li><a class="color" href="#">1 L</a></li>
+                                    <li><a class="color" href="#">1,50 L</a></li>
+                                    <li><a class="color" href="#">2 L</a></li>
+                                </ul>
+                            </section>                                               
                         </div>
-
-                        <div class="row">
-                         <div class="col-sm-12">
-                           <div class="well-deatail">
-                                <p class="text-center text-detail">{{{description}}}</p>
+                      </div>
+                              <!--<div class="pull-left space-top-detail">
+                                  <img src="img/detail-sm.png" class="img-responsive">
+                                  <img src="img/detail-sm1.png" class="img-responsive space-img-detail">
+                              </div>-->
+                              <div class="space-top-detail1" align="center">
+                                  <img src="/upload/{{getImg image}}" class="/img-responsive">
+                              </div>
+                              
+                                <div class="col-sm-12" style="padding:30px;" >
+                                  <form role="form" id="cart" style="padding:0px;margin:0px;">
+                                    <label  >Select Shop</label>
+                                    <select class=" col-xs-12 col-sm-12" name="shop" required>
+                                      <option value="">Please Select</option>
+                                      {{#each getShop shop}}
+                                        <option value="{{_id}}">{{name}}</option>
+                                      {{/each}}
+                                    </select>
+                                  
+                                  <input  type="submit" class="btn_addtocard pull-left" value="Add to cart" style="margin-top:15px;">
+                                   </form>
+                                  <h2 class="pull-right">{{price}}</h2>
+                                </div>
+                             
                             </div>
-                         </div>
-                        </div>
-                    </div>
-                   </section>
 
-                   <section class="shadow_bottom">
+                            <div class="row">
+                             <div class="col-sm-12">
+                               <div class="well-deatail">
+                                    <p class="text-center text-detail">{{{description}}}</p>
+                                </div>
+                             </div>
+                            </div>
+                        </div>
+                   </section>
+                    <section class="shadow_bottom">
                     <div class="wrapper">
+
                         <div class="row space-top-filter">
                             <div class="filter_set">
                                 <div class="pull-right">
@@ -47,20 +83,22 @@
                         
 
                         <div class="clear-fix"></div>
-					
-						{{>addreview}}
-					
-						{{#each getReviews review filterReview removeFilter}}
-							{{>review}}
-						{{else}}
-	                        <i>No reviews</i>
-						{{/each}}
+          
+                        {{>addreview}}
+                      
+                        {{#each getReviews review filterReview removeFilter}}
+                          {{>review}}
+                        {{else}}
+                                      <i>No reviews</i>
+                        {{/each}}
                         
                        
 
                         
 
-                     </div>
-                   </section>
+                    </div>
+                  </section>
+                    
                 </article>
+
 </template>
