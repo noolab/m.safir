@@ -13,8 +13,9 @@
 	text-decoration: none;
 }
 .w_nav2 li a.color1{
-	background:	#e7955e;
-	border-radius: 50%;
+	
+	width: 60px;
+	height: 60px;
 }
 .w_nav2 li a.color2{
 	background:	#e7705e;

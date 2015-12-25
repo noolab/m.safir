@@ -22,7 +22,7 @@ Template.details.events({
         		}else{
         			var userId=Session.get('userIdSession');
         		}
-        		alert();
+        		//alert();
         		var carts=cart.find({userId:userId},{status:'0'});
         			carts.forEach(function(index){
         				arraypush.push(index.id_product);
@@ -31,7 +31,8 @@ Template.details.events({
         			var search= arraypush.indexOf(this._id);
         			if(search>=0){
         				//alert('have already');
-        				var objCart=cart.findOne({id_product:this._id});
+        				var objCart=cart.findOne({userId:userId},{id_product:this._id});
+        				
         				
         				var obj={
 							quantity : 1+objCart.quantity,  
@@ -40,7 +41,7 @@ Template.details.events({
 	        				}
         				Meteor.call('updatCart',objCart._id,obj);
         			}else{
-        				alert('not have');
+        				//alert('not have');
         				var obj = {                                                         
 						id_product: idproduct,                                            
 						userId: userId,
@@ -125,6 +126,18 @@ Template.details.helpers({
 		}
 		return arr;
 
+	},
+	getSizeColor:function(code){
+		var attributes=attribute.findOne({product:code});
+		
+		var image=attributes.productImage;
+		var color = image.replace("uploads", "upload");
+		var attr_value=attribute_value.find({parentId:attributes.parent});
+		var obj={
+			color:color,
+			size:attr_value
+		}
+		return obj;
 	}
 })
 Template.headermobile.helpers({
@@ -165,3 +178,10 @@ Template.headermobile.helpers({
 	},
 
 });
+Template.headermobile.events({
+	'click #removeCart':function(e){
+		e.preventDefault();
+		cart.remove(this._id);
+	}
+})
+
