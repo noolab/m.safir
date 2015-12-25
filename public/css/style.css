@@ -1133,3 +1133,41 @@ article
 .hideiconlike{
 	display: none!important;
 }
+
+		
+/* SLIDER */
+
+#list1
+{
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+	/*width: 100%;*/
+}
+
+	/*#list1 img { width: 100%; height: auto; overflow: hidden; }
+	#list1 { width: 100%; opacity: 0; }*/
+	
+#list2
+{
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+	/*width: 100%;*/
+}
+
+	/*#list2 img { width: 100%; height: auto; overflow: hidden; }
+	#list2 { width: 100%; opacity: 0; }*/
+	
+#list3
+{
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+	/*width: 100%;*/
+}
+/*
+	#list3 img { width: 100%; height: auto; overflow: hidden; }
+	#list3 { width: 100%; opacity: 0; }
+		
+/* MENU */
