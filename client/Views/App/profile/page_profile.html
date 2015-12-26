@@ -1,23 +1,12 @@
 <template name="profile">
 	<div class="container">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <h3 class="my1h3 backre"><a href="/profile">{{_ "MY SAFIR PROFILE"}}</a></h3>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            	<h3 class="my1h3"><a href="/member">{{_ "MEMBER PROFILE"}}</a></h3>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            	<h3 class="my1h3"><a href="/reward">{{_ "REWARDS & POINTS"}}</a></h3>
-            </div>
-        </div><br><br><br>
-			<div class="container-box">
-					<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 con-me">
-						<div class="container-box">
-						<div class="col-xs-12 col-sm-12 col-lg-12">
+		<div class="container-box">
+			<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 con-me">
+				<div class="container-box">
+					<div class="col-xs-12 col-sm-12 col-lg-12">
 						<div class="col-xs-6 col-sm-6 col-lg-4">
 							{{#with getprofile}}
-								<img style="border:8px solid #000" src="/upload/{{getImg image}}" class="img-circle center-block" width="200" height="200"> 
+							<img style="border:8px solid #000;" src="/upload/{{getImg image}}" class="img-circle center-block" width="200" height="200"> 
 							{{/with}}
 						</div>
 						<div class="col-xs-6 col-sm-6 col-lg-6">
@@ -26,11 +15,11 @@
 					</div>
 					<div class="col-xs-12 col-sm-6 col-lg-12">
 						
-						<hr style="border:1px solid #000;">
+						<hr style="border:1px solid #000; margin-top:-50px;">
 						<div class="col-xs-12 col-md-6 ">
 							<form class="form-horizontal form_pro" role="form">
-							{{#with getprofile}}
-							{{profile.image}}
+								{{#with getprofile}}
+								{{profile.image}}
 								<div class="form-group">
 									<label class="col-xs-5 col-sm-4 label_pro">{{_ "NAME"}}</label>
 									<div class="col-sm-6">
@@ -69,7 +58,7 @@
 										<span style="font-weight:bold">Nerd, hard worker , dreamer</span>
 									</div>
 								</div>
-							{{/with}}
+								{{/with}}
 							</form>
 						</div>
 					</div>
@@ -108,14 +97,14 @@
 				<!-- questions -->
 				<div class="row">
 					{{#each getquestion}}
-						<div class="col-xs-12 col-sm-4 col-lg-4">
-							<input type="hidden" name="question" value="{{_id}}">
-							<p style="font-size:12px;" class="text-right" >{{name}}</p>
-							<div class="form-group">
-	                            <label>Answer</label>
-	                            <input class="input_answer" id="answer[]" name="answer" value="{{getAnswer _id}}">
-	                        </div>
+					<div class="col-xs-12 col-sm-4 col-lg-4">
+						<input type="hidden" name="question" value="{{_id}}">
+						<p style="font-size:12px;" class="text-right" >{{name}}</p>
+						<div class="form-group">
+							<label>Answer</label>
+							<input class="input_answer" id="answer[]" name="answer" value="{{getAnswer _id}}">
 						</div>
+					</div>
 					{{/each}}
 				</div>
 				<div class="col-8 pull-right">
