@@ -13,7 +13,10 @@ Session.set('ADDIMAGEID_ATTR', "");
 Session.set("filter","");
 Session.set('fiterValue',"");
 Session.set('tags','');
+Session.setDefault('userId','');
 Session.set('removefilter','');
+Session.set('numberOfReviews',2);
+
 Meteor.call('getPath',function(err,res){
 				Session.set('path',res);
 			});
@@ -634,17 +637,8 @@ Template.add_review.events({
 });
 
 Template.details.events({
-	'click #flip':function(e,tpl){
-		$("#panel").slideToggle("slow");
-	},
-	'click #show': function(e,tpl){
-		$("#show-text").slideToggle("slow");
-	},
 	'click #refresh': function(e,tpl){
 
-	},
-	'click h3':function(e,tpl){
-		$(".fa-angle-down").slideToggle("slow");
 	},
 	'click .octofilter-link': function(e,tpl){
 		console.log('ABC');
@@ -739,7 +733,9 @@ Template.details.events({
 				if( Session.get('userId') == ""){
 					var newId=Random.id();
 					Session.setPersistent('userId',newId);
+					console.log('Newid'+newId);
 				}
+				console.log('id='+Session.get('userId'));
 				var userId = Session.get('userId');
 			}	
 			
@@ -910,11 +906,20 @@ Template.details.helpers({
 			//console.log('ToRemove:'+Session.get('removefilter'));
 	
 			
+			if(Session.get('fiterValue')=="" || Session.get('fiterValue')=="undefined"){
+				var lastResult=[];
+				var numberOfResult=Session.get('numberOfReviews');
 
+				if(numberOfResult>reviews.length)
+					numberOfResult=reviews.length
+				console.log('NUMBER OF lastResult.length '+numberOfResult);
+				for(var i=0;i<numberOfResult;i++)
+					lastResult.push(reviews[i]);
 
-			
-			if(Session.get('fiterValue')=="" || Session.get('fiterValue')=="undefined")
-				return reviews;
+				console.log('NUMBER OF lastResult.length '+lastResult.length);
+				return lastResult;
+					
+			}
 			console.log('Calling filterReview='+reviews.length);
 			var values=Session.get('fiterValue').split(':');
 			//fiterValue
@@ -1002,10 +1007,20 @@ Template.details.helpers({
 				}
 			}
 
-
 			console.log('Still in the sand(grades):'+results.length);
 			console.log('afterFilter:'+results.length);
-			return results;
+
+			var lastResult=[];
+			var numberOfResult=Session.get('numberOfReviews');
+
+			if(numberOfResult>results.length)
+				numberOfResult=results.length
+			console.log('NUMBER OF lastResult.length '+numberOfResult);
+			for(var i=0;i<numberOfResult;i++)
+				lastResult.push(results[i]);
+
+			console.log('NUMBER OF lastResult.length '+lastResult.length);
+			return lastResult;
 		
 		
 	},
@@ -1239,3 +1254,13 @@ Template.addproduct.rendered = function(){
     
 
 	};
+	Template.details.events({
+		'click #btnMore':function(e){
+			e.preventDefault();
+			alert();
+			var last = Session.get('numberOfReviews');
+			var sum = Number(last) + 5;
+			var update = Session.set('numberOfReviews',sum);
+			return update;
+		}
+	});

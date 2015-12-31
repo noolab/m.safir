@@ -46,7 +46,7 @@
                            <img class="menu-li-arrow-submenu" src="/img/icons/submenu.png" alt="" />
                         </a>
 
-                        <ul id="submenu-{{_id}}" class="deroulant" style="display:none;">
+                        <ul id="submenu-{{_id}}" class="deroulant sub-menu" style="display:none;">
                             {{#each getChildren _id}}
                                 <li id="a-submenu-{{_id}}" class="icon plus sousmenu">
                                 <a href="/category/{{_id}}">
@@ -69,9 +69,6 @@
                     </li> 
                     
                     {{/each}}
-
-
-                   
                  
                 </ul> <!-- .menu -->
 
@@ -225,8 +222,10 @@
                     <div class="col-xs-12">
                         <div class="hold_refine">
                             <div class="row">
-                                <div class="col-xs-4"><a href="#" id="refineCateg" class="active">{{title}}<span></span></a></div>
-                                <div class="col-xs-4" ><a href="" id="refineAll">All {{title}}<span></span></a></div>
+                                <div class="col-xs-4"><a href="#" id="refineCateg" class="active" >{{title}}<span></span></a></div>
+
+                                <div class="col-xs-4" ><a href="" id="refineAll" >All {{title}}<span></span></a></div>
+
                                 <div class="col-xs-4"><a href="">{{title}}</a></div>
                             </div>
                             <div id="refineMenu">
@@ -293,8 +292,7 @@
                 
   {{>yield}}
 
-              
-
             </section> <!-- #content-wrapper -->
         </section> <!-- #page-wrapper -->
+
 </template>
