@@ -5,36 +5,63 @@
 			
 			<h1 class="content-text-review">Checkout</h1>
 			<div class="row">
-				<div class="col-md-9">
+				<div class="col-md-12">
+					<div class="col-md-12">
+					<table class="table table-striped">
+					    <thead>
+					      <tr>
+					        <th>Image</th>
+					        <th>Product Name</th>
+					        <th>Shop</th>
+					        <th>Qty</th>
+					        <th>Price</th>
+					        <th>subtotal</th>
+					        <th>Tools</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    {{#each getCart}}
+					      <tr>
+					        <td>{{#with getProductInfo id_product}}<a href="/details/{{_id}}"><img src="/upload/{{getImg image}}" class="img-responsive" style="width:70px; height:70px;"></a>{{/with}}
+					        </td>
+					        <td>
+					        	{{#with getProductInfo id_product}}{{title}}{{/with}}
+					        </td>
+					        <td>
+					        	{{getShopName shopId}}
+					        </td>
+					        <td>
+					        	<input type="text" style="color:black;width:30px;" class="qty" value="{{quantity}}" />
+					        </td>
+					        <td>
+					        	{{#with getProductInfo id_product}}{{price}}{{/with}}
+					        </td>
+					        <td>
+					        	{{subtotal}}
+					        </td>
+					        <td>
+					        	<a href="" class="fa fa-times" style="color:black;"></a>
+
+					        </td>
+					      </tr>
+					  	{{/each}}
+					  	<tr>
+					  		<td colspan="5" align="right">
+					  			<strong>Total</strong>
+					  		</td>
+					  		<td colspan="2" align="center">
+					  			<strong>{{getTotal}}</strong>
+					  		</td>
+					  	</tr>
+					    </tbody>
+					  </table>
+					
+					
+					
+
+				</div>
 					<div class="row">
-						<div class="col-md-2">Image</div>
-						<div class="col-md-3">Product Name</div>
-						<div class="col-md-2">Shop</div>
-						<div class="col-md-2">Qty</div>
-						<div class="col-md-1">Price</div>
-						<div class="col-md-2">subtotal</div>
-						<hr>
-					</div>
-					{{#each getCart}}
-						{{#with getProductInfo _id}}
-							<div class="row cart">
-								<div class="col-md-2"><img src="/upload/{{getImg product.image}}" class="img-responsive"></div>
-								<div class="col-md-3">{{product.title}}</div>
-								<div class="col-md-2">{{shop}}</div>
-								<div class="col-md-2"><input type="text" style="width:20px;" class="qty" data-id="{{item_id}}" pro-id="{{product._id}}" value="{{qty}}"></div>
-								<div class="col-md-1">{{product.price}}</div>
-								<div class="col-md-2">{{subtotal}} &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove-circle remove" style="cursor:pointer" data-remove="{{item_id}}"></span></div>
-							</div>
-						{{/with}}
-						
-					{{/each}}
-					<div class="row cart">
-						<hr>
-						<div class="col-md-10 total-text"><strong>Total</strong></div>
-						<div class="col-md-2"><strong>{{getTotal}}</strong></div>
-					</div>
-					<div class="row">
-						<hr><div class="pull-right"><input type="button"  class="btn btn-primary" style="background:#000" value="Proceed Order"></div>
+						<hr><div class="pull-right" style="padding-right:15px;"><input type="button"  class="btn btn-primary" id="btnAdd" style="background:#000;" value="Proceed Order"></div>
 					</div>
 				</div>
 				<div class="col-md-3">

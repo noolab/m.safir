@@ -23,7 +23,8 @@ Template.details.events({
         			var userId=Session.get('userIdSession');
         		}
         		//alert();
-        		var carts=cart.find({userId:userId},{status:'0'});
+        		//mycart = cart.find({$and:[{order_status:0},{userId:userid}]});
+        		var carts=cart.find({$and:[{order_status:0},{userId:userid}]})
         			carts.forEach(function(index){
         				arraypush.push(index.id_product);
         			});
@@ -31,7 +32,7 @@ Template.details.events({
         			var search= arraypush.indexOf(this._id);
         			if(search>=0){
         				//alert('have already');
-        				var objCart=cart.findOne({userId:userId},{id_product:this._id});
+        				var objCart=cart.find({$and:[{order_status:0},{userId:userid}]})
         				
         				
         				var obj={
@@ -48,7 +49,7 @@ Template.details.events({
 						shopId:shopId,                                     
 						quantity: 1,  
 						subtotal: subtotal,
-						status:'0',
+						order_status:0,
 						date:dateTime                                                    
 						//shop: shop,                                                        
 						//attribute: attribute                                               
@@ -73,7 +74,7 @@ Template.details.events({
 					shopId:shopId,                                     
 					quantity: 1,  
 					subtotal: subtotal,
-					status:'0',
+					order_status:0,
 					date:dateTime                                                    
 						                                            
 					};                                                               
@@ -147,8 +148,8 @@ Template.headermobile.helpers({
 		}else{
 			id=Session.get('userIdSession');
 		}
-		console.log('Myconsole:'+cart.find({userId:id},{status:'0'}).count());
-		return cart.find({userId:id},{status:'0'});
+		console.log('Myconsole:'+cart.find({userId:id},{order_status:0}).count());
+		return cart.find({$and:[{order_status:0},{userId:userid}]});
 	},
 	getProduct: function(id){
 		return products.findOne({"_id":id});
@@ -170,7 +171,7 @@ Template.headermobile.helpers({
 		}else{
 			var userId=Session.get('userIdSession');
 		}
-		var result=cart.find({userId:userId},{status:'0'});
+		var result=cart.find({$and:[{order_status:0},{userId:userid}]});
 		result.forEach(function(value){
 			 total+=value.subtotal;
 		})

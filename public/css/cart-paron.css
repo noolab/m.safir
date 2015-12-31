@@ -3,6 +3,10 @@
   margin: 0px auto;
   margin: 5px 50px;
 */}
+body{
+  position: relative;
+  z-index: -1;
+}
 ul.cart-dropdown li.item-cart{
 	/*padding: 5px 15px;*/
   padding: 10px 5px;
