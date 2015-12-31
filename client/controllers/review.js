@@ -20,6 +20,23 @@ Template.addreview.events({
 			tpl.$("#add_review").css("display",'none');
 	}
 });
+Template.addreview.helpers({
+ getImgUrl: function(userid){
+  console.log('avatar='+userid);
+  var user=users.findOne({"_id":userid});
+  if(!user.hasOwnProperty('image'))
+            return 'unknown.png';
+  var img = images.findOne({_id:user.image});
+            console.log("current img="+img);
+            
+            if(img){
+                console.log(img.copies.images.key);
+                return img.copies.images.key;
+            }else{
+                return;
+            }
+ }
+});
 
 Template.review.helpers({
 	getUsername: function(userid){
