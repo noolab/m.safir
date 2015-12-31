@@ -83,3 +83,6 @@ Meteor.publish("address", function () {
 Meteor.publish('attribute_value', function (){ 
   return attribute_value.find({});
 });
+   Meteor.publish("order", function () {
+    return order.find({});
+});
