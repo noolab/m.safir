@@ -1133,6 +1133,34 @@ article
 .hideiconlike{
 	display: none!important;
 }
+<<<<<<< HEAD
+/*!
+ * Yamm!3 - Yet another megamenu for Bootstrap 3
+ * http://geedmo.github.com/yamm3
+ * 
+ * @geedmo - Licensed under the MIT license
+ */
+.yamm .nav,
+.yamm .collapse,
+.yamm .dropup,
+.yamm .dropdown {
+  position: static; padding-left:0!important; padding-right:0!important
+}
+.yamm .container {
+  position: relative;
+}
+.yamm .dropdown-menu {
+  left: auto;
+}
+.yamm .yamm-content {
+  padding: 20px 30px;
+}
+.yamm .dropdown.yamm-fw .dropdown-menu {
+  left: 0;
+  right: 0;
+}
+
+=======
 
 		
 /* SLIDER */
@@ -1171,3 +1199,4 @@ article
 	#list3 { width: 100%; opacity: 0; }
 		
 /* MENU */
+>>>>>>> b6dca53e9be7486647d3bd8bd36d05fb38a1cecb

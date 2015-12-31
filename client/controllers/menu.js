@@ -1,8 +1,8 @@
 Session.set('children1','');
 Session.set('children2','');
 Session.set('selected_menu','');
-
 /*
+
 Deps.autorun(function () {
 	var current=Session.get('selected_menu');
   			if(current!='none'){

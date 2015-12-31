@@ -66,38 +66,102 @@
                              </div>
                             </div>
                         </div>
+                        
                    </section>
-                    <section class="shadow_bottom">
-                    <div class="wrapper">
 
-                        <div class="row space-top-filter">
-                            <div class="filter_set">
-                                <div class="pull-right">
-                                    <button type="button" id="input">
-                                     <h5 class="md-text"><i class="fa fa-search fa-2x"></i>&nbsp;FILTER REVIEWS</h5></button>    
-                                </div>
-                            </div>
-                          
-                        </div>
-                        
-
-                        <div class="clear-fix"></div>
+                   <section class="shadow_bottom" id="produst_listing">
+    <div class="container">
+      <div class="row">
+        <h1 class="content-text-review">{{_ "REVIEWS & FEEDBACKS"}}</h1>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+          <div class="hold_btn_filter_view">
+            <div class="pull-right">
+              <button class="btn btn-filter-view" type="button" id="input">
+              <i class="fa fa-search"></i> {{_ "FILTER REVIEWS"}}</button>  
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
           
-                        {{>addreview}}
-                      
-                        {{#each getReviews review filterReview removeFilter}}
-                          {{>review}}
-                        {{else}}
-                                      <i>No reviews</i>
-                        {{/each}}
-                        
-                       
+          {{#if currentUser}}
+            {{>addreview}}
+          {{/if}}
+            {{#each getReviews review filterReview removeFilter}}
+              {{>review}}
+            {{else}}
+                          <i>No reviews</i>
+            {{/each}}
 
-                        
+          <div class="pull-right">
+              <h3 id="show1">{{_ "MORE REVIEWS"}} &nbsp; <i class="fa fa-angle-down" id="btnMore"></i></h3>   
+          </div>
+          <div class="wrapper_forum">
+            <div class="filter_set">
+        
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
 
-                    </div>
+                   <section id="produst_listing">
+                            <div class="container">
+                              <div class="row">
+                                <div class="hold_product_detail">
+                                  <div class="col-md-12 well">
+                                  <div class="col-md-12">
+                                    <h1>ARTICLE ABOUT</h1>
+                                  </div>
+
+                                  {{#each articles title}}
+                                    {{>article}}
+                                  {{else}}
+                                    <i>No articles about {{title}}</i>
+                                  {{/each}}
+                                 
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                   </section>
-                    
-                </article>
+
+                      <section id="forum_question">
+                        <div class="container">
+                          <div class="hold_product_detail">
+                              <div class="col-md-12">
+                                <h1>{{_ "RELATED PRODUCTS"}}</h1>
+                              </div>
+                            <div class="row"></div> 
+                            {{>recommendation}}
+                         
+                          </div>
+                        </div>
+                      </section>
+     </article>
+
+<script>
+$('.octofilter-link').click(function() {
+    alert( "HOPP" );
+    console.log("TRIGGER");
+    
+
+  });
+    var galleryTop = new Swiper('.gallery-top', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 10,
+    });
+    var galleryThumbs = new Swiper('.gallery-thumbs', {
+        spaceBetween: 10,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+    });
+    galleryTop.params.control = galleryThumbs;
+    galleryThumbs.params.control = galleryTop;
+</script>
 
 </template>
