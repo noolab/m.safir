@@ -1,41 +1,55 @@
 
-Template.listpro.events({
-    'click #favorite':function(e){
+Template.listproducts.events({
+    'click #unlike':function(e){
         
-        
+            
              e.preventDefault();
-             var id=this._id;
-             console.log('id'+Session.get('userId'));
-             if(Session.get('userId')){
-                 //alert();
-                 var obj={
-                    proId:id,
-                    userId:Session.get('userId')
-                 }
-
-                 Meteor.call('insertFavorite',obj);
-                  alert('Product successfully append to favorite!');
+             var like="#like"+this._id;
+             var unlike="#unlike"+this._id;
+             $(like).removeClass('hidelike');
+             $(unlike).addClass('hidelike');
+             //console.log('id'+Session.get('userId'));
+             if(Meteor.userId()){
+                var userId=Meteor.userId();
+             }else{
+                var userId=Session.get('userId');
+                if(!userId){
+                    var newId=Random.id();
+                    Session.setPersistent('userId',newId);
+                }
+                
+             }
+             
+            var obj={
+                proId:id,
+                userId:userId
             }
-            else{
-            	var newId=Random.id();
-                Session.setPersistent('userId',newId);
-                 //var ses=Session.get('userId');
-                 
-                 var obj={
-                    proId:id,
-                    userId:Session.get('userId')
-                 }
 
-                 Meteor.call('insertFavorite',obj);
-                 alert('Product successfully added to favorite!');
-            }
+            Meteor.call('insertFavorite',obj);
+            alert('Product successfully append to favorite!'); 
+                
+
+            
     },
-    'click #remove':function(e){
-        var id=this._id;
-        //alert(id);
-        var obj=favorite.findOne({proId:id});
-        //alert(obj);
+    'click #like':function(e){
+        e.preventDefault();
+        var like="#like"+this._id;
+        var unlike="#unlike"+this._id;
+        $(like).addClass('hidelike');
+        $(unlike).removeClass('hidelike');
+        if(Meteor.userId()){
+                var userId=Meteor.userId();
+        }else{
+            var userId=Session.get('userId');
+                
+        }
+        alert(userId);
+        var obj=favorite.findOne({userId:userId},{proId:this._id});
+        //alert(obj._id);
+       
         favorite.remove(obj._id);
+       
+        
     }
 });
 Template.listpro.helpers({
