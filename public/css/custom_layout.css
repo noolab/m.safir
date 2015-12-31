@@ -94,7 +94,8 @@ h3.price a:hover span{
     color: #888;
     font-weight: bold;
     font-size: 12px;
-    text-decoration: none;      
+    text-decoration: none;  
+    padding-left: 12px;    
 }
 
 .hold_refine a.active{

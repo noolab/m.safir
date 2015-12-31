@@ -118,7 +118,8 @@ Template.reward.helpers({
 		console.log('MyResult:'+p);
 			var result = products.find({point:{$gte:0,$lte:p}});
 			//console.log('MyProduct: '+result);
-			console.log("NB result: "+result.fetch().length);
+			//console.log("NB result: "+result.fetch().length);
+			console.log('MyResult:'+JSON.stringify(result));
 			return result;
 		
 	}

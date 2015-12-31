@@ -117,8 +117,19 @@ Template.webzinelisting.helpers({
 		i = i +1;
 		if( i <= 1 ) return false;
 		else return true;
-	}
+	},
+	getImage: function(id){
+        var img = images.findOne({_id:id});
+        alert(img);
+        if(img){
+            console.log(img.copies.images.key);
+            return img.copies.images.key;
+        }else{
+            return;
+        }
+    }
 });
+
 Session.set("commentValidation","");
 Template.webzinedetails.helpers({
 	related_product: function( categoryId ){
@@ -269,7 +280,16 @@ Template.managecontent.helpers({
 	getCatname: function(){
 		var id = this.category;
 		return categories.findOne({_id:id}).title;
-	}
+	},
+	getImage: function(id){
+        var img = images.findOne({_id:id});
+        if(img){
+            console.log(img.copies.images.key);
+            return img.copies.images.key;
+        }else{
+            return;
+        }
+    }
 });
 //Remove all content
 Template.managecontent.events({
