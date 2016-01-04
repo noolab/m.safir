@@ -65,3 +65,9 @@ Template.listproducts.onRendered(function(){
     $(unlike).addClass('hidelike');
   });
 });
+Template.headermobile.events({
+  'click #favorite':function(e){
+    e.preventDefault();
+    Router.go('/favorite');
+  }
+});
