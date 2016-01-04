@@ -21,7 +21,7 @@ Template.listproducts.events({
              }
              
             var obj={
-                proId:id,
+                proId:this._id,
                 userId:userId
             }
 
@@ -52,30 +52,16 @@ Template.listproducts.events({
         
     }
 });
-Template.listpro.helpers({
-    favoriteList:function(){
-    	if(Session.get('userId')){
-    		var ses=Session.get('userId');
-          var data=  favorite.find({userId:ses});
-          var object=[];
-          var obj={};
-          data.forEach(function(entry) {
-            var proid=entry.proId;
-              obj=products.findOne({_id:proid})
-              object.push(obj);
-                
-           });
-          console.log(object);
-        return object;
-    	}
-        
-        
-        
-    },
-    getProduct:function(){
-    	console.log('abc');
-		var result=products.find();
-		//console.log(result.fetch.count());
-		return result;
-	}
+Template.listproducts.onRendered(function(){
+  var userId=Session.get('userId');
+  if(Meteor.userId()){
+    var userId=Meteor.userId();
+  }
+  var favoritelist=favorite.find({userId:userId});
+  favoritelist.forEach(function(value){
+    var like="#like"+value.proId;
+    var unlike="#unlike"+value.proId;
+    $(like).removeClass('hidelike');
+    $(unlike).addClass('hidelike');
+  });
 });
