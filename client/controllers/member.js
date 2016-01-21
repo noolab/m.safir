@@ -1,5 +1,15 @@
 
 Template.member.helpers({
+	nb_comments: function(){
+		var me=Meteor.user();
+		var number=products.find({"review.user":me._id}).count();
+		return number;
+	},
+	nb_likes: function(){
+		var me=Meteor.user();
+		var number=favorite.find({"userId":me._id}).count();
+		return number;
+	},
 	getpoint: function(){
 		var me=Meteor.user();
 		if(me==null)
@@ -52,11 +62,13 @@ Template.member.helpers({
 	pointLeft: function(){
 		
 			var me=Meteor.user();
-			console.log('Getting user');
-		if(me.profile.shipcard!='undefined')
+			console.log('Getting user'+JSON.stringify(me));
+		if(typeof me.profile.shipcard != "undefined")
 			var point=Number(me.profile.shipcard.point);
 		else
 			point=0;
+
+		console.log("POINT RESTANT"+point);
 
 		if(point<=1000)
 			return 1000-point;

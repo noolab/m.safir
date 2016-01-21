@@ -1,55 +1,7 @@
 Template.home.rendered=function(){
-	$('#slider').flexslider({
-					animation: "slide",
-					directionNav: true,
-					animationLoop: true,
-					controlNav: false,
-					slideToStart: 1,
-					slideshow: true,
-					animationDuration: 300,
-					start: function(){
-						 $('#slider').animate({opacity: 1}, 750);
-					},
-				});
-
-	$("#list1").flexslider({
-					animation: "slide",
-					directionNav: true,
-					animationLoop: true,
-					controlNav: false,
-					slideToStart: 1,
-					slideshow: true,
-					animationDuration: 300,
-					start: function(){
-						 $('#list1').animate({opacity: 1}, 750);
-					},
-				});
-
-	$("#list2").flexslider({
-					animation: "slide",
-					directionNav: true,
-					animationLoop: true,
-					controlNav: false,
-					slideToStart: 1,
-					slideshow: true,
-					animationDuration: 300,
-					start: function(){
-						 $('#list2').animate({opacity: 1}, 750);
-					},
-				});
-
-	$("#list3").flexslider({
-					animation: "slide",
-					directionNav: true,
-					animationLoop: true,
-					controlNav: false,
-					slideToStart: 1,
-					slideshow: true,
-					animationDuration: 300,
-					start: function(){
-						 $('#list3').animate({opacity: 1}, 750);
-					},
-				});
+	$('#ca-container').contentcarousel();
+	$('#ca-container1').contentcarousel();
+	$('#ca-container2').contentcarousel();
 									
 };
 
@@ -70,8 +22,15 @@ Template.home.helpers({
 		return products.findOne({"_id":id});
 	},
 	contents : function(){
-		var type=contents_type.findOne({"type":"News"});
+		var type=contents_type.findOne({"type":"Webzine"});
 		if(type!=null)
 			return contents.find({"typeid":type._id});
 	},
+	getContentImg: function(id){
+		var p=contents.findOne({_id:id});
+		if(p.image instanceof Array)
+			return p.image[0];
+		else
+			return p.image;
+	}
 });

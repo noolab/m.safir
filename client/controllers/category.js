@@ -4,6 +4,7 @@ Session.set("rating",'');
 Session.set("brand",'');
 Session.set("advance",'');
 Session.set('subcategories','');
+Session.set('multiUploadCategory','');
 
 Session.set('limit', -1);
 
@@ -40,68 +41,172 @@ Template.listing.onDestroyed(function () {
   console.log('CHANGING LIMIT TO -1');
 });
 
-
-
 // add categories
 Template.addcategory.events({
 	'submit form': function(e){
 		e.preventDefault();
+		var imgArray=[];
 		var title = $('#title').val();
-		alert(title);
 		var parent = $('#parent').val();
-		var image = Session.get('img_categ');
-		//alert(title+parent);
-		Meteor.call("addCat", title, parent, image);
+		var imgArray=Session.get('multiUploadCategory').split(":");
+
+		Meteor.call("addCat", title, parent, imgArray);
 		Router.go("/managecategory");
 	},
 	'change #image': function(event, template) {
-	//e.preventDefault();
-    var files = event.target.files;
-		for (var i = 0, ln = files.length; i < ln; i++) {
-				images.insert(files[i], function (err, fileObj) {
-				 //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-				Session.set('img_categ', fileObj._id);
-			});
-			//console.log(files[i]);
-		}
-		console.log('img uploaded!');
-	}
+		event.preventDefault();
+	    var files = event.target.files;
+	    for (var i = 0, ln = files.length; i < ln; i++) {
+	      images.insert(files[i], function (err, fileObj) {
+	      if(Session.get('multiUploadCategory')){
+	      	var strImage=Session.get('multiUploadCategory')+":"+fileObj._id;
+	      }else{
+	      	var strImage=fileObj._id;
+	      }
+	      Session.set('multiUploadCategory',strImage);
+	        
+		 });
+    	}
+  	},
+    'click #rmFile':function(e){
+    	e.preventDefault();
+    	var result=confirm('Do you want to delete?');
+    	if(result){
+    		var aferRemove=Session.get('multiUploadCategory').replace(this.image,'');
+    		Session.set('multiUploadCategory',aferRemove);
+	    	images.remove(this.image, function(err, file) {
+		        if (err) {
+		        	console.log('error', err);
+		        }else {
+		            console.log('remove success');
+		            success();
+		        };
+	        });
+    	}  	
+
+    }
+	
 });
+
+Template.addcategory.helpers({
+	getIdImage:function(){
+		var arr=[];
+		var arrayImage=Session.get('multiUploadCategory').split(":");
+		for(var i=0;i<arrayImage.length;i++){
+			if(arrayImage[i]){
+				var obj={
+					image:arrayImage[i]
+				}
+				arr.push(obj);
+			}
+		}
+		return arr;
+	},
+	getImg: function(id){
+            var img = images.findOne({_id:id});
+            if(img){
+                console.log(img.copies.images.key);
+                return img.copies.images.key;
+            }
+            else{
+                return;
+            }
+    }
+});
+
 Template.updatecategory.events({
 	"submit form": function(e) {
-		//alert("Update");
+		e.preventDefault();
+		var arrayIMG=[];
 		var id = $("#idRecord").val();
 		var title = $('#title').val();
 		var parent = $('#parent').val();
-		var image = Session.get('img_categ');
+
+		$('input[name="checkImg"]:checked').each(function() {
+		   arrayIMG.push(this.value);
+		});
+
 		var attr={
 			title:title,
 			parent:parent,
-			image:image
+			image:arrayIMG
 		};
 		Meteor.call('updateCat',id, attr);
 		Router.go('/manageCategory');   
 	},
 	'change #image': function(event, template) {
-	//e.preventDefault();
-    var files = event.target.files;
-		for (var i = 0, ln = files.length; i < ln; i++) {
-				images.insert(files[i], function (err, fileObj) {
-				 //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-				Session.set('img_categ', fileObj._id);
-			});
-			//console.log(files[i]);
+		event.preventDefault();
+		var arrayImage=[];
+		var imagsearr=this.image;
+		for(var j=0;j<imagsearr.length;j++){
+			arrayImage.push(imagsearr[j]);
 		}
-		console.log('img uploaded!');
+		
+		var files = event.target.files;
+		for (var i = 0, ln = files.length; i < ln; i++) {
+			images.insert(files[i], function (err, fileObj) {
+			
+				if(Session.get('multiUploadCategory')){
+					var strImage=Session.get('multiUploadCategory')+','+fileObj._id;
+				}else{
+				
+					var strImage=arrayImage.toString()+','+fileObj._id;
+					
+				}
+				Session.set('multiUploadCategory',strImage);
+
+			});			
+
+		}
 	}
 });
+
+Template.updatecategory.helpers({
+	getIdImage:function(image){
+		if(Session.get('multiUploadCategory')){
+			var imageArr=Session.get('multiUploadCategory').split(',');
+		}else{
+			var imageArr=image;
+		}
+
+		var nameImage=[];
+		for(var i=0;i<imageArr.length;i++){
+			
+			var img = images.findOne({_id:imageArr[i]});
+			if(!img)
+				continue;
+			if(!img.copies)
+				continue;
+            console.log(img.copies.images.key);
+            var name=img.copies.images.key;
+            var obj={
+            	imageId:imageArr[i],
+            	imageName:name
+            }
+            nameImage.push(obj);
+		}
+		return nameImage;
+	},
+	getImg: function(id){
+            var img = images.findOne({_id:id});
+            if(img){
+                console.log(img.copies.images.key);
+                return img.copies.images.key;
+            }
+            else{
+                return;
+            }
+    }
+});
+
 Template.managecategory.events({
 	'click #remove': function(e){
 		e.preventDefault();
 		var id = this._id;
 		Meteor.call('deleteCategory', id);
 		
-	}
+	},
+	
 });
 // helpers categories
 Template.addcategory.helpers({
@@ -135,7 +240,19 @@ Template.managecategory.helpers({
 			return;
 		var result = categories.findOne({_id:cat});
 		return result.title;
-	}
+	},
+	getImg: function(id){
+		var nameImage=[];
+		//alert(id);
+		for(var i=0;i<id.length;i++){
+			var img = images.findOne({_id:id[i]});
+            console.log(img.copies.images.key);
+            var name=img.copies.images.key;
+            nameImage.push(name);
+		}
+		return nameImage;
+            
+    }
 });
 
 
@@ -213,12 +330,12 @@ Template.listing.helpers({
 		var result;
 
 		var fils=Meteor.call('getChildrenList',category,function(err,result){
-			console.log('fils:'+result);
-			console.log('err:'+err);
+			//console.log('fils:'+result);
+			//console.log('err:'+err);
 			var finalList=result;
 			finalList.push(category);
 			Session.set('subcategories',finalList);
-			console.log('subcategories:'+Session.get('subcategories'));
+			//console.log('subcategories:'+Session.get('subcategories'));
 
 			
 		});
@@ -448,7 +565,7 @@ Template.listing.events({
                  Meteor.call('insertFavorite',obj);
                  $(event.target).addClass("red");
                  $(event.target).removeClass("fa-heart-o");
-                  alert('Product successfully append to favorite!');
+                 // alert('Product successfully append to favorite!');
             }
             else{
             	var newId=Random.id();

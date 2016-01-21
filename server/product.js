@@ -3,9 +3,11 @@ Meteor.methods({
 	//add products
 	addPro: function(prod){
 		console.log(JSON.stringify(prod));
-		var attributes={
+
+		var attributes={ 
 				oldId		:prod.oldId,
 				price		:prod.price,
+				attrImage   :prod.attrImage,
 				title		:prod.title,
 				description	:prod.description,
 				image		:prod.image,
@@ -20,7 +22,9 @@ Meteor.methods({
 				priority	:prod.priority,
 				shop		:prod.shop,
 				date		:prod.date,
-				tags        :prod.tags
+				tags        :prod.tags,
+				articles	:prod.articles,
+				tutoes      :prod.tutoes
 		};
 		var productId=products.insert(attributes);
 
@@ -34,7 +38,7 @@ Meteor.methods({
 				point: prod.attr[i].point,
 				value: prod.attr[i].value,
 				barcode:prod.attr[i].barcode,
-				productImage:''
+				productImage:prod.attr[i].productImage
 			};
 			attribute.insert(obj);
 		}
@@ -42,14 +46,17 @@ Meteor.methods({
 		console.log("Inserted");
 		return productId;
 	},
-	updateProduct: function(prod){
+
+	updateProduct: function(id,prod){
 		console.log(JSON.stringify(prod));
 		var attributes={
-				_id			:prod._id,
+				//_id			:prod._id,
 				oldId		:prod.oldId,
 				price		:prod.price,
+				attrImage   :prod.attrImage,
 				title		:prod.title,
 				description	:prod.description,
+				image		:prod.image,
 				Brand		:prod.brand,
 				CODE		:123,
 				metaTitle	:prod.description,
@@ -61,10 +68,12 @@ Meteor.methods({
 				priority	:prod.priority,
 				shop		:prod.shop,
 				date		:prod.date,
-				tags        :prod.tags
+				tags        :prod.tags,
+				articles	:prod.articles,
+				tutoes      :prod.tutoes
 		};
-		var productId=products.update({"_id":prod._id},{$set :attributes});
 
+		var productId=products.update({"_id":prod._id},{$set :attributes});
 		console.log('DELETING ATTR 	:'+prod.oldId);
 		attribute.remove({"product":prod.oldId});
 		console.log('New attr='+JSON.stringify(prod.attr));
@@ -78,7 +87,7 @@ Meteor.methods({
 				point: prod.attr[i].point,
 				value: prod.attr[i].value,
 				barcode:prod.attr[i].barcode,
-				productImage:''
+				productImage:prod.attr[i].productImage
 			};
 			attribute.insert(obj);
 		}
@@ -116,5 +125,15 @@ Meteor.methods({
 	},
 	addlistPro:function(obj){
 		return list_product.insert(obj);
+	},
+	insertAddress:function(id,obj){
+		users.update({_id:id}, {$set:obj});
+	},
+	insertTradeDetail:function(obj, detailId){
+		//console.log('MY CALL '+JSON.stringify(obj));
+		//console.log('MY ID '+detailId);
+
+		translation.insert(obj);
 	}
 });
+

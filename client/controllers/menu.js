@@ -1,8 +1,8 @@
 Session.set('children1','');
 Session.set('children2','');
 Session.set('selected_menu','');
-/*
 
+/*
 Deps.autorun(function () {
 	var current=Session.get('selected_menu');
   			if(current!='none'){
@@ -21,15 +21,38 @@ Deps.autorun(function () {
 */
 Template.header.helpers({
 	getParent: function(){
-		return categories.find({"parent":"0"});
+		return categories.find({"$or":[{"parent":"0"},{"parent":" "}]});
 	},
 	getChildren: function(parent){
 		return categories.find({"parent":parent});
+	},
+	changeLanguage: function(){
+		if(TAPi18n.getLanguage()=='fa')
+			return 'English';
+		else
+			return 'فارسی';
 	}
 });
 
 
 Template.header.events({
+	'click #en':function(e,tpl){
+
+		if(TAPi18n.getLanguage()=='fa')
+			var lang='en';
+		else
+			var lang='fa';
+		
+		TAPi18n.setLanguage(lang)
+      .done(function () {
+        Session.set("showLoadingIndicator", false);
+      })
+      .fail(function (error_message) {
+        // Handle the situation
+        console.log(error_message);
+      });
+
+	},
 	'mouseover #child1': function(e,tpl){
 		tpl.$(".list").html('');
 		tpl.$(".num2").html('');

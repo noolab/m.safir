@@ -13,5 +13,35 @@ Meteor.methods({
    { "_id": productId },
    { $addToSet: {review: attr } });
 
+	},
+	addReviewwebzine: function(title,text,grade,userid,productId){
+		var curDate=Date.now();
+		var attr={
+			title:title,
+			comment:text,
+			grade:grade,
+			user:userid,
+			date:curDate
+		};
+
+		contents.update(
+   { "_id": productId },
+   { $addToSet: {review: attr } });
+
+	},
+	addReviewTuto: function(title,text,grade,userid,productId){
+		var curDate=Date.now();
+		var attr={
+			title:title,
+			comment:text,
+			grade:grade,
+			user:userid,
+			date:curDate
+		};
+
+		contents.update(
+   { "_id": productId },
+   { $addToSet: {review: attr } });
+
 	}
 });

@@ -1,25 +1,37 @@
 Template.registerHelper('getImg', function (id) {
-    
-        if(id=='')
-            return 'unknown.png';
-            if(id.indexOf("/uploads")>-1){
+        //console.log("IMAGE="+id);
+        if(id=='' || typeof id == "undefined")
+            // return '/uploads/unknown.png';
+            return '/img/unknown.png';
+
+        else if(id.indexOf("uploads")>-1){
                 //console.log('oldSafir');
-                id=id.replace("/uploads/","");
+                //id=id.replace("/uploads/","/upload/");
                 //console.log('oldSafir2'+id);
+               // console.log("first"+id);
                 return id;
-            }else{
-                var img = images.findOne({_id:id});
+        }
+        else if(id.indexOf("http://")>-1){
+                    //id=id.replace("/upload/","");
+                  //  console.log("SECOND="+id);
+                   return id;
+        }else{
+                    var img = images.findOne({_id:id});
             //console.log("current img="+img);
-            
-            if(img){
-                //console.log(img.copies.images.key);
-                return img.copies.images.key;
-            }else{
-                return;
-            }
-   
-            }
-            
+                    //console.log("LAST="+id);
+                    if(img){
+                        //console.log(img.copies.images.key);
+                        return '/uploads/'+img.copies.images.key;
+                    }else{
+                        return;
+                    } 
+        }
+                    
+});
+
+Template.registerHelper('trimString', function(passedString) {
+    var theString = passedString.substring(0,110);
+    return new Handlebars.SafeString(theString)
 });
 
 Template.registerHelper('getDate', function (curdate) {
@@ -51,12 +63,12 @@ Template.registerHelper('getCart', function (curdate) {
             userid = Meteor.userId();
 
             if( userid ){
-                mycart = cart.find({userId:userid});
+                mycart = cart.find({$and:[{order_status:0},{userId:userid}]});
             }
         }else{
             userid = Session.get('userId');
             if( userid ){
-                mycart = cart.find({userId:userid});
+                mycart = cart.find({$and:[{order_status:0},{userId:userid}]});
             }
         }
         console.log('cart id='+userid);
@@ -69,3 +81,38 @@ Template.registerHelper('getCart', function (curdate) {
         console.log('TOTAL'+total);
         return mycart;
 }); 
+
+var clock = 100;
+
+var timeLeft = function() {
+  if (clock > 0) {
+    clock--;
+    Session.set("time", clock);
+    return console.log(clock);
+  } else {
+    console.log("That's All Folks");
+    return Meteor.clearInterval(interval);
+  }
+};
+
+var interval = Meteor.setInterval(timeLeft, 1000);
+
+Template.registerHelper("time", function() {
+    return Session.get("time");
+  });
+
+
+Template.registerHelper("getFirstImgContent",function(id){
+    var p=contents.findOne({_id:id});
+        if(p.image instanceof Array)
+            return p.image[0];
+        else
+            return p.image;
+    });
+
+Template.registerHelper("validProduct",function(img,price){
+    if(typeof price === "undefined" || price=="" || typeof img === "undefined" || img=="")
+        return false;
+    else
+        return true;
+    });

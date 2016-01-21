@@ -1,7 +1,7 @@
 
 Meteor.subscribe("categories");
 Deps.autorun(function() {
-	Meteor.subscribe("products",20);
+	TAPi18n.subscribe("products",20);
 });
 
 Meteor.subscribe("images");
@@ -23,6 +23,9 @@ Meteor.subscribe("question");
 Meteor.subscribe("journey");
 Meteor.subscribe("linkselling");
 Meteor.subscribe("membershipcard");
-Meteor.subscribe("list_product");
+TAPi18n.subscribe("list_product");
 Meteor.subscribe("attribute_value");
 Meteor.subscribe("order");
+Meteor.subscribe("translation");
+Meteor.subscribe("payments");
+Meteor.subscribe("banner");

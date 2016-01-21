@@ -119,17 +119,47 @@ Session.set('keyword', "");
 Session.set('groupsearch', "");
 Session.set("searchall","");
 Template.header.events({
-	'click .search-btn': function(e){
+	'click .kesearch': function(e){
 		e.preventDefault();
+        var Search = $(".input-search").val();
+        if(Search =='')
+            alert("Please fill in search box!");
+        else{
 		var key = $(".input-search").val();
-		var groupid = $("#group-text").attr("data-selected");
+		//var groupid = $("#group-text").attr("data-selected");
 		Session.set('keyword', key);
-		Session.set('groupsearch', groupid);
-	
+		//Session.set('groupsearch', groupid);
+        if(Session.get('groupsearch')=='')
+                Session.set('groupsearch', 10);
 		Router.go('searchproduct' );
+        $('#textToSearch').val('');
+        }
 	},
-	//added
-	"click .search-group": function(e,tmp){
+    'click .searchselection': function(e,tpl){
+        var id=$(e.currentTarget).attr("data-group");
+        Session.set('groupsearch', id);
+        console.log('searching: '+id);
+       //alert('hoop');
+    },
+    'keyup #textToSearch':function(e){
+        e.preventDefault();
+        var Search = $(".input-search").val();
+        if(e.which === 13){
+            if(Search ==''){
+                alert("Please fill in search box!");
+            }else{
+            var key = $(".input-search").val();
+            var groupid = $("#group-text").attr("data-selected");
+            Session.set('keyword', key);
+            //Session.set('groupsearch', groupid);
+            if(Session.get('groupsearch')=='')
+                Session.set('groupsearch', 10);
+            Router.go('searchproduct' );
+            $('.input-search').val('');
+            }
+        }
+    },
+	'click .search-group': function(e,tmp){
 		var group_text = $(e.currentTarget).html();
 		var group_value = $(e.currentTarget).attr('data-group');
 		$("#group-text").html( group_text );
@@ -145,6 +175,18 @@ Template.searchproduct.helpers({
 	nbcontents: function(){
 		return Session.get('nbcontents');
 	},
+    displayContent:function(){
+        if(Number(Session.get('nbcontents'))>0)
+            return true;
+        else
+            return false;
+    },
+    displayproduct: function(){
+        if(Number(Session.get('nbproducts'))>0)
+            return true;
+        else
+            return false;
+    },
 	isLiked: function(productId){
 		if(Session.get('userId')){
     		  var ses=Session.get('userId');

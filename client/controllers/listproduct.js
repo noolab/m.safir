@@ -79,5 +79,11 @@ Template.addlistproduct.events({
         e.preventDefault();
         var id = this._id;
         return list_product.remove({_id:id});
+    },
+    "click #sortname":function(e){
+        e.preventDefault();
+        var result = products.find({}, {sort: {title:1}});
+        alert(result);
+        return result;
     }
 });

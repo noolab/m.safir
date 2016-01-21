@@ -1,24 +1,6 @@
-Session.setDefault('nbproducts','');
-Session.setDefault('querylimit',16);
-Session.setDefault('quickview','');
-
-
-Template.listproducts.rendered=function(){
-	$('#slider').flexslider({
-					animation: "slide",
-					directionNav: true,
-					animationLoop: true,
-					controlNav: false,
-					slideToStart: 1,
-					slideshow: true,
-					animationDuration: 300,
-					start: function(){
-						 $('#slider').animate({opacity: 1}, 750);
-					},
-				});
-									
-};
-
+Session.set('nbproducts','');
+Session.set('querylimit',16);
+Session.set('quickview','');
 Template.listproducts.helpers({
 	nbproducts: function(){
 		return Session.get('nbproducts');
@@ -47,10 +29,6 @@ Template.listproducts.helpers({
     	}
     		
 	},
-
-	getProduct: function(id){
-		return products.findOne({"_id":id});
-	},
 	getSelectedProduct: function(){
 		var id=Session.get('quickview');
 		if(id=='')
@@ -64,13 +42,11 @@ Template.listproducts.helpers({
 	getShopname: function( id ){
 		var shop = shops.findOne({_id:id });
 		if( shop ) return shop.name; 
-	},
-
+	}
 });
 
 
 Template.listproducts.events({
-
 	'click #favorite':function(e,tpl){
 	             e.preventDefault();
 	             var id=this._id;
@@ -92,7 +68,7 @@ Template.listproducts.events({
 
 		                 Meteor.call('insertFavorite',obj);
 		                 
-		                  alert('Product successfully append to favorite!');
+		                  //alert('Product successfully append to favorite!');
 		            }
 		            else{
 		            	var newId=Random.id();
@@ -184,20 +160,29 @@ Template.listproducts.events({
 			}
 			 
             
+    	},
+    	"click #name":function(e){
+    		e.preventDefault();
+    		 Session.set("GETName",'name');    		
+    	},
+    	"click #price":function(e){
+    		e.preventDefault();
+    		Session.set("GETName",'price');
+    	},
+    	"click #bestSelling":function(e){
+    		e.preventDefault();
+    		Session.set("GETName",'sell');
     	}
+
  });
 
 Template.listproducts.onCreated(function() {
     
     $(window).on('scroll', function(e) {
-    	console.log('scrolling');
        if($(window).scrollTop() == $(document).height() - $(window).height()) {
        		var limit=Number(Session.get('querylimit'));
-       		console.log('oldLimit: '+limit);
 	    	limit=limit+16;
-	    	console.log('NewLimit: '+limit);
 	    	Session.set('querylimit',limit);
-	    	console.log('limit '+Session.get('querylimit'));
            //alert("Welcome Rosoty");
     	}
     });

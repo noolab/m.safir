@@ -2,35 +2,33 @@
 Session.set('tag_msg','');
 Session.set('ADDIMAGEID','');
 Session.set('tagValidation', "");
+Session.setDefault('selectedCategoryTag','');
+
 function attrDept( id = 0){
 	var multi_level_attr =  "";
-	var attr = tags.find( {parent:"",_id:{$ne:id}});
+	var attr = parent_tags.find( {category_id:Session.get('selectedCategoryTag'),_id:{$ne:id}});
+	console.log('attrDep: '+id);
+	console.log('cat:'+Session.get('selectedCategoryTag'));
+	console.log('count: '+attr.count());
 	if( attr ){
+
 		var dep = 0;
 		attr.forEach( function(val, index){
 			
-				//space = '&nbsp'; 
-			multi_level_attr += '<option value="'+val._id+'">'+ val.title+'</option>';
-			var attr =  tags.find({parent:val._id, _id:{$ne:id}});
-			if(attr){
-				attr.forEach( function(val, index){
-					multi_level_attr += '<option value="'+val._id+'">&mdash; '+ val.title+'</option>';
-					var attr =  tags.find({parent:val._id, _id:{$ne:id}});
-					if(attr){
-						attr.forEach( function(val, index){
-							multi_level_attr += '<option value="'+val._id+'">&mdash;&mdash; '+ val.title+'</option>';
-						})
-					}
-				})
-			}
 			
-		})
+				
+					multi_level_attr += '<option value="'+val._id+'">&mdash; '+ val.title+'</option>';
+					
+				
+			
+			
+		});
 		return multi_level_attr;
 	}
 }
 function catDept(){
 	var multi_level =  "";
-	var attr = categories.find({parent:"0"});
+	var attr = categories.find({parent:" "});
 	if( attr ){
 		var dep = 0;
 		attr.forEach( function(val, index){
@@ -75,32 +73,28 @@ Template.managetag.events({
 				parent:parent,
 				categoryId:categoryId
 			}
-			var id = tags.insert(obj);
-			//Meteor.call('insertAttr',obj);
+			//var id = tags.insert(obj);
+			Meteor.call('insertTag',obj);
 			e.target.name.value='';
 			e.target.value.value='';
 		}
-		Session.set('tagValidation', msg);
+		//Session.set('tagValidation', msg);
     },
 	'click #bnt_delete':function(e){
         e.preventDefault();
-        var result = tags.findOne({_id:this._id});
-        var id=result.productImage;
         var result=confirm('Do you want to delete?');
         //alert(id);
         if(result){
-            tags.remove(this._id);
-            //delete file
-            images.remove(id, function(err, file) {
-            if (err) {
-              console.log('error', err);
-            } else {
-              console.log('remove success');
-              success();
-                };
-            });
+            Meteor.call('removeTag',this._id);
+            
         }
     },
+    'change #selectCategory' : function(e,tpl){
+    	var catId=$("#selectCategory").val();
+    	//alert("selected: "+catId);
+    	Session.set('selectedCategoryTag',catId);
+
+    }
 })
 Template.managetag.helpers({
     datashow:function(){
@@ -118,36 +112,22 @@ Template.managetag.helpers({
 		}
     },
     getparent:function(){
-		var id = ( this._id !='')? this._id:0;
-        var data = attrDept( id );
-		console.log(data);
-		return data;
+    	if(Session.get('selectedCategoryTag')=='')
+			return parent_tags.find();
+		else
+			return parent_tags.find({"category_id":Session.get('selectedCategoryTag')});
     },
-	getParent:function(parentId){
-        var parentData = tags.findOne({_id:parentId});
-		if( parentData ) return parentData.title;
+	getParentTagName:function(id){
+        return parent_tags.findOne({_id:id}).title;
     },
 	getCategory:function(){
         var data = catDept( );
 		console.log(data);
 		return data;
 	},
-	addshopmsg: function(){
-		var msg = Session.get('tagValidation');
-		if( msg ) return msg.data;
+	getCateName:function(id){
+		return categories.findOne({_id:id}).title;
 	},
-	isAddShopmsg: function(){
-		var msg = Session.get('tagValidation');
-		if(msg) return true;
-		else return false;
-	},
-	addShopSuccess: function(){
-		var msg = Session.get('tagValidation');
-		if( msg ){
-			if( msg.status == true ) return true;
-			else return false;
-		}
-	}
 	
 });
 //Delete tags
@@ -175,46 +155,83 @@ Template.edittag.events({
 				parent:parent,
 				categoryId:categoryId
 			}
-			var id = tags.update(this._id,obj);
-			//Meteor.call('insertAttr',obj);
+			Meteor.call('updateTag',this._id,obj);
 			e.target.name.value='';
 			e.target.value.value='';
-			Session.set('tagValidation', msg);
 			Router.go('/managetag');
 		}
 		
     }
-})
+});
 Template.edittag.helpers({
-	getparent:function(){
-		var id = ( this._id !='')? this._id:0;
-        var data = attrDept( id );
-		console.log(data);
-		return data;
+	getparentTagName:function(id){
+		
+		return parent_tags.findOne({_id:id}).title;
     },
-	getParent:function(parentId){
-        var parentData = tags.findOne({_id:parentId});
-		if( parentData ) return parentData.title;
+	getParentTag:function(parentId){
+        return parent_tags.find();
     },
 	getCategory:function(){
         var data = catDept( );
 		console.log(data);
 		return data;
 	},
-	addshopmsg: function(){
-		var msg = Session.get('tagValidation');
-		if( msg ) return msg.data;
-	},
-	isAddShopmsg: function(){
-		var msg = Session.get('tagValidation');
-		if(msg) return true;
-		else return false;
-	},
-	addShopSuccess: function(){
-		var msg = Session.get('tagValidation');
-		if( msg ){
-			if( msg.status == true ) return true;
-			else return false;
-		}
+	getCategoryName:function(id){
+		return categories.findOne({_id:id}).title;
 	}
+	
 });
+
+//===================parenttag==============
+Template.manageparenttag.helpers({
+    
+	
+	getCategory:function(){
+  //       var data = catDept( );
+		// console.log(data);
+		return categories.find();
+	},
+	parentTags:function(){
+
+		return parent_tags.find();
+	},
+	catName:function(id){
+		return categories.findOne({_id:id}).title;
+	}
+	
+	
+});
+Template.manageparenttag.events({
+	'submit form':function(e){
+		e.preventDefault();
+		var obj={
+			title:e.target.title.value,
+			category_id:e.target.cate.value
+		}
+		Meteor.call('insertParentTag',obj);
+	},
+	'click #remove':function(){
+		var id=this._id;
+		parent_tags.remove({_id:id});
+	}
+})
+Template.updateparenttag.helpers({
+	getCatName:function(id){
+		return categories.findOne({_id:id}).title;
+	},
+	getCat:function(){
+		return categories.find();
+	}
+})
+Template.updateparenttag.events({
+	'submit form':function(e){
+		alert(e.target.cate.value);
+		e.preventDefault();
+		var obj={
+			title:e.target.title.value,
+			category:e.target.cate.value
+		}
+		Meteor.call('updateparenttag',this._id,obj);
+		Router.go('/manageparenttag');
+	}
+})

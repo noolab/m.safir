@@ -4,11 +4,12 @@
 Meteor.publish("categories", function () {console.log('categories:'+categories.find({}).fetch().length);
     return categories.find({});
 });
-Meteor.publish('products', function (limit){ 
+//Meteor.publish('products', function (limit){ 
+TAPi18n.publish('products', function (limit){ 
   if(limit!=-1)
-    return products.find({},{limit:limit});
+    return products.i18nFind({},{limit:limit});//return products.find({},{limit:limit});
   else
-    return products.find({});
+    return products.i18nFind({});
 });
 Meteor.publish('images', function (){ 
   return images.find({});
@@ -76,13 +77,24 @@ Meteor.publish("address", function () {
     return membershipcard.find({});
 });
 
-    Meteor.publish("list_product", function () {
-    return list_product.find({});
+    TAPi18n.publish("list_product", function () {
+    return list_product.i18nFind({});
 });
 
-Meteor.publish('attribute_value', function (){ 
+Meteor.publish('attribute_value', function (){ order
   return attribute_value.find({});
 });
-   Meteor.publish("order", function () {
-    return order.find({});
+Meteor.publish('order', function (){ 
+  return order.find({});
+});
+
+Meteor.publish('translation', function (){ 
+  return translation.find({});
+});
+
+Meteor.publish('payments', function (){ 
+  return payments.find({});
+});
+Meteor.publish('banner', function (){ 
+  return banner.find({});
 });

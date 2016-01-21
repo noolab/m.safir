@@ -22,6 +22,19 @@ Template.cart.helpers({
 	
 });
 
+Template.payment.helpers({
+	
+	pay: function(){
+		Meteor.call('api',function(err,res){
+			console.log('ERROR:');
+			console.log(err);
+			console.log('RESULT');
+			console.log(res);
+		});
+	}
+	
+});
+
 /*modifier cartview sreyden/chantern*/
 Template.header.helpers({
 	getNameproduct: function(id_product){
@@ -98,10 +111,9 @@ Template.cart.events({
 	}
 });
 Template.header.events({
-	'click #remove':function(e){
+	'click #remove': function(e){
 		e.preventDefault();
-		var id = this._id;
-		alert(id);
-		Meteor.call('removecart',id);
+		var id =this._id;
+		Meteor.call('removemycart', id);	
 	}
 });

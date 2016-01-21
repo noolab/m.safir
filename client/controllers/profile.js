@@ -23,12 +23,6 @@ Template.editprofile.helpers({
 		return profile;
 		//console.log(profile+'UserId'+id);
 	},
-    getImage1:function(){
-        var id = Meteor.userId();
-        var profile = Meteor.users.find({_id:id});
-        return profile;
-        //console.log(profile+'UserId'+id);
-    },
      getImage: function(id){
             var img = images.findOne({_id:id});
             if(img){

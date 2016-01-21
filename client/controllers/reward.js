@@ -1,6 +1,7 @@
 Session.set('compteur',0);
 Session.set('rank','');
 Template.reward.helpers({
+	
 	short: function(count){
 		return count.substr(0,20);
 	},
@@ -13,9 +14,10 @@ Template.reward.helpers({
 	},
 	getpoint: function(){
 		var me=Meteor.user();
+		//alert("me mellow ");
 		if(me==null)
 			return;
-		if(me.profile.shipcard!='undefined')
+		if(typeof me.profile.shipcard != "undefined")
 			return me.profile.shipcard.point;
 		else
 			return 0;
@@ -23,13 +25,13 @@ Template.reward.helpers({
 	isBronze: function(){
 		if(Session.get('rank')==''){
 			var me=Meteor.user();
-			console.log('Getting user');
-		if(me.profile.shipcard!='undefined')
+			console.log('Getting user'+JSON.stringify(me));
+		if(typeof me.profile.shipcard != "undefined")
 			var point=Number(me.profile.shipcard.point);
 		else
 			point=0;
 
-		console.log('POINT:'+point);
+		console.log('ISBRONZEPOINT:'+point);
 		if(point>=0 && point<1000){
 			Session.set('rank','BRONZE');
 			//$('#ranking').addClass("backpt");
@@ -53,8 +55,8 @@ Template.reward.helpers({
 	isSilver: function(){
 		if(Session.get('rank')==''){
 			var me=Meteor.user();
-			console.log('Getting user');
-		if(me.profile.shipcard!='undefined')
+			console.log('Getting user ISSILVER');
+		if(typeof me.profile.shipcard != "undefined")
 			var point=Number(me.profile.shipcard.point);
 		else
 			point=0;
@@ -83,8 +85,8 @@ Template.reward.helpers({
 	isGold: function(){
 		if(Session.get('rank')==''){
 			var me=Meteor.user();
-			console.log('Getting user');
-		if(me.profile.shipcard!='undefined')
+			console.log('Getting user ISGOLD');
+		if(typeof me.profile.shipcard != "undefined")
 			var point=Number(me.profile.shipcard.point);
 		else
 			point=0;
@@ -111,15 +113,18 @@ Template.reward.helpers({
 			return false;
 	},
 	getproduct:function(){
-
-		var point = Meteor.user().profile.shipcard.point;
+		var me=Meteor.user();
+		if(typeof me.profile.shipcard != "undefined")
+			var point=Number(me.profile.shipcard.point);
+		else
+			point=0;
+		
 		//console.log('MyResult:'+point);
 		var p = Number(point);
 		console.log('MyResult:'+p);
 			var result = products.find({point:{$gte:0,$lte:p}});
 			//console.log('MyProduct: '+result);
-			//console.log("NB result: "+result.fetch().length);
-			console.log('MyResult:'+JSON.stringify(result));
+			console.log("NB result: "+result.fetch().length);
 			return result;
 		
 	}

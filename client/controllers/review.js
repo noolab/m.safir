@@ -20,13 +20,14 @@ Template.addreview.events({
 			tpl.$("#add_review").css("display",'none');
 	}
 });
+
 Template.addreview.helpers({
- getImgUrl: function(userid){
-  console.log('avatar='+userid);
-  var user=users.findOne({"_id":userid});
-  if(!user.hasOwnProperty('image'))
+	getImgUrl: function(userid){
+		console.log('avatar='+userid);
+		var user=users.findOne({"_id":userid});
+		if(!user.hasOwnProperty('image'))
             return 'unknown.png';
-  var img = images.findOne({_id:user.image});
+		var img = images.findOne({_id:user.image});
             console.log("current img="+img);
             
             if(img){
@@ -35,7 +36,7 @@ Template.addreview.helpers({
             }else{
                 return;
             }
- }
+	}
 });
 
 Template.review.helpers({
@@ -45,9 +46,9 @@ Template.review.helpers({
 	getImgUrl: function(userid){
 		console.log('avatar='+userid);
 		var user=users.findOne({"_id":userid});
-		if(!user.hasOwnProperty('avatar'))
+		if(!user.hasOwnProperty('image'))
             return 'unknown.png';
-		var img = images.findOne({_id:user.avatar});
+		var img = images.findOne({_id:user.image});
             console.log("current img="+img);
             
             if(img){

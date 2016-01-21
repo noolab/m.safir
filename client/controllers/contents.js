@@ -1,6 +1,9 @@
+Session.set('multiUploadContentAdd','');
+Session.set('multiUploadContent','');
 //Start contents========================================================*/
 Template.addContent.events({
-	'click #btnAdd': function(e){
+	'submit form': function(e){
+		var imgArray=[];
 		e.preventDefault();
 		var datestr = new Date().toString("yyyy-MM-dd HH:mm:ss");
 		//var datestr = 'Thu Sep 17 2015 18:24:52 GMT+0700 (SE Asia Standard Time)';
@@ -8,59 +11,93 @@ Template.addContent.events({
 		//alert("post");
 		var author = Meteor.userId();
 		var title =$('#title').val();
-		var content =CKEDITOR.instances.editor1.getData();//$('#editor1').val();
+		//var content =CKEDITOR.instances.editor1.getData();//$('#editor1').val();
+		var content = $('#editor1').val();
 		var typeid =$('#type').val();
 		var category =$('#catId').val();
 		var url =$('#url').val();
-		//alert(category);
 		var date = timestamp;
-		var image =$('#image').val();
-		var img_id = Session.get('ADDIMAGEID');
-		Meteor.call('addContent', title, content, typeid, date, img_id, author,category,url);
+		var imgArray=Session.get('multiUploadContentAdd').split(":");
+		Meteor.call('addContent', title, content, typeid, date, imgArray, author,category,url);
+		Session.set('multiUploadContentAdd','');		
 		Router.go('managecontent');
-		console.log("Inserted");
 	},
 	'change #image': function(event, template) {
-    var files = event.target.files;
-    for (var i = 0, ln = files.length; i < ln; i++) {
-      images.insert(files[i], function (err, fileObj) {
-        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-		Session.set('ADDIMAGEID', fileObj._id);
-	  });
+		event.preventDefault();
+	    var files = event.target.files;
+	    for (var i = 0, ln = files.length; i < ln; i++) {
+	      images.insert(files[i], function (err, fileObj) {
+	      if(Session.get('multiUploadContentAdd')){
+	      	var strImage=Session.get('multiUploadContentAdd')+":"+fileObj._id;
+	      }else{
+	      	var strImage=fileObj._id;
+	      }
+	      Session.set('multiUploadContentAdd',strImage);
+	        
+		 });
+    	}
+  	},
+    'click #rmFile':function(e){
+    	e.preventDefault();
+    	var result=confirm('Do you want to delete?');
+    	if(result){
+    		var aferRemove=Session.get('multiUploadContentAdd').replace(this.image,'');
+    		Session.set('multiUploadContentAdd',aferRemove);
+	    	images.remove(this.image, function(err, file) {
+		        if (err) {
+		        	console.log('error', err);
+		        }else {
+		            console.log('remove success');
+		            success();
+		        };
+	        });
+    	}
+    	
+
     }
-  }
+});
+Template.addContent.helpers({
+	getIdImage:function(){
+		var arr=[];
+		var arrayImage=Session.get('multiUploadContentAdd').split(":");
+		for(var i=0;i<arrayImage.length;i++){
+			if(arrayImage[i]){
+				var obj={
+					image:arrayImage[i]
+				}
+				arr.push(obj);
+			}
+		}
+		return arr;
+	}
 });
 Session.get('UPDATEIMAGEID','');
 Template.updateContent.events({
 	'click #btnUpdate': function(e,tmp){
 		e.preventDefault();
+		var arrayIMG=[];
 		var datestr = new Date().toString("yyyy-MM-dd HH:mm:ss");
 		//var datestr = 'Thu Sep 17 2015 18:24:52 GMT+0700 (SE Asia Standard Time)';
 		var timestamp = (new Date(datestr.split(".").join("-")).getTime())/1000;
-		//alert("post");
 		var author = Meteor.userId();
 		var title =$('#title').val();
 		var content =CKEDITOR.instances.editor1.getData();//$('#editor1').val();
 		var typeid =$('#type').val();
 		var category =$('#catId').val();
 		var url =$('#url').val();
-		//alert(category);
 		var date = timestamp;
-		var image =$('#image').val();
-		var img_id = Session.get('UPDATEIMAGEID');
-		//delete Session.keys['UPDATEIMAGEID'];
-		console.log("img;"+ img_id);
+
+		$('input[name="checkImg"]:checked').each(function() {
+		   arrayIMG.push(this.value);
+		});
 		
 		if( typeid=="" || category==""){
 			console.log("Some field is require. Check again!");
 		}else{
-		
-
-
 
 			var obj={
 				title:title,
-				image:img_id,
+				image:arrayIMG,
 				url:url,
 				author:author,
 				content:content,
@@ -69,35 +106,72 @@ Template.updateContent.events({
 				date:timestamp
 			}
 			contents.update(this._id,obj);
+			Session.set('multiUploadContentAdd','');
+			Session.set('multiUploadContent','');
 			Router.go('managecontent');
 			console.log("updated!");
 		}
 	},
 	'change #image': function(event, template) {
-		//alert(this.image);
 		event.preventDefault();
-        var id=this.image;
-            images.remove(id, function(err, file) {
-            if (err) {
-              console.log('error', err);
-            } else {
-              console.log('remove success');
-              success();
-                };
-            });
-   
-    var files = event.target.files;
-    for (var i = 0, ln = files.length; i < ln; i++) {
-      images.insert(files[i], function (err, fileObj) {
-        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-		Session.set('UPDATEIMAGEID', fileObj._id);
-	  });
-    }
-  },
-  'click #remove':function(e){
+		var arrayImage=[];
+		var imagsearr=this.image;
+		for(var j=0;j<imagsearr.length;j++){
+			arrayImage.push(imagsearr[j]);
+		}
+		
+		var files = event.target.files;
+		for (var i = 0, ln = files.length; i < ln; i++) {
+			images.insert(files[i], function (err, fileObj) {
+			
+				if(Session.get('multiUploadContent')){
+					var strImage=Session.get('multiUploadContent')+','+fileObj._id;
+				}else{
+				
+					var strImage=arrayImage.toString()+','+fileObj._id;
+					
+				}
+				Session.set('multiUploadContent',strImage);
 
-  }
+			});			
+
+		}
+ 	},
+ 	
+  	'click #remove':function(e){
+
+   }
 });
+
+Template.updateContent.helpers({
+	getIdImage:function(image){
+		if(Session.get('multiUploadContent')){
+			var imageArr=Session.get('multiUploadContent').split(',');
+		}else{
+			var imageArr=image;
+		}
+
+		var nameImage=[];
+		for(var i=0;i<imageArr.length;i++){
+			var img = images.findOne({_id:imageArr[i]});
+			if(!img)
+				continue;
+			if(!img.copies)
+				continue;
+            console.log(img.copies.images.key);
+            var name=img.copies.images.key;
+            var obj={
+            	imageId:imageArr[i],
+            	imageName:name
+            }
+            nameImage.push(obj);
+		}
+		console.log('All img='+JSON.stringify(nameImage));
+		return nameImage;
+	}
+});
+
+
 i = 0;
 Template.webzinelisting.helpers({
 	webzine1 : function(){
@@ -118,18 +192,17 @@ Template.webzinelisting.helpers({
 		if( i <= 1 ) return false;
 		else return true;
 	},
-	getImage: function(id){
-        var img = images.findOne({_id:id});
-        alert(img);
-        if(img){
-            console.log(img.copies.images.key);
-            return img.copies.images.key;
-        }else{
-            return;
-        }
+	     getImage: function(id){
+            var img = images.findOne({_id:id});
+            if(img){
+                console.log(img.copies.images.key);
+                return img.copies.images.key;
+            }
+            else{
+                return;
+            }
     }
 });
-
 Session.set("commentValidation","");
 Template.webzinedetails.helpers({
 	related_product: function( categoryId ){
@@ -138,6 +211,18 @@ Template.webzinedetails.helpers({
 		console.log('count:'+ prod.count());
 		if( prod ) return prod;
 		else return;
+	},
+	related: function(category,id){
+		console.log("article related of "+category);
+		var list=contents.find({category:category,_id: { $not: id }});
+		var max=list.count();
+		console.log('relatedcount='+max);
+		var index=Math.floor((Math.random() * max) + 1);
+		console.log('index='+index);
+		if(max==0)
+			return null;
+		else
+			return list.fetch()[index-1];
 	},
 	getErrormsg: function(){
 		return Session.get("commentValidation");
@@ -150,6 +235,10 @@ Template.webzinedetails.helpers({
 	getUsername: function( userid ){
 		var user = users.findOne(userid);
 		if( user ) return user.profile.firstname+' '+user.profile.lastname
+	},
+	getarticle: function(){
+		var article = contents_type.findOne({_id:this.typeid}).type;
+		return article;
 	}
 });
 Template.webzinedetails.events({
@@ -270,6 +359,13 @@ Template.updateContent.helpers({
 
 //ManageContent
 Template.managecontent.helpers({
+	getAllImg: function(c){
+		var p=contents.findOne({_id:c});
+		if(p.image instanceof Array)
+			return p.image;
+		else
+			return [p.image];
+	},
 	managecontent: function(){
 		return contents.find();
 	},
@@ -280,16 +376,8 @@ Template.managecontent.helpers({
 	getCatname: function(){
 		var id = this.category;
 		return categories.findOne({_id:id}).title;
-	},
-	getImage: function(id){
-        var img = images.findOne({_id:id});
-        if(img){
-            console.log(img.copies.images.key);
-            return img.copies.images.key;
-        }else{
-            return;
-        }
-    }
+	}
+   
 });
 //Remove all content
 Template.managecontent.events({
@@ -304,8 +392,8 @@ Template.showwebzine.events({
 		var id = this._id;
 		return contents.remove({_id:id});
 	}
-});*/
-/*
+});
+
 Template.showtuto.events({
 'click #remove':function(){
 		var id = this._id;
@@ -322,7 +410,7 @@ Template.showlooks.events({
 //show Webzine
 Template.showwebzine.helpers({
 	getWebzine: function(){
-		return contents.find({"typeid":"ZwarAPwhFaf3acLuM"});
+		return contents.find({"type":"Webzine"});
 	},
 	getTypename: function(){
 		var id =this.typeid;
@@ -336,7 +424,7 @@ Template.showwebzine.helpers({
 //show Tuto
 Template.showtuto.helpers({
 	getTuto: function(){
-		return contents.find({"typeid":"tCvBRhhfJ7PvTHBh7"});
+		return contents.find({"type":"Tuto"});
 	},
 	getTypename: function(){
 		var id =this.typeid;
@@ -350,7 +438,7 @@ Template.showtuto.helpers({
 //show Looks
 Template.showlooks.helpers({
 	getLooks: function(){
-		return contents.find({"typeid":"tCvBRhhfJ7PvTHBh8"});
+		return contents.find({"type":"Looks"});
 	},
 	getTypename: function(){
 		var id =this.typeid;
@@ -361,24 +449,49 @@ Template.showlooks.helpers({
 		return categories.findOne({_id:id}).title;
 	}
 });
+
 */
 
 Template.tutonew.helpers({
 	getTutoCategory:function(){
 		//var type=contents_type.findOne({"type":"Tuto"});
-		return categories.find();
+		return categories.find({"parent":" "});
+	},
+	getCategoryImg: function(id){
+		var p=categories.findOne({_id:id});
+		if(p.image instanceof Array)
+			return p.image[0];
+		else
+			return p.image;
 	}
 });
+
 Template.tutolisting.helpers({
 	getContent:function(id){
 		var type=contents_type.findOne({type:"Tuto"});
-		//console.log('makar:'+type._id+'categoryId:'+id);
+		console.log('makar:'+type._id+'categoryId:'+id);
+
+		console.log('Displaying tuto');
 		var string=type._id+':'+id;
 		Session.set('Tuto',string);
 		return contents.find({category:id},{typeid:type._id});
+	},
+	getTutoImg: function(id){
+		var p=contents.findOne({_id:id});
+		if(p.image instanceof Array)
+			return p.image[0];
+		else
+			return p.image;
 	}
 });
 Template.tutodetails.helpers({
+	getTutoImg: function(id){
+		var p=contents.findOne({_id:id});
+		if(p.image instanceof Array)
+			return p.image[0];
+		else
+			return p.image;
+	},
 	getTutodetails:function(id){
 
 		return contents.findOne({_id:id});
@@ -397,4 +510,620 @@ Template.tutodetails.helpers({
 	getCatergoryName: function(categoryId){
 		 	return categories.findOne({"_id":categoryId}).title;
 		 }
-})
+});
+Template.webzinedetails.events({
+	'click #addreview': function(e,tpl){
+		var userid=Meteor.userId();
+		if(userid==null){
+			alert("You have to be logged to submit a review!");
+			return;
+		}
+
+		var title=tpl.$("#title").val();
+		var text=tpl.$("#comment").val();
+		var grade=tpl.$("#sel1").val();
+
+		Meteor.call('addReviewwebzine',title,text,grade,userid,this._id);
+		alert("Review added successfully!")
+	},
+	'click #bt_review': function(e,tpl){
+		if(tpl.$("#add_review").css("display")=='none')
+			tpl.$("#add_review").css("display","block");
+		else
+			tpl.$("#add_review").css("display",'none');
+	}
+});
+Template.tutodetails.events({
+	'click #addreview': function(e,tpl){
+		var userid=Meteor.userId();
+		if(userid==null){
+			alert("You have to be logged to submit a review!");
+			return;
+		}
+
+		var title=tpl.$("#title").val();
+		var text=tpl.$("#comment").val();
+		var grade=tpl.$("#sel1").val();
+
+		Meteor.call('addReviewTuto',title,text,grade,userid,this._id);
+		alert("Review added successfully!")
+	},
+	'click .morereview':function(e){
+			e.preventDefault();
+			//alert();
+			var last = Session.get('numberOfReviews');
+			var sum = Number(last) + 5;
+			var update = Session.set('numberOfReviews',sum);
+			return update;
+	},
+});
+
+
+Template.tutodetails.helpers({
+	suggestion: function(title){
+		return contents.find({"content":{"$regex":title}});
+	},
+	getArticle: function(idarticle){
+		return contents.findOne({"_id":idarticle});
+	},
+	getTutoes: function(idtutoes){
+		return contents.findOne({"_id":idtutoes});
+	},
+	getAllAttributes: function(productId,parent){
+		return attribute.find({"product":productId,"parent":parent});
+	},
+	getParentDetails: function(parent){
+		return parentattr.findOne({"_id":parent});
+	},
+	listAttr: function(parent){
+		console.log("OLDID="+parent);
+		return attribute.find({"product":parent});
+	},
+	getParentAttr: function(product){
+		console.log('cherche les attr de '+product);
+		var list=attribute.find({"product":product}).fetch();
+		var out=[];
+		for(var i=0;i<list.length;i++){
+			var contains=0;
+			for(var j=0;j<out.length;j++)
+				if(out[j].parent==list[i].parent)
+					contains=1;
+			if(contains==0)
+				out.push(list[i]);
+		}
+			
+		return out;
+	},
+	getShops: function(id){
+		return shops.find({"products.product":id,"products.quantity":{ "$nin": ["0"] }});
+	},
+	getAttribute: function(id){
+  		
+  		return attribute.findOne({"_id": id});
+  	},
+	getTagName: function(tagid){
+		if(tagid!=null)
+			return tags.findOne({_id:tagid}).title;
+		else
+			return;
+	},
+	getAttr: function(id){
+		return attribute.findOne({"_id":id});
+	},
+	getCategoryName: function(categoryid){
+		console.log("cat:"+categoryid);
+		if(categoryid!=null)
+			return categories.findOne({_id:categoryid}).title;
+		else
+			return;
+	},
+	getShopname: function( id ){
+		var shop = shops.findOne({_id:id });
+		if( shop ) return shop.name; 
+	},
+	filterReview: function(){
+		Tracker.autorun(function () {
+			console.log('RERUNNING');
+			return Session.get('fiterValue');
+		});
+	},
+	removeFilter: function(){
+		Tracker.autorun(function () {
+			console.log('RERUNNING delete');
+			return Session.get('removefilter');
+		});
+	},
+	slic:function(tags){
+		var parentarr=[];
+		var valuearr=[];
+		var nameParent=[];
+		//alert('Tags:'+JSON.stringify(tags));
+		for(var i=0;i<tags.length;i++){
+
+			parentarr.push(tags[i].parent);
+			valuearr.push(tags[i].value);
+		}
+		function onlyUnique(value, index, self) { 
+		 return self.indexOf(value) === index;
+		}
+		//var arr=['aaa','cc','ajdjfdj','aaa',12];
+		var unique = parentarr.filter( onlyUnique );
+		for(var j=0;j<unique.length;j++){
+			var name=parent_tags.findOne({"_id":unique[j]}).title;
+			nameParent.push(name);
+		}
+		var obj={
+			parents:nameParent,
+			values:valuearr
+		}
+		
+		return obj;
+
+	},
+	getParentTagName: function(id){
+		return parent_tags.findOne({"_id":id}).title;
+	},
+	getReviews: function(reviews,filtre,toremove){
+			/*
+			console.log('reloading reviews...'+Session.get('fiterValue'));
+			var toRemove=Session.get('removefilter').split(':');
+			var myFilter=Session.get('fiterValue');
+			for(var i=0;i<toRemove.length;i++){
+				if(toRemove[i]=='')
+					continue;
+				var str=':'+toRemove[i];
+				myFilter.replace(str,'');
+			}*/
+
+			//console.log('Before: '+Session.get('fiterValue'));
+			//console.log('ToRemove:'+Session.get('removefilter'));
+	
+			
+			if(Session.get('fiterValue')=="" || Session.get('fiterValue')=="undefined"){
+				var lastResult=[];
+				var numberOfResult=Session.get('numberOfReviews');
+
+				if(numberOfResult>reviews.length)
+					numberOfResult=reviews.length
+				console.log('NUMBER OF lastResult.length '+numberOfResult);
+				for(var i=0;i<numberOfResult;i++)
+					lastResult.push(reviews[i]);
+
+				console.log('NUMBER OF lastResult.length '+lastResult.length);
+				return lastResult;
+					
+			}
+			console.log('Calling filterReview='+reviews.length);
+			var values=Session.get('fiterValue').split(':');
+			//fiterValue
+			var ages=[];
+			var myTags=[];
+			var grades=[];
+
+			for(var i=0;i<values.length;i++){
+				var param=values[i];
+				if(param=='')
+					continue;
+				console.log("Processing "+param);
+				if(param.indexOf('-')>=0){
+					ages.push(param);
+				}else if(param.indexOf('/')>=0){
+					grades.push(param);
+				}else{
+					myTags.push(param);
+				}
+			}
+
+			console.log('ages:'+ages.length);
+			console.log('myTags:'+myTags.length);
+			console.log('grades:'+grades.length);
+
+			var results=[];
+			for(var i=0;i<ages.length;i++){
+				var ageMin=Number(ages[i].split('-')[0]);
+				var ageMax=Number(ages[i].split('-')[1]);
+
+				console.log('min:'+ageMin);
+				console.log('max:'+ageMax);
+				//Loop into reviews
+				for(var j=0;j<reviews.length;j++){
+					var curUser=users.findOne({"_id":reviews[j].user});
+					if(Number(curUser.profile.age)<= ageMax && Number(curUser.profile.age)>=ageMin){
+						results.push(reviews[j]);
+
+					}
+						
+				}
+			}
+			console.log('Size of the rest:'+reviews.length);
+			console.log('Still in the sand after ager filter:'+results.length);
+			if(results.length>0){
+					console.log('remise a 0');
+					reviews=[];
+					reviews=results.slice(0);
+					results=[];
+			}
+				
+			console.log('Size of the rest:'+reviews.length);
+			for(var i=0;i<myTags.length;i++){
+				var curTag=myTags[i];
+				console.log('tagging '+curTag);
+				for(var j=0;j<reviews.length;j++){
+					var curUser=users.findOne({"_id":reviews[j].user});
+					if(curUser.profile.tag.indexOf(curTag)>=0)
+						results.push(reviews[j]);
+				}
+			}
+
+			console.log('Still in the sand(tags):'+results.length);
+			if(results.length>0){
+					console.log('remise a 0');
+					reviews=[];
+					reviews=results.slice(0);
+					results=[];
+
+			}
+			if(grades.length==0)
+				results=reviews.slice(0);
+			console.log('Size of the rest:'+reviews.length);
+			for(var i=0;i<grades.length;i++){
+				var curGrade=grades[i].split('/')[0];
+				//Loop into reviews
+
+				for(var j=0;j<reviews.length;j++){
+					
+					if(Number(reviews[j].grade)==Number(curGrade) && results.indexOf(reviews[j])<0){
+						results.push(reviews[j]);
+						console.log('Comparing '+curGrade+' and '+reviews[j].grade);
+					}
+						
+				}
+			}
+
+			console.log('Still in the sand(grades):'+results.length);
+			console.log('afterFilter:'+results.length);
+
+			var lastResult=[];
+			var numberOfResult=Session.get('numberOfReviews');
+
+			if(numberOfResult>results.length)
+				numberOfResult=results.length
+			console.log('NUMBER OF lastResult.length '+numberOfResult);
+			for(var i=0;i<numberOfResult;i++)
+				lastResult.push(results[i]);
+
+			console.log('NUMBER OF lastResult.length '+lastResult.length);
+			return lastResult;
+		
+		
+	},
+	getReviewsShort: function(reviews,limit){
+		if(Session.get("filter")==""){
+			var ret=[];
+			for(var i=0;i<reviews.length && i<=limit;i++){
+					var current=reviews[i];
+					ret.push(current);
+			}
+			return ret;
+		}
+		else{
+			var ret=[];
+			for(var i=0;i<reviews.length && i<=limit;i++){
+				var current=reviews[i];
+				var currentAuthor=users.findOne({_id:current.user});
+				if(currentAuthor.emails[0].address==Session.get("filter"))
+					ret.push(current);
+			}
+			return ret;
+		}
+	},
+	path: function(){
+		return Session.get('path');
+	},
+	selected_attr: function(){
+		return Session.get('selected_attr');
+	},
+	selected_price: function(){
+		return Session.get('selected_price');
+	},
+	selected_point: function(){
+		return Session.get('selected_point');
+	}
+});
+Template.webzinedetails.events({
+	'click #addreview': function(e,tpl){
+		var userid=Meteor.userId();
+		if(userid==null){
+			alert("You have to be logged to submit a review!");
+			return;
+		}
+
+		var title=tpl.$("#title").val();
+		var text=tpl.$("#comment").val();
+		var grade=tpl.$("#sel1").val();
+
+		Meteor.call('addReviewTuto',title,text,grade,userid,this._id);
+		alert("Review added successfully!")
+	},
+	'click .morereview':function(e){
+			e.preventDefault();
+			//alert();
+			var last = Session.get('numberOfReviews');
+			var sum = Number(last) + 5;
+			var update = Session.set('numberOfReviews',sum);
+			return update;
+	},
+});
+
+
+Template.webzinedetails.helpers({
+	suggestion: function(title){
+		return contents.find({"content":{"$regex":title}});
+	},
+	getArticle: function(idarticle){
+		return contents.findOne({"_id":idarticle});
+	},
+	getTutoes: function(idtutoes){
+		return contents.findOne({"_id":idtutoes});
+	},
+	getAllAttributes: function(productId,parent){
+		return attribute.find({"product":productId,"parent":parent});
+	},
+	getParentDetails: function(parent){
+		return parentattr.findOne({"_id":parent});
+	},
+	listAttr: function(parent){
+		console.log("OLDID="+parent);
+		return attribute.find({"product":parent});
+	},
+	getParentAttr: function(product){
+		console.log('cherche les attr de '+product);
+		var list=attribute.find({"product":product}).fetch();
+		var out=[];
+		for(var i=0;i<list.length;i++){
+			var contains=0;
+			for(var j=0;j<out.length;j++)
+				if(out[j].parent==list[i].parent)
+					contains=1;
+			if(contains==0)
+				out.push(list[i]);
+		}
+			
+		return out;
+	},
+	getShops: function(id){
+		return shops.find({"products.product":id,"products.quantity":{ "$nin": ["0"] }});
+	},
+	getAttribute: function(id){
+  		
+  		return attribute.findOne({"_id": id});
+  	},
+	getTagName: function(tagid){
+		if(tagid!=null)
+			return tags.findOne({_id:tagid}).title;
+		else
+			return;
+	},
+	getAttr: function(id){
+		return attribute.findOne({"_id":id});
+	},
+	getCategoryName: function(categoryid){
+		console.log("cat:"+categoryid);
+		if(categoryid!=null)
+			return categories.findOne({_id:categoryid}).title;
+		else
+			return;
+	},
+	getShopname: function( id ){
+		var shop = shops.findOne({_id:id });
+		if( shop ) return shop.name; 
+	},
+	filterReview: function(){
+		Tracker.autorun(function () {
+			console.log('RERUNNING');
+			return Session.get('fiterValue');
+		});
+	},
+	removeFilter: function(){
+		Tracker.autorun(function () {
+			console.log('RERUNNING delete');
+			return Session.get('removefilter');
+		});
+	},
+	slic:function(tags){
+		var parentarr=[];
+		var valuearr=[];
+		var nameParent=[];
+		//alert('Tags:'+JSON.stringify(tags));
+		for(var i=0;i<tags.length;i++){
+
+			parentarr.push(tags[i].parent);
+			valuearr.push(tags[i].value);
+		}
+		function onlyUnique(value, index, self) { 
+		 return self.indexOf(value) === index;
+		}
+		//var arr=['aaa','cc','ajdjfdj','aaa',12];
+		var unique = parentarr.filter( onlyUnique );
+		for(var j=0;j<unique.length;j++){
+			var name=parent_tags.findOne({"_id":unique[j]}).title;
+			nameParent.push(name);
+		}
+		var obj={
+			parents:nameParent,
+			values:valuearr
+		}
+		
+		return obj;
+
+	},
+	getParentTagName: function(id){
+		return parent_tags.findOne({"_id":id}).title;
+	},
+	getReviews: function(reviews,filtre,toremove){
+			/*
+			console.log('reloading reviews...'+Session.get('fiterValue'));
+			var toRemove=Session.get('removefilter').split(':');
+			var myFilter=Session.get('fiterValue');
+			for(var i=0;i<toRemove.length;i++){
+				if(toRemove[i]=='')
+					continue;
+				var str=':'+toRemove[i];
+				myFilter.replace(str,'');
+			}*/
+
+			//console.log('Before: '+Session.get('fiterValue'));
+			//console.log('ToRemove:'+Session.get('removefilter'));
+	
+			
+			if(Session.get('fiterValue')=="" || Session.get('fiterValue')=="undefined"){
+				var lastResult=[];
+				var numberOfResult=Session.get('numberOfReviews');
+
+				if(numberOfResult>reviews.length)
+					numberOfResult=reviews.length
+				console.log('NUMBER OF lastResult.length '+numberOfResult);
+				for(var i=0;i<numberOfResult;i++)
+					lastResult.push(reviews[i]);
+
+				console.log('NUMBER OF lastResult.length '+lastResult.length);
+				return lastResult;
+					
+			}
+			console.log('Calling filterReview='+reviews.length);
+			var values=Session.get('fiterValue').split(':');
+			//fiterValue
+			var ages=[];
+			var myTags=[];
+			var grades=[];
+
+			for(var i=0;i<values.length;i++){
+				var param=values[i];
+				if(param=='')
+					continue;
+				console.log("Processing "+param);
+				if(param.indexOf('-')>=0){
+					ages.push(param);
+				}else if(param.indexOf('/')>=0){
+					grades.push(param);
+				}else{
+					myTags.push(param);
+				}
+			}
+
+			console.log('ages:'+ages.length);
+			console.log('myTags:'+myTags.length);
+			console.log('grades:'+grades.length);
+
+			var results=[];
+			for(var i=0;i<ages.length;i++){
+				var ageMin=Number(ages[i].split('-')[0]);
+				var ageMax=Number(ages[i].split('-')[1]);
+
+				console.log('min:'+ageMin);
+				console.log('max:'+ageMax);
+				//Loop into reviews
+				for(var j=0;j<reviews.length;j++){
+					var curUser=users.findOne({"_id":reviews[j].user});
+					if(Number(curUser.profile.age)<= ageMax && Number(curUser.profile.age)>=ageMin){
+						results.push(reviews[j]);
+
+					}
+						
+				}
+			}
+			console.log('Size of the rest:'+reviews.length);
+			console.log('Still in the sand after ager filter:'+results.length);
+			if(results.length>0){
+					console.log('remise a 0');
+					reviews=[];
+					reviews=results.slice(0);
+					results=[];
+			}
+				
+			console.log('Size of the rest:'+reviews.length);
+			for(var i=0;i<myTags.length;i++){
+				var curTag=myTags[i];
+				console.log('tagging '+curTag);
+				for(var j=0;j<reviews.length;j++){
+					var curUser=users.findOne({"_id":reviews[j].user});
+					if(curUser.profile.tag.indexOf(curTag)>=0)
+						results.push(reviews[j]);
+				}
+			}
+
+			console.log('Still in the sand(tags):'+results.length);
+			if(results.length>0){
+					console.log('remise a 0');
+					reviews=[];
+					reviews=results.slice(0);
+					results=[];
+
+			}
+			if(grades.length==0)
+				results=reviews.slice(0);
+			console.log('Size of the rest:'+reviews.length);
+			for(var i=0;i<grades.length;i++){
+				var curGrade=grades[i].split('/')[0];
+				//Loop into reviews
+
+				for(var j=0;j<reviews.length;j++){
+					
+					if(Number(reviews[j].grade)==Number(curGrade) && results.indexOf(reviews[j])<0){
+						results.push(reviews[j]);
+						console.log('Comparing '+curGrade+' and '+reviews[j].grade);
+					}
+						
+				}
+			}
+
+			console.log('Still in the sand(grades):'+results.length);
+			console.log('afterFilter:'+results.length);
+
+			var lastResult=[];
+			var numberOfResult=Session.get('numberOfReviews');
+
+			if(numberOfResult>results.length)
+				numberOfResult=results.length
+			console.log('NUMBER OF lastResult.length '+numberOfResult);
+			for(var i=0;i<numberOfResult;i++)
+				lastResult.push(results[i]);
+
+			console.log('NUMBER OF lastResult.length '+lastResult.length);
+			return lastResult;
+		
+		
+	},
+	getReviewsShort: function(reviews,limit){
+		if(Session.get("filter")==""){
+			var ret=[];
+			for(var i=0;i<reviews.length && i<=limit;i++){
+					var current=reviews[i];
+					ret.push(current);
+			}
+			return ret;
+		}
+		else{
+			var ret=[];
+			for(var i=0;i<reviews.length && i<=limit;i++){
+				var current=reviews[i];
+				var currentAuthor=users.findOne({_id:current.user});
+				if(currentAuthor.emails[0].address==Session.get("filter"))
+					ret.push(current);
+			}
+			return ret;
+		}
+	},
+	path: function(){
+		return Session.get('path');
+	},
+	selected_attr: function(){
+		return Session.get('selected_attr');
+	},
+	selected_price: function(){
+		return Session.get('selected_price');
+	},
+	selected_point: function(){
+		return Session.get('selected_point');
+	}
+});

@@ -19,12 +19,12 @@ Meteor.methods({
 		
 		var finalList=[];
 		var current=categories.find({"parent":elt}).fetch();
-		console.log('finding parent of: '+elt);
+		//console.log('finding parent of: '+elt);
 		for(var i=0;i<current.length;i++){
 			finalList.push(current[i]._id);
-			console.log('finaList:'+finalList);
+			//console.log('finaList:'+finalList);
 			var listchildren=Meteor.call('getChildrenList',current[i]._id);
-			console.log('listChild:'+listchildren);
+			//console.log('listChild:'+listchildren);
 			for(var j=0;j<listchildren.length;j++){
 				finalList.push(listchildren[i]);
 			}
