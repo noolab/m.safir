@@ -65,7 +65,7 @@ Template.listpro.helpers({
 		return result;
 	}
 });
-//==============favorite new
+//==============favorite searchproduct
 Template.searchproduct.events({
     'click #unlike':function(e){
         e.preventDefault();
@@ -122,5 +122,64 @@ Template.searchproduct.onRendered(function(){
     var unlike="#unlike"+value.proId;
     $(like).removeClass('nonelike');
     $(unlike).addClass('nonelike');
+  });
+});
+//==============favorite listproducts
+Template.listproducts.events({
+    'click #unlike':function(e){
+        e.preventDefault();
+        var unlike = '#unlike'+this._id;
+        var like = '#like'+this._id;
+        $(like).removeClass('hidelike');
+        $(unlike).addClass('hidelike');
+         if(Meteor.userId()){
+                var userId=Meteor.userId();
+             }else{
+                var userId=Session.get('userId');
+                if(!userId){
+                    var newId=Random.id();
+                    Session.setPersistent('userId',newId);
+                }
+                
+             }
+             
+            var obj={
+                proId:this._id,
+                userId:userId
+            }
+
+            Meteor.call('insertFavoritee',obj);
+            alert('Product successfully append to favorite!'); 
+    },
+    'click #like':function(e){
+        e.preventDefault();
+        var unlike = '#unlike'+this._id;
+        var like = '#like'+this._id;
+        $(like).addClass('hidelike');
+        $(unlike).removeClass('hidelike');
+        if(Meteor.userId()){
+                var userId=Meteor.userId();
+        }else{
+            var userId=Session.get('userId');
+              
+        }
+        alert(userId);
+        var obj=favorite.findOne({userId:userId},{proId:this._id});
+        //alert(obj._id);
+       
+        favorite.remove(obj._id);
+    }
+});
+Template.listproducts.onRendered(function(){
+  var userId=Session.get('userId');
+  if(Meteor.userId()){
+    var userId=Meteor.userId();
+  }
+  var favoritelist=favorite.find({userId:userId});
+  favoritelist.forEach(function(value){
+    var like="#like"+value.proId;
+    var unlike="#unlike"+value.proId;
+    $(like).removeClass('hidelike');
+    $(unlike).addClass('hidelike');
   });
 });
