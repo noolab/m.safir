@@ -27,7 +27,7 @@ Template.details.events({
         			carts.forEach(function(index){
         				arraypush.push(index.id_product);
         			});
-        			alert('makara');
+        			
         			var search= arraypush.indexOf(this._id);
         			if(search>=0){
         				var objCart=cart.find({$and:[{order_status:0},{userId:userId},{id_product:this._id}]});
@@ -56,7 +56,8 @@ Template.details.events({
 						//shop: shop,                                                        
 						//attribute: attribute                                               
 						};                                                                                                                           //
-						Meteor.call('addtocart', obj);   
+						Meteor.call('addtocart', obj);
+						alert('Add to cart successully!');   
         			}
         		}
         		else {
@@ -72,7 +73,8 @@ Template.details.events({
 						//shop: shop,                                                        
 						//attribute: attribute                                               
 						};                                                                                                                           //
-						Meteor.call('addtocart', obj);   
+						Meteor.call('addtocart', obj);
+						alert('Add to cart successully!');    
         		}
         			
                      
