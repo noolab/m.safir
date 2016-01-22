@@ -1,5 +1,6 @@
 Template.details.events({
 	'submit #cart': function (e, tpl) { 
+		
 		e.preventDefault();
 		var subtotal=0; 
 		var shopId=e.target.shop.value;
@@ -12,36 +13,37 @@ Template.details.events({
 		  if(result.price!==''){
 		  	 subtotal=parseInt(result.price);
 		  }
+		  //var userId=Session.get('userId');
+		  	var userId=Meteor.userId();
 		  
 		  //alert(subtotal);                        
-        if (Session.get('userIdSession')) { 
+        if (userId) { 
+        	
         		var arraypush=[];
-        		
-        		if(Meteor.userId()){
-        			var userId=Meteor.userId();
-        		}else{
-        			var userId=Session.get('userIdSession');
-        		}
-        		//alert();
-        		//mycart = cart.find({$and:[{order_status:0},{userId:userid}]});
-        		var carts=cart.find({$and:[{order_status:0},{userId:userid}]})
+        		var existRow=cart.find().count();
+
+        		if(existRow>0){
+        			var carts=cart.find({$and:[{order_status:0},{userId:userId}]})
         			carts.forEach(function(index){
         				arraypush.push(index.id_product);
         			});
-        			//alert('makara');
+        			alert('makara');
         			var search= arraypush.indexOf(this._id);
         			if(search>=0){
-        				//alert('have already');
-        				var objCart=cart.find({$and:[{order_status:0},{userId:userid}]})
-        				
-        				
-        				var obj={
-							quantity : 1+objCart.quantity,  
-							subtotal : subtotal+objCart.subtotal,
+        				var objCart=cart.find({$and:[{order_status:0},{userId:userId},{id_product:this._id}]});
+        				alert(objCart.count());
+        				//alert(JSON.stringify(objCart));
+        				objCart.forEach(function(value){
+        					var obj={
+							quantity : 1+parseInt(value.quantity),  
+							subtotal : subtotal+parseInt(value.subtotal),
 							date     : dateTime 
 	        				}
-        				Meteor.call('updatCart',objCart._id,obj);
-        			}else{
+        				Meteor.call('updatCart',value._id,obj);
+        				});
+        				
+        			}
+        			else {
         				//alert('not have');
         				var obj = {                                                         
 						id_product: idproduct,                                            
@@ -56,32 +58,28 @@ Template.details.events({
 						};                                                                                                                           //
 						Meteor.call('addtocart', obj);   
         			}
+        		}
+        		else {
+        			//alert('insert');
+        			var obj = {                                                         
+						id_product: idproduct,                                            
+						userId: userId,
+						shopId:shopId,                                     
+						quantity: 1,  
+						subtotal: subtotal,
+						order_status:0,
+						date:dateTime                                                    
+						//shop: shop,                                                        
+						//attribute: attribute                                               
+						};                                                                                                                           //
+						Meteor.call('addtocart', obj);   
+        		}
+        			
                      
-		} else { 
-			if(Meteor.userId()){
-				var userId=Meteor.userId();
-			}else{
-				var newId = Random.id();                                           
-					Session.setPersistent('userIdSession', newId); 
-					var userId=Session.get('userIdSession');
-			}                                                          
-					                            
-					//var ses=Session.get('userId');                                   
-		                                                                      
-			var obj = {                                                         
-					id_product: idproduct,                                            
-					userId:userId , 
-					shopId:shopId,                                     
-					quantity: 1,  
-					subtotal: subtotal,
-					order_status:0,
-					date:dateTime                                                    
-						                                            
-					};                                                               
-		                                                                 
-					Meteor.call('addtocart', obj);  
-					                  
-		}                                                            
+		}else{
+			Router.go('login');
+		}
+		                                                         
 	},
 	'click #btn_color':function(e){
     	if(Session.get('count_color')){
@@ -143,22 +141,37 @@ Template.details.helpers({
 })
 Template.headermobile.helpers({
 	getCartshow:function(){
-		if(Meteor.userId()){
-			id=Meteor.userId();
-		}else{
-			id=Session.get('userIdSession');
-		}
-		console.log('Myconsole:'+cart.find({userId:id},{order_status:0}).count());
-		return cart.find({$and:[{order_status:0},{userId:userid}]});
+		// if(Meteor.userId()){
+		// 	id=Meteor.userId();
+		// }else{
+		// 	id=Session.get('userIdSession');
+		// }
+		// console.log('Myconsole:'+cart.find({userId:id},{order_status:0}).count());
+		// return cart.find({$and:[{order_status:0},{userId:id}]});
+		var	userId=Meteor.userId();
+		console.log('Myconsole:'+cart.find({$and:[{order_status:0},{userId:userId}]}).count());
+		Session.set('cartcount',cart.find({$and:[{order_status:0},{userId:userId}]}).count());
+		return cart.find({$and:[{order_status:0},{userId:userId}]},{limit:2});
 	},
 	getProduct: function(id){
 		return products.findOne({"_id":id});
 	},
 	getproductimage:function(id){
 		var idimage=products.findOne({_id:id}).image;
-		var image = idimage.replace("uploads", "upload");
-		//console.log('IMG:'+idimage);
-		return image;
+		if(idimage.indexOf("uploads")>-1 || idimage.indexOf("http://")>-1){
+			return idimage;
+		}else{
+			var img = images.findOne({_id:idimage});
+            //console.log("current img="+img);
+                    //console.log("LAST="+id);
+            if(img){
+                        //console.log(img.copies.images.key);
+                return '/uploads/'+img.copies.images.key;
+            }else{
+                return;
+            } 
+		}
+		
 		
 	},
 	getNameproduct: function(id_product){
@@ -166,12 +179,8 @@ Template.headermobile.helpers({
 	},
 	getTotol:function(){
 		var total=0;
-		if(Meteor.userId()){
-			var userId=Meteor.userId();
-		}else{
-			var userId=Session.get('userIdSession');
-		}
-		var result=cart.find({$and:[{order_status:0},{userId:userid}]});
+		var userId=Meteor.userId();
+		var result=cart.find({$and:[{order_status:0},{userId:userId}]});
 		result.forEach(function(value){
 			 total+=value.subtotal;
 		})

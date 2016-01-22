@@ -26,5 +26,8 @@ Meteor.methods({
 	},
 	updateStatus:function(id,obj){
 		cart.update({_id:id},{$set:obj});
+	},
+	updatCart:function(id,obj){
+		cart.update({_id:id},{$set:obj});
 	}
 });
