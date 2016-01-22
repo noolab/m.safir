@@ -7,6 +7,7 @@ Template.listpro.events({
              var id=this._id;
              console.log('id'+Session.get('userId'));
              if(Session.get('userId')){
+                alert(Session.get('userId'));
                  //alert();
                  var obj={
                     proId:id,
@@ -123,6 +124,12 @@ Template.searchproduct.onRendered(function(){
     $(like).removeClass('nonelike');
     $(unlike).addClass('nonelike');
   });
+});
+Template.headermobile.events({
+  'click #favorite':function(e){
+    e.preventDefault();
+    Router.go('/favorite');
+  }
 });
 //==============favorite listproducts
 Template.listproducts.events({
