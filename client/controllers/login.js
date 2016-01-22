@@ -19,7 +19,7 @@ Template.login.helpers({
 	}
 })
 Template.login.events({
-    'click .btn_login': function(event,tpl){
+    'submit form': function(event,tpl){
         event.preventDefault();
 		//alert("login");
         var email = $('[name=email]').val();
@@ -59,8 +59,33 @@ Template.login.events({
 			"show"      : true   // show the modal immediately                  
 		  });
     },
-    'click #register': function(event){
+    /*'submit form': function(event){
     	event.preventDefault();
+    	console.log('Register in progress...');
+    	var username=$(".reg-username").val();
+    	alert(username);
+    	var firstname =$('.reg-firstname').val();
+		var lastname =$('.reg-lastname').val();
+		var email = $('.reg-email').val();
+		var password =$('.reg-password').val();
+		var country=$('.reg-country').val();
+		var city=$('.reg-city').val();
+		var shipcard = '';
+		var point = 0;
+		var rerole = 'member';
+			Meteor.call('regUser',firstname, lastname, email, password, shipcard, point, rerole,country,city,username,function(err){
+				if(err){
+					console.log(err.reason);
+					Session.set("registerError",err.reason);
+				}else{
+					Session.set("registerError","");
+					Router.go('register-success'); 
+				}
+			});
+		}*/
+		'click #register': function(event){
+    	event.preventDefault();
+    	var arr=[];
     	console.log('Register in progress...');
     	var username=$(".reg-username").val();
     	var firstname =$('.reg-firstname').val();
@@ -73,8 +98,19 @@ Template.login.events({
 		var point = 0;
 		var rerole = 'member';
 		var msg = "";
-		//console.log('register in progress 2...')
-		if(firstname == "" || firstname <= 3|| lastname == "" ||email == "" ||password == ""){
+		var user = users.find();
+		user.forEach(function(value){
+			var emails=value.emails[0].address;
+			//alert(email);
+			arr.push(emails);
+		});
+		var search = arr.indexOf(email);
+		if(search>=0){
+		alert("this email have already");
+		}else{
+			alert("email not exist");
+		}
+		if(firstname == "" || lastname == "" ||email == "" ||password == ""){
 					if( firstname == "")
 						msg += "<p> Firstname is required.</p>";
 					if( lastname == "")
@@ -88,21 +124,22 @@ Template.login.events({
 					Session.set("registerError", msg );
 					
 			}else{
-			//alert(firstname+lastname+email+password);
-			Meteor.call('regUser',firstname, lastname, email, password, shipcard, point, rerole,country,city,username,function(err){
-				if(err){
-					console.log(err.reason);
-					Session.set("registerError",err.reason);
-				}else{
-					Session.set("registerError","");
-					Router.go('register-success'); 
-				}
-			});
-		}
-    	
-    }
-});
+		
+							//alert(firstname+lastname+email+password);
+				Meteor.call('regUser',firstname, lastname, email, password, shipcard, point, rerole,country,city,username,function(err){
+					if(err){
+						console.log(err.reason);
+						Session.set("registerError",err.reason);
+					}else{
+						Session.set("registerError","");
+						Router.go('register-success'); 
+					}
+				});
+			}
 
+
+		}
+});
 
 Template.login.onRendered(function(){
 	$("#squarespaceModal").modal({                    
