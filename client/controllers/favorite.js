@@ -7,7 +7,6 @@ Template.listpro.events({
              var id=this._id;
              console.log('id'+Session.get('userId'));
              if(Session.get('userId')){
-                alert(Session.get('userId'));
                  //alert();
                  var obj={
                     proId:id,
