@@ -1,16 +1,5 @@
-Template.dailyPopup.helpers({
+/*Template.dailyPopup.helpers({
 	getMyPopup:function(){
-/*		var arr=[];
-		var popup = list_product.findOne({title:"popup"}).products;
-		alert(popup);
-		for(var i=0;i<popup.length;i++){
-			var pro = products.findOne({_id:popup[i]});
-			alert(popup[i]);
-			alert('result:'+JSON.stringify(pro));	
-			arr.push(pro);
-		}
-		alert('products:'+arr);
-		return arr;*/
 		
 		function shuffle(o){
             for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -41,10 +30,10 @@ Template.dailyPopup.helpers({
 			return contentsresult;
 			
 		}
-});
-Template.dailyPopup.events({
+});*/
+/*Template.dailyPopup.events({
 	'click #x-close':function(e){
 		e.preventDefault();
 		Router.go('/profile');
 	}
-});
+});*/
