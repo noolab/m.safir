@@ -2,7 +2,7 @@
   <section id="slider">
     <ul class="slides">
      {{#each contents}}
-     <li><img src="/upload/{{getImg image}}" alt="" /></li>
+     <li><img src="{{getImg image}}" alt="" /></li>
      {{/each}}
 
    </ul>
@@ -17,7 +17,7 @@
     {{#each products}}
     {{#with getProduct this}}
     <li>
-     <a href="{{pathFor 'details' id=_id}}"><img src="/upload/{{getImg image}}" class="img-circle img-responsive"  /> </a>
+     <a href="{{pathFor 'details' id=_id}}"><img src="{{getImg image}}" class="img-circle img-responsive"  /> </a>
    </li>
    {{/with}}
    {{/each}}
@@ -35,7 +35,7 @@
     {{#each products}}
     {{#with getProduct this}}
     <li>
-     <a href="{{pathFor 'details' id=_id}}"><img src="/upload/{{getImg image}}" class="img-circle img-responsive"  /> </a>
+     <a href="{{pathFor 'details' id=_id}}"><img src="{{getImg image}}" class="img-circle img-responsive"  /> </a>
    </li>
    {{/with}}
    {{/each}}
@@ -52,7 +52,7 @@
     {{#each products}}
     {{#with getProduct this}}
     <li>
-     <a href="{{pathFor 'details' id=_id}}"><img src="/upload/{{getImg image}}" class="img-circle img-responsive"  /> </a>
+     <a href="{{pathFor 'details' id=_id}}"><img src="{{getImg image}}" class="img-circle img-responsive"  /> </a>
    </li>
    {{/with}}
    {{/each}}
