@@ -103,7 +103,7 @@ Template.checkout.events({
 		Session.set("total", total);
 		//Meteor._reload.reload();
 	},
-	"click .glyphicon-trash":function(e,tmp){
+	"click #removeCart":function(e,tmp){
 		var id = this._id;
 		return cart.remove({_id:id});
 	},

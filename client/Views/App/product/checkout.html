@@ -22,7 +22,7 @@
 					    <tbody>
 					    {{#each getCart}}
 					      <tr>
-					        <td>{{#with getProductInfo id_product}}<a href="/details/{{_id}}"><img src="/upload/{{getImg image}}" class="img-responsive" style="width:70px; height:70px;"></a>{{/with}}
+					        <td>{{#with getProductInfo id_product}}<a href="/details/{{_id}}"><img src="{{getImg image}}" class="img-responsive" style="width:70px; height:70px;"></a>{{/with}}
 					        </td>
 					        <td>
 					        	{{#with getProductInfo id_product}}{{title}}{{/with}}
@@ -31,7 +31,7 @@
 					        	{{getShopName shopId}}
 					        </td>
 					        <td>
-					        	<input type="text" style="color:black;width:30px;" class="qty" value="{{quantity}}" />
+					        	<input type="text" id="quantity" style="color:black;width:30px;" class="qty" value="{{quantity}}" />
 					        </td>
 					        <td>
 					        	{{#with getProductInfo id_product}}{{price}}{{/with}}
@@ -40,7 +40,7 @@
 					        	{{subtotal}}
 					        </td>
 					        <td>
-					        	<a href="" class="fa fa-times" style="color:black;"></a>
+					        	<a href="" id="removeCart" class="fa fa-times" style="color:black;"></a>
 
 					        </td>
 					      </tr>
