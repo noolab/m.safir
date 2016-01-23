@@ -1,5 +1,7 @@
 Session.set('multiUploadContentAdd','');
 Session.set('multiUploadContent','');
+Session.set('removefilter','');
+Session.set('numberOfReviews',3);
 //Start contents========================================================*/
 Template.addContent.events({
 	'submit form': function(e){
@@ -548,7 +550,7 @@ Template.tutodetails.events({
 		Meteor.call('addReviewTuto',title,text,grade,userid,this._id);
 		alert("Review added successfully!")
 	},
-	'click .morereview':function(e){
+	'click #btnMore':function(e){
 			e.preventDefault();
 			//alert();
 			var last = Session.get('numberOfReviews');
@@ -845,7 +847,7 @@ Template.webzinedetails.events({
 		Meteor.call('addReviewTuto',title,text,grade,userid,this._id);
 		alert("Review added successfully!")
 	},
-	'click .morereview':function(e){
+	'click #morereview':function(e){
 			e.preventDefault();
 			//alert();
 			var last = Session.get('numberOfReviews');

@@ -7,10 +7,34 @@
                 </div>
 
                 <ul id="menu-lateral" class="menu">
+
                     {{#if currentUser}}
+                    <li id="member" class="icon plus sousmenu">
+
+                        <a href="">
+                            <span class="menu-li-title">{{_ "My Profile"}} </span>
+                           <img class="menu-li-arrow-submenu" src="/img/icons/submenu.png" alt="" />
+                        </a>
+
+                        <ul class="deroulant sub-menu" style="display:none;">
+                          
                     <li class="icon home">
                         <a href="/profile">
                             <span class="menu-li-title">{{_ "My Profile"}}</span>
+                            <img class="menu-li-arrow" src="/img/icons/arrow-forward.png" alt="" />
+                        </a>
+                    </li>
+
+                    <li class="icon home">
+                        <a href="/reward">
+                            <span class="menu-li-title">{{_ "Rewards and points"}}</span>
+                            <img class="menu-li-arrow" src="/img/icons/arrow-forward.png" alt="" />
+                        </a>
+                    </li>
+
+                    <li class="icon home">
+                        <a href="/member">
+                            <span class="menu-li-title">{{_ "Membership"}}</span>
                             <img class="menu-li-arrow" src="/img/icons/arrow-forward.png" alt="" />
                         </a>
                     </li>
@@ -21,21 +45,56 @@
                             <img class="menu-li-arrow" src="/img/icons/arrow-forward.png" alt="" />
                         </a>
                     </li>
+                          
+                            
+                        </ul>
+
+                    </li> 
+                   
 
                     {{else}}
                     <li class="icon home">
                         <a href="/register">
-                            <span class="menu-li-title">{{_ "Register"}}</span>
+                            <span class="menu-li-title">{{_ "Login"}} / {{_ "Register"}}</span>
                             <img class="menu-li-arrow" src="/img/icons/arrow-forward.png" alt="" />
                         </a>
                     </li>
-                    <li class="icon home">
-                        <a href="/login">
-                            <span class="menu-li-title">{{_ "Login"}}</span>
-                            <img class="menu-li-arrow" src="/img/icons/arrow-forward.png" alt="" />
-                        </a>
-                    </li>
+                    
                     {{/if}}
+
+
+                    <li id="community" class="icon plus sousmenu">
+
+                        <a href="">
+                            <span class="menu-li-title">{{_ "Community"}} </span>
+                           <img class="menu-li-arrow-submenu" src="/img/icons/submenu.png" alt="" />
+                        </a>
+
+                        <ul class="deroulant sub-menu" style="display:none;">
+                          
+                                <li class="icon sousmenu">
+                                <a href="/tuto">
+                                    <span class="menu-li-title">{{_ "Tutorial"}}</span>
+                                    
+                                   
+                                </a>
+                                
+                                </li>
+
+                                <li class="icon plus sousmenu">
+                                <a href="/webzinelisting">
+                                    <span class="menu-li-title">{{_ "WEBZINE"}}</span>
+                                    
+
+                                   
+                                </a>
+                                
+                                </li>
+                          
+                            
+                        </ul>
+
+                    </li> 
                 {{#each getParent}}
                     <li id="a-submenu-{{_id}}" class="icon plus sousmenu">
 
@@ -108,7 +167,6 @@
                                     </div>
                                 </div>
                                 <br/>
-
 
                             </div>
                       <!--  <li class="item"><a href="#" id="advanced">Advanced</a></li>
@@ -221,11 +279,10 @@
                     </div>
 
                 </section> <!-- #header -->
-                
-                <section id="refine_menu" >
+      <section id="refine_menu" >
                     {{#with currentCategory}}
                     <div class="col-xs-12">
-                        <div class="hold_refine">
+                        <div class="hold_refine" id="panel_menu">
                             <div class="row">
                                 <div class="col-xs-4"><a href="#" id="refineCateg" class="active" >{{title}}<span></span></a></div>
 
@@ -294,12 +351,21 @@
                     </div>
                     {{/with}}
                 </section> <!-- #refine menu -->
-                
+         <article>  
+         <div class="wrapper">             
   {{>yield}}
+</div>
+</article>
+
   {{>footermobile}}
-
-
             </section> <!-- #content-wrapper -->
         </section> <!-- #page-wrapper -->
+        
+    <script>// For refind menu
+    $("#refineMenuAll").click(function() {
+      $("#refineMenu").toggleClass("hidden");
+      $(this).addClass("hidden");
+    });
+    </script>
 
 </template>

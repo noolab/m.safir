@@ -1629,3 +1629,13 @@ Template.addproduct.rendered = function(){
 				console.log('hopppp');
 
 			};
+Template.details.events({
+		'click #btnMore':function(e){
+			e.preventDefault();
+			alert();
+			var last = Session.get('numberOfReviews');
+			var sum = Number(last) + 5;
+			var update = Session.set('numberOfReviews',sum);
+			return update;
+		}
+	});
