@@ -1,5 +1,5 @@
 Template.register.events({
-    'click #register': function(event){
+    'submit form': function(event){
     	event.preventDefault();
     	console.log('Register in progress...');
     	var username=$('[name=username]').val();
