@@ -1,7 +1,6 @@
 Template.register.events({
     'click #register': function(event){
     	event.preventDefault();
-    	//alert('hndh');
     	console.log('Register in progress...');
     	var username=$('[name=username]').val();
     	var firstname =$('[name=fname]').val();
@@ -14,8 +13,9 @@ Template.register.events({
 		var point = 0;
 		var rerole = 'member';
 		var msg = "";
-		//alert(username+firstname+lastname+email+password+country+city+shipcard+point+rerole);
+
 		console.log(username, firstname, lastname, email, password, country, city, shipcard, point, rerole, msg);
+
 		console.log('register in progress 2...')
 		if( firstname == '' || lastname == ''  || email=='' || password ==''){
 			if( firstname == '' )
@@ -31,8 +31,8 @@ Template.register.events({
 			Session.set("registerError", msg );
 		}
 		else{
-			//alert(firstname+lastname+email+password);
-			Meteor.call('regisUser',firstname, lastname, email, password, shipcard, point, rerole,country,city,username,function(err){
+			
+			Meteor.call('register',firstname, lastname, email, password, shipcard, point, rerole,country,city,username,function(err){
 				if(err){
 					console.log(err.reason);
 					Session.set("registerError",err.reason);
