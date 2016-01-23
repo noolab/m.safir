@@ -114,7 +114,7 @@ Template.headermobile.events({
 
 Template.headermobile.helpers({
 	getParent: function(){
-		return categories.find({"parent":"0"});
+		return categories.find({"parent":" "});
 	},
 	getChildren: function(parent){
 		return categories.find({"parent":parent});
