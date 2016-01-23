@@ -1199,4 +1199,6 @@ article
 	#list3 { width: 100%; opacity: 0; }
 		
 /* MENU */
->>>>>>> b6dca53e9be7486647d3bd8bd36d05fb38a1cecb
+.hidelike{
+	display: none;
+}
