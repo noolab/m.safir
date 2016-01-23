@@ -1,5 +1,7 @@
 Template.search.events({
 	'click .tag': function(e){
+        e.preventDefault();
+        alert("oo");
 		var id=this._id+";";
 		var position=Session.get('search').indexOf(id);
 		console.log(position);
@@ -13,14 +15,12 @@ Template.search.events({
 		console.log("Search:"+Session.get('search'));
 		
 	},
-	'click #favorite':function(e){
-        
-        
+	'click #favorite':function(e){      
              e.preventDefault();
+             alert("id");
              var id=this._id;
              console.log('id'+Session.get('userId'));
              if(Session.get('userId')){
-                 //alert();
                  var obj={
                     proId:id,
                     userId:Session.get('userId')
@@ -32,8 +32,6 @@ Template.search.events({
             else{
             	var newId=Random.id();
                 Session.setPersistent('userId',newId);
-                 //var ses=Session.get('userId');
-                 
                  var obj={
                     proId:id,
                     userId:Session.get('userId')
@@ -107,9 +105,7 @@ Template.search.helpers({
             
             
         }
-            
-    
-        //console.log(result.fetch()[0]);
+
         return result;
     }
 });
@@ -120,26 +116,25 @@ Session.set('groupsearch', "");
 Session.set("searchall","");
 Template.header.events({
 	'click .kesearch': function(e){
-		e.preventDefault();
+		e.preventDefault();       
         var Search = $(".input-search").val();
         if(Search =='')
             alert("Please fill in search box!");
         else{
 		var key = $(".input-search").val();
-		//var groupid = $("#group-text").attr("data-selected");
 		Session.set('keyword', key);
-		//Session.set('groupsearch', groupid);
         if(Session.get('groupsearch')=='')
                 Session.set('groupsearch', 10);
-		Router.go('searchproduct' );
+		Router.go('searchproduct' );        
         $('#textToSearch').val('');
         }
 	},
     'click .searchselection': function(e,tpl){
+        e.preventDefault();
+        alert("hi");
         var id=$(e.currentTarget).attr("data-group");
         Session.set('groupsearch', id);
         console.log('searching: '+id);
-       //alert('hoop');
     },
     'keyup #textToSearch':function(e){
         e.preventDefault();
@@ -151,7 +146,6 @@ Template.header.events({
             var key = $(".input-search").val();
             var groupid = $("#group-text").attr("data-selected");
             Session.set('keyword', key);
-            //Session.set('groupsearch', groupid);
             if(Session.get('groupsearch')=='')
                 Session.set('groupsearch', 10);
             Router.go('searchproduct' );
@@ -160,6 +154,7 @@ Template.header.events({
         }
     },
 	'click .search-group': function(e,tmp){
+        e.preventDefault();
 		var group_text = $(e.currentTarget).html();
 		var group_value = $(e.currentTarget).attr('data-group');
 		$("#group-text").html( group_text );
@@ -197,7 +192,6 @@ Template.searchproduct.helpers({
 	          data.forEach(function(entry) {
 	            var proid=entry.proId;
 	            if(proid==productId){
-	            	//console.log(productId+'=>'+proid+ " favorite?");
 	            	found=true;
 	            }
 	            	
@@ -206,7 +200,6 @@ Template.searchproduct.helpers({
 	          
         		return found;
     	}else{
-    		//console.log(productId+' isNotFavorite');
     		return false;
     	}
     		

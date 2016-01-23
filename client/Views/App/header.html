@@ -121,7 +121,7 @@
 						<div class="search">
 							<div class="input-group">
 								<span class="input-group-addon slide-toggle"><i class="fs glyphicon glyphicon-list"  id="btn_all" data-selected="0">All</i></span>
-								<input class="form-control input-search " placeholder="Search for..." type="text" id="textToSearch">
+								<input class="form-control input-search" placeholder="Search for..." type="text" id="textToSearch">
 								<span class="input-group-btn">
 									<button class="btn kesearch" type="button" style="padding:0px 10px 0px 10px; margin:0px 0px 0px 5px;">
 											<i class="fa fa-search" style="margin-top:-10px;"></i>
@@ -133,6 +133,18 @@
 				</div>
 			</div>
 		</div><!--end header middle-->
+
+		<script type="text/javascript">	
+			$(document).ready(function() {
+				$('#textToSearch').focus(function() {
+
+					$(this).val('');
+
+				});
+
+			});			
+		</script>
+
 		<div class="header_bottom">
 			
 			<!-- Static navbar -->
