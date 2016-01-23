@@ -8,6 +8,7 @@ Template.headermobile.onRendered(function () {
             $("#refineMenu").hide();
             $("#refineMenuAll").hide();
             $(".hold_sub_dropdown").hide();
+            
 
 });
 

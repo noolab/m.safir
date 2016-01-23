@@ -298,12 +298,11 @@
             </section> <!-- #content-wrapper -->
         </section> <!-- #page-wrapper -->
         
-<script>// For refind menu
- jQuery(document).ready(function(){
-        jQuery('#hideshow').on('click', function(event) {        
-             jQuery('#contentfilter').toggle('show');
-        });
+    <script>// For refind menu
+    $("#refineMenuAll").click(function() {
+      $("#refineMenu").toggleClass("hidden");
+      $(this).addClass("hidden");
     });
-</script>
+    </script>
 
 </template>
