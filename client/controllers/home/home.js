@@ -6,18 +6,18 @@ Template.home.rendered=function(){
 };
 
 Template.home.helpers({
-	list1: function(){
-		console.log('liste:'+list_product.find().fetch().length);
-		return list_product.find().fetch()[0];
-	},
-	list2: function(){
+	// list1: function(){
+	// 	console.log('liste:'+list_product.find().fetch().length);
+	// 	return list_product.find().fetch()[0];
+	// },
+	// list2: function(){
 
-		return list_product.find().fetch()[1];
-	},
-	list3: function(){
+	// 	return list_product.find().fetch()[1];
+	// },
+	// list3: function(){
 
-		return list_product.find().fetch()[2];
-	},
+	// 	return list_product.find().fetch()[2];
+	// },
 	getProduct: function(id){
 		return products.findOne({"_id":id});
 	},
@@ -34,3 +34,35 @@ Template.home.helpers({
 			return p.image;
 	}
 });
+
+Template.list1.helpers({
+	list1: function(){
+		console.log('liste:'+list_product.find().fetch().length);
+		return list_product.find().fetch()[0];
+	},
+	getProduct:function(id){
+		return products.findOne({_id:id});
+	}
+	
+})
+Template.list2.helpers({
+	list2: function(){
+		console.log('liste:'+list_product.find().fetch().length);
+		return list_product.find().fetch()[1];
+	},
+	getProduct:function(id){
+		return products.findOne({_id:id});
+	}
+	
+})
+Template.list3.helpers({
+	list3: function(){
+		console.log('liste:'+list_product.find().fetch().length);
+		return list_product.find().fetch()[2];
+	},
+	getProduct:function(id){
+		return products.findOne({_id:id});
+	}
+	
+})
+	
