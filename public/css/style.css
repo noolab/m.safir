@@ -1123,8 +1123,8 @@ article
 	.choose_size{
 		width: 13%;
 		height: 50px;
-		box-shadow: -1px 4px 5px #888;
-		background-color: rgba(5, 4, 4, 0);
+		/*box-shadow: -1px 4px 5px #888;
+		background-color: rgba(5, 4, 4, 0);*/
 		padding: 15px;
 	}
 .hide_color_size{
