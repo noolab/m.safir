@@ -19,12 +19,7 @@
         align-items: center;
     }
   </style>
-    <!-- <ul class="slides">
-     {{#each contents}}
-     <li><img src="{{getImg image}}" alt="" /></li>
-     {{/each}}
-
-   </ul> -->
+    
   <div style="padding-left:20px;padding-right:20px;">
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -54,41 +49,11 @@
         autoplay:5000
     });
   </script>     
-
- <section id="list1">
-  {{#with list1}}
-  <h2 class="home_products">{{title}}</h2>
-  <ul class="slides">
-
-    {{#each products}}
-    {{#with getProduct this}}
-    <li>
-     <a href="{{pathFor 'details' id=_id}}"><img src="{{getImg image}}" class="img-circle img-responsive"  /> </a>
-   </li>
-   {{/with}}
-   {{/each}}
-
- </ul>
- {{/with}}
- </section>
+ {{>list1}}
+ {{>list2}}
+ {{>list3}}
 
 
-<section id="list2">
-  {{#with list2}}
-  <h2 class="home_products">{{title}}</h2>
-  <ul class="slides">
-
-    {{#each products}}
-    {{#with getProduct this}}
-    <li>
-     <a href="{{pathFor 'details' id=_id}}"><img src="{{getImg image}}" class="img-circle img-responsive"  /> </a>
-   </li>
-   {{/with}}
-   {{/each}}
-
- </ul>
- {{/with}} 
-</section>
 
 <section id="list3">
   {{#with list3}}

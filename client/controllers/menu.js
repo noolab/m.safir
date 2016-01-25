@@ -114,6 +114,7 @@ Template.header.events({
 		tpl.$(".num2").html('');
 	},
 	'click .kesearch': function(e,tpl){
+		e.preventDefault();
 		var search=tpl.$("#textToSearch").val();
 		Session.set('keyword',search);
 		var url="/searchproduct";

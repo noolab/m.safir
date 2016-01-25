@@ -6,6 +6,9 @@
 					<div class="col-sm-6">
 						<div class="header_top_left">
 							<ul class="nav nav-pills">
+								<li><a href="/">{{_ "Home"}}</a></li>
+								<li><a href="/webzinelisting">{{_ "WEBZINE"}}</a></li>
+								
 								{{#if currentUser}}
 									<li><a href="/profile">{{_ "My Profile"}}</a></li>
 									
@@ -27,8 +30,7 @@
 					<div class="col-sm-6">
 						<div class="header_top_right pull-right">
 							<ul class="nav nav-pills">
-								<li><a href="/webzinelisting">{{_ "WEBZINE"}}</a></li>
-								<li><a href="/">{{_ "Home"}}</a></li>
+								
 
 
 								<li class="dropdown">
@@ -121,7 +123,7 @@
 						<div class="search">
 							<div class="input-group">
 								<span class="input-group-addon slide-toggle"><i class="fs glyphicon glyphicon-list"  id="btn_all" data-selected="0">All</i></span>
-								<input class="form-control input-search " placeholder="Search for..." type="text" id="textToSearch">
+								<input class="form-control input-search" placeholder="Search for..." type="text" id="textToSearch">
 								<span class="input-group-btn">
 									<button class="btn kesearch" type="button" style="padding:0px 10px 0px 10px; margin:0px 0px 0px 5px;">
 											<i class="fa fa-search" style="margin-top:-10px;"></i>
@@ -133,6 +135,18 @@
 				</div>
 			</div>
 		</div><!--end header middle-->
+
+		<script type="text/javascript">	
+			$(document).ready(function() {
+				$('#textToSearch').focus(function() {
+
+					$(this).val('');
+
+				});
+
+			});			
+		</script>
+
 		<div class="header_bottom">
 			
 			<!-- Static navbar -->
@@ -173,15 +187,7 @@
 												
 											</ul>   
 										</div>
-										<!--<div class="col_3 responsive_halfs">
-											<ul class="list">
-												<li><a href="#_">Design</a></li>
-												<li><a href="#_">Logo</a></li>
-												<li><a href="#_">Flash</a></li>
-												<li><a href="#_">Illustration</a></li>
-												<li><a href="#_">More...</a></li>
-											</ul>    
-										</div>-->
+										
 									</div>
 								</div><!-- End Item container -->
 							</li>

@@ -4,31 +4,13 @@
         .hidelike{
             display: none;
         }
-        .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
     </style>
-    
         <div class="container">
             <div class="row" style="padding-left:15px;padding-right:15px;">
                 <div class="swiper-container">
-                    <div class="swiper-wrapper">
+                   
                         {{#each products}} 
+                         
                         <div class="swiper-slide" style="padding:40px;">
                             <div class="thumbnail" >
                                 <a href="{{pathFor 'details' id=_id}}" class="title"><img data-holder-rendered="true" src="{{getImg image}}" data-src="holder.js/100%x200" alt="100%x200" class="img-circle" width="50" /> </a>
@@ -46,28 +28,21 @@
                                 </div>
                             </div>
                         </div>
-                        {{/each}}
+                        {{#if products}}
+                      {{/if}}
+                      {{else}}
+                      <h4 class="center">No Product Found</h4>
+                       {{/each}}  
+                      
+
+
                     </div>
                     <!-- Add Pagination -->
                     <!-- <div class="swiper-pagination"></div> -->
                     <!-- Add Arrows -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
                 </div>
                 
             </div>
-        </div>
         
 
-    
-    <script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        spaceBetween: 30,
-        autoplay:5000
-    });
-    </script>
 </template>

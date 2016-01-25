@@ -17,17 +17,14 @@ Template.listproducts.helpers({
 	            if(proid==productId){
 	            	//console.log(productId+'=>'+proid+ " favorite?");
 	            	found=true;
-	            }
-	            	
-	                
-	           });
+	            }	      
+	         });
 	          
         		return found;
     	}else{
     		//console.log(productId+' isNotFavorite');
     		return false;
-    	}
-    		
+    	}	
 	},
 	getSelectedProduct: function(){
 		var id=Session.get('quickview');
@@ -189,5 +186,5 @@ Template.listproducts.onCreated(function() {
 });
 
 Template.details.rendered=function(){
-	$("[rel='tooltip']").tooltip(); 
+	//$("[rel='tooltip']").tooltip(); 
 };

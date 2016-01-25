@@ -27,7 +27,7 @@
 }
 
 #menu-search-input-text {
-    width: 160px;
+   /* width: 160px;*/
     margin-left: 50px;
     border-width: medium medium 1px;
     border-style: none none solid;
