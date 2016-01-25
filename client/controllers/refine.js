@@ -91,7 +91,7 @@ Template.headermobile.events({
 				var html="";
 				console.log('myBrands='+myBrands);
 				for(var i=0;i<myBrands.length;i++)
-					html=html+"<h4><a href='' class='targetBrand' >"+myBrands[i]+"</a></h4>";
+					html=html+"<h4><a href='' class='targetBrand'  >"+myBrands[i]+"</a></h4>";
 				tpl.$("#listBrand").html(html);
 			//}
 

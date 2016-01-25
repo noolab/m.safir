@@ -613,12 +613,12 @@ form { width: 80%; overflow: hidden; } /*change form:width=100px to 50px*/
 			background: #303034;
 			height: 32px;	
 			font-size: 11px;
-			line-height: 32px;
+			/*line-height: 32px;*/
 			font-weight: bold;
 			text-transform: uppercase;
 			color: #fff;
 			text-align: left;	
-			padding: 0 16px;	
+			padding: 10px 16px;	
 			margin: 0;
 		}
 		
