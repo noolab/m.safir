@@ -1,18 +1,56 @@
 <template name="recommendation">
-  
+<style type="text/css">
+.hidelike{
+display: none;
+}
+.swiper-slide {
+text-align: center;
+font-size: 18px;
+background: #fff;
+/ Center slide text vertically /
+display: -webkit-box;
+display: -ms-flexbox;
+display: -webkit-flex;
+display: flex;
+-webkit-box-pack: center;
+-ms-flex-pack: center;
+-webkit-justify-content: center;
+justify-content: center;
+-webkit-box-align: center;
+-ms-flex-align: center;
+-webkit-align-items: center;
+align-items: center;
+}
+</style>
 
        <div class="row"> 
+       <div class="swiper-container">
+		<div class="swiper-wrapper">
         {{#each products category}}
+        <div class="swiper-slide" style="padding:40px;">
           <div class="col-md-3">
            <a href="{{pathFor 'details' id=this._id }}"> <img style="border:8px solid #000" src="{{getImg image}}" class="img-circle center-block" alt="{{title}}" width="150" height="150"></a>
           <p class="text-center" style="font-size:12px; padding:15px"><a href="{{pathFor 'details' id=this._id }}">{{title}}</a></p>
           <h3 class="text-center" style="font-weight:bold;color:#000;">{{price}}</h3>
           </div>
+          </div>
           {{/each}}
-       
+		</div>
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
+		</div>
         </div> 
 
     
 
-
+<script>
+var swiper = new Swiper('.swiper-container', {
+pagination: '.swiper-pagination',
+paginationClickable: true,
+nextButton: '.swiper-button-next',
+prevButton: '.swiper-button-prev',
+spaceBetween: 30,
+autoplay:5000
+});
+</script>
 </template>
