@@ -140,12 +140,12 @@ Template.details.helpers({
 	},
 	getColor:function(productId){
 		var parent=parentattr.findOne({"name":"Color"});
-		alert('parent='+JSON.stringify(parent));
+		//alert('parent='+JSON.stringify(parent));
 		var currentproduct=products.findOne({"_id":productId});
-		alert(currentproduct.oldId);
+		//alert(currentproduct.oldId);
 		//var attr=attribute.find({"parent":parent._id},{"product":currentproduct.oldId});
 		var attr=attribute.find({$and:[{product:currentproduct.oldId},{parent:parent._id}]});
-		alert('color='+attr.count());
+		//alert('color='+attr.count());
 		return attr;
 	},
 })
