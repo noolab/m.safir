@@ -22,7 +22,21 @@ Template.login.events({
     'click .btn_login': function(event,tpl){
         event.preventDefault();
 		//alert("login");
-        var email = $('[name=email]').val();
+		var regUsername = /^[a-zA-Z]+$/;
+		var email=false;
+		var regEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        var fields = $('[name=email]').val();
+        //alert('te='+fields);
+        if (!fields.match(regEmail)){
+        	if(!fields.match(regUsername)){
+        		email=Meteor.users.findOne({idmebership:fields}).username;	
+        	}else{
+        		email=fields;
+        		//alert('test='+email);
+        	}	
+        }else{
+        	email=fields;
+        }
         var password = $('[name=password]').val();
 		/*$('.close').click();*/
 		Meteor.loginWithPassword(email, password, function(error){
