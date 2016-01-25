@@ -19,6 +19,34 @@ Deps.autorun(function () {
   			}
   });
 */
+Template.headermobile.helpers({
+	changeLanguage: function(){
+		if(TAPi18n.getLanguage()=='fa')
+			return 'English';
+		else
+			return 'فارسی';
+	}
+	
+});
+
+Template.headermobile.events({
+	'click #en':function(e,tpl){
+		if(TAPi18n.getLanguage()=='fa')
+			var lang='en';
+		else
+			var lang='fa';
+		
+		TAPi18n.setLanguage(lang)
+      .done(function () {
+        Session.set("showLoadingIndicator", false);
+      })
+      .fail(function (error_message) {
+        console.log(error_message);
+      });
+
+	}
+});
+// end
 Template.header.helpers({
 	getParent: function(){
 		return categories.find({"$or":[{"parent":"0"},{"parent":" "}]});
