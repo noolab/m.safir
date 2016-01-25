@@ -1,5 +1,4 @@
 <template name="tutodetails">
-		<!-- Start contain -->
   <section class="shadow_bottom" >
   {{#with getTutodetails _id}}
       <div class="container" id="space_cont_top"  >		
@@ -9,7 +8,7 @@
            </div>
            <div class="col-md-7">
 			  <h1 class="txt-color" >{{title}}</h1><br>
-			  <iframe width="490" height="370" src="/videos/{{url}}?autostart=false" frameborder="0" allowfullscreen="allowfullscreen" data-link="{{url}}"></iframe>
+			  <iframe  width="100%" height="auto" src="/videos/{{url}}" frameborder="0" allowfullscreen="allowfullscreen" data-link="{{url}}" scrolling="no" onload="resizeIframe(this)"></iframe>
 			  <div class="share-control" style="padding-top:10px; padding-bottom:50px">
 				  <div class="col-md-12 row share-control">
 				  	<p class="p-font-sm">{{{content}}}</p>
@@ -79,6 +78,10 @@
       </div>
     </div>
   </section>
-
+<script  type="text/javascript">
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
  <!-- end contain -->
 </template>
