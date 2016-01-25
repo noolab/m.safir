@@ -22,9 +22,9 @@ Deps.autorun(function () {
 Template.headermobile.helpers({
 	changeLanguage: function(){
 		if(TAPi18n.getLanguage()=='fa')
-			return 'English';
+			return 'EN';
 		else
-			return 'فارسی';
+			return 'فا';
 	}
 	
 });
