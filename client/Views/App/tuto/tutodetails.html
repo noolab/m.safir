@@ -22,17 +22,16 @@
            {{#each getRelated}}
                <div class="row space-row-tuto div_hover">
 	             <div class="col-md-5">
-	             <!-- 	<iframe width="150" height="113" src="/videos/{{url}}?autostart=false" frameborder="0" allowfullscreen="allowfullscreen" data-link="{{url}}"></iframe> -->
-	             	<video  width="150" height="113"  controls>
+	             	<a href="/tutodetails/{{_id}}"><video  width="150" height="113"  controls>
                     <source src="/videos/{{url}}" type="video/mp4">
-                  </video>
+                  </video></a>
 	             </div>
-				 <div class="col-md-7">
-				  	<h4 class="h4-bold-tuto">{{title}}</h4>
-				  	<p class="p-font-sm">
-				  	{{{content}}}
-				  	</p>
-				 </div>
+    				 <div class="col-md-7">
+    				  	<a href="/tutodetails/{{_id}}" style="color:black;"><h4 class="h4-bold-tuto">{{title}}</h4></a>
+    				  	<p class="p-font-sm">
+    				  	{{{content}}}
+    				  	</p>
+    				 </div>
 			   </div>
 			   {{/each}}
            </div>
