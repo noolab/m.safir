@@ -189,5 +189,5 @@ Template.listproducts.onCreated(function() {
 });
 
 Template.details.rendered=function(){
-	$("[rel='tooltip']").tooltip(); 
+	//$("[rel='tooltip']").tooltip(); 
 };

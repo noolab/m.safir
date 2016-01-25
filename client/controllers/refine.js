@@ -20,7 +20,7 @@ Session.setDefault('advanced_brand','');
 Session.setDefault('advanced_has_comment',0);
 Session.setDefault('advanced_is_favorite',0);
 Session.setDefault('currentCategory','');
-Template.myrefine.events({
+Template.headermobile.events({
 	'click #refine_price_range': function(e,tpl){
 			$("#panel_price").slideToggle("slow");
 			//$('#sl2').slider(); 
@@ -45,8 +45,6 @@ Template.myrefine.events({
 			$(".refine-item").removeClass('toshow');
 			$(".price-range").removeClass('tohide');
 			$(".price-range").addClass('toshow');
-
-			Router.go('advanced');
 		},
 		'click .alphabet': function(e,tpl){
 			e.preventDefault();
@@ -58,7 +56,8 @@ Template.myrefine.events({
 			letter=value.toUpperCase();
 			var myBrands=[];
 
-			var liste=products.find().fetch();
+			var str="^"+letter;
+			var liste=products.find({"Brand":{$regex : str}}).fetch();
 			console.log("Processing2:"+liste.length);
 			for(var i=0;i<liste.length;i++){
 				if(liste[i].hasOwnProperty('Brand')){
@@ -66,22 +65,44 @@ Template.myrefine.events({
 					var first=liste[i].Brand;
 					//console.log('first:'+first);
 					//console.log(first.substr(0,1)+' = '+letter+' ???');
-					if(first!='' && first.toUpperCase().substr(0,1)==letter && myBrands.indexOf(first)==-1)
+					if(myBrands.indexOf(first)==-1)
 						myBrands.push(first);
 				}
 			
 			}
-			tpl.$("#allBrands").html("");
-			console.log('myBrands='+myBrands);
-			for(var i=0;i<myBrands.length;i++)
-				tpl.$("#allBrands").append('<li><a href="/listproducts/'+myBrands[i]+'" class="targetBrand">'+myBrands[i]+'</a></li>');
+
+			/*if(myBrands.length>6){
+				tpl.$("#letterBrand").text(letter);
+				tpl.$("#listBrand").html("");
+				tpl.$("#listBrand2").html("");
+				var html="";
+				console.log('myBrands='+myBrands);
+				for(var i=0;i<6;i++)
+					html=html+"<h4>"+myBrands[i]+"</h4>";
+				var html2="";
+				for(var i=6;i<myBrands.length;i++)
+					html2=html2+"<h4>"+myBrands[i]+"</h4>";
+				tpl.$("#listBrand2").html(html2);
+			}else{*/
+				tpl.$("#letterBrand").text(letter);
+				tpl.$("#listBrand").html("");
+				tpl.$("#listBrand2").html("");
+
+				var html="";
+				console.log('myBrands='+myBrands);
+				for(var i=0;i<myBrands.length;i++)
+					html=html+"<h4><a href='' class='targetBrand' >"+myBrands[i]+"</a></h4>";
+				tpl.$("#listBrand").html(html);
+			//}
+
+			
 		
 		},
 		'click .targetBrand': function(e,tpl){
 			e.preventDefault();
 			var brand=$(e.currentTarget).text();
 
-			var oldValue=Session.get('advanced_brand');
+			var oldValue='';//Session.get('advanced_brand');
 			var newVal=oldValue+''+brand+';';
 
 
@@ -118,7 +139,7 @@ Template.myrefine.events({
 
 });
 
-Template.myrefine.helpers({
+Template.headermobile.helpers({
 	getPriceFilter: function(){
 		var min=Session.get('advanced_price_min');
 		var max=Session.get('advanced_price_max');
@@ -135,37 +156,36 @@ Template.myrefine.helpers({
 	isBrand: function(letter){
 		letter=letter.toUpperCase();
 		var found=false;
-		var liste=products.find().fetch();
-		for(var i=0;i<liste.length;i++){
-			if(liste[i].hasOwnProperty('Brand')){
-					var first=liste[i].Brand.toUpperCase().substr(0,1);
-					if(first==letter)
-						found=true;
-			}
-			
-		}
-		console.log('letter:'+letter+'= '+found);
-		return found;
+		var str="^"+letter;
+		var liste=products.find({"Brand":{$regex : str}});
+		if(liste.count()==0)
+			return false;
+		else
+			return true
+	},
+	abc: function(){
+		return ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','X','Y','Z'];
 	},
 	listBrand: function(letter){
 		console.log("Processing "+letter);
 		letter=letter.toUpperCase();
 		var myBrands=[];
-		var liste=products.find().fetch();
-		//console.log("Processing2:"+liste.length);
+		var str="^"+letter;
+		var liste=products.find({"Brand":{$regex : str}}).fetch();
+		console.log("Processing2:"+liste.length);
 		for(var i=0;i<liste.length;i++){
 			if(liste[i].hasOwnProperty('Brand')){
 				//console.log('Brand:'+liste[i].Brand);
 				var first=liste[i].Brand.toUpperCase();
 				//console.log(first.substr(0,1)+' = '+letter+' ???');
-				if(first.substr(0,1)==letter && myBrands.indexOf(first)==-1)
+				if(myBrands.indexOf(first)==-1)
 					myBrands.push(first);
 			}
 			
 		}
 
 		console.log('myBrands='+myBrands);
-		return myBrands;
+		return {brands:myBrands,size:myBrands.length};
 	},
 	categories: function(){
 		var route=Router.current().route.getName();
@@ -176,7 +196,7 @@ Template.myrefine.helpers({
 			var product=products.findOne({"_id":productId});
 			currentCategory=product.category;
 		}else if(route=='listing'){
-			//console.log('Entering category page');
+			console.log('Entering category page');
 			currentCategory=Router.current().params.id;
 		}
 		else{
@@ -184,7 +204,7 @@ Template.myrefine.helpers({
 			return;
 		}
 
-		//console.log("currentCat="+currentCategory);
+		console.log("currentCat="+currentCategory);
 		var listCategories=[];
 		var obj=categories.findOne({"_id":currentCategory});
 		while(obj!= null && obj.parent!="0"){
@@ -198,9 +218,9 @@ Template.myrefine.helpers({
 		for(var i=listCategories.length-1;i>=0;i--)
 			res.push(listCategories[i]);
 
-		//console.log('route:'+route);
-		//console.log('pyramide:'+res.length);
-		//console.log(JSON.stringify(res));
+		console.log('route:'+route);
+		console.log('pyramide:'+res.length);
+		console.log(JSON.stringify(res));
 		return res;
 	},
 	currentLetter: function(){
@@ -217,7 +237,6 @@ Template.myrefine.onRendered(function(){
 		console.log('valuePrice='+min+'-'+max);
 		Session.set('advanced_price_max',max);
 		Session.set('advanced_price_min',min);
-		Router.go('/advanced');
 		/*var interval=min+'-'+max;
 		$(".removeRefineItemPrice").parent().parent().remove();
 		$("#refineitem").append('<li><a href="" class="border-dashed">'+interval+' <span class="fa fa-times removeRefineItemPrice" ></span></a></li>');
