@@ -128,18 +128,26 @@ Template.details.helpers({
 		return arr;
 
 	},
-	getSizeColor:function(code){
-		var attributes=attribute.findOne({product:code});
-		
-		var image=attributes.productImage;
-		var color = image.replace("uploads", "upload");
-		var attr_value=attribute_value.find({parentId:attributes.parent});
-		var obj={
-			color:color,
-			size:attr_value
-		}
-		return obj;
-	}
+	/* Change color and image*/
+	getSize:function(productId){
+		var parent=parentattr.findOne({"name":"Size"});
+		//alert('parent='+JSON.stringify(parent));
+		var currentproduct=products.findOne({"_id":productId});
+		//alert(currentproduct.oldId);
+		//var attr=attribute.find({"parent":parent._id},{"product":currentproduct.oldId});
+		var attr=attribute.find({$and:[{product:currentproduct.oldId},{parent:parent._id}]});
+		return attr;
+	},
+	getColor:function(productId){
+		var parent=parentattr.findOne({"name":"Color"});
+		//alert('parent='+JSON.stringify(parent));
+		var currentproduct=products.findOne({"_id":productId});
+		//alert(currentproduct.oldId);
+		//var attr=attribute.find({"parent":parent._id},{"product":currentproduct.oldId});
+		var attr=attribute.find({$and:[{product:currentproduct.oldId},{parent:parent._id}]});
+		//alert('color='+attr.count());
+		return attr;
+	},
 })
 Template.headermobile.helpers({
 	getCartshow:function(){

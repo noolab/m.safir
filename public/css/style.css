@@ -545,7 +545,7 @@ form { width: 80%; overflow: hidden; } /*change form:width=100px to 50px*/
 			.menu-li-title
 			{
 				font-size: 12px;
-				margin-left: 50px;
+				margin-left: 10px;
 				line-height: 50px;
 				font-weight: bold;
 				text-transform: uppercase;

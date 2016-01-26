@@ -7,28 +7,29 @@
           <h3 style="padding:20px;" class="pull-right">{{title}}</h3>
           
         </div>
-        <!-- {{#with getSizeColor CODE}}  -->
+        <!-- {{#with getSizeColor CODE}} --> 
         <div class="test_color">
           
           <div class="choose_color col-xs-12  col-sm-12">
             <section class="sky-form" style="padding-left:15px;">
               <button  id="btn_color" class="btn-default btn col-sm-3 col-xs-3">COLOR</button>
+              
               <ul id="ul_color" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" >
-                <li><a class="color1" href="#"><img src="{{color}}" alt="image-color"></a></li>
-                
+                {{#each getColor s_id}}<li><a class="color1" href="#">
+                  <img src="{{getImg productImage}}" alt="image-color" width="300px" height="70px"></a></li>{{/each}}
               </ul>
+              
             </section>       
           </div><br>
           <div class="choose_size col-lg-12 col-xs-12 col-md-12 col-sm-12">
             <section class="sky-form" style="padding-left:15px;">
               <button id="btn_size" style="margin-top:15px;" class="btn-default btn col-sm-3 col-xs-3">SIZE</button>
               <ul id="ul_size" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" style="color:black; font-weight:bold; padding-top:15px;">
-                {{#each size}}
-                <li><a class="color" href="#">{{value}}</a></li>
+                {{#each getSize _id}}
+                <li><a class="color" href="#"><img src="{{getImg productImage}}" alt="image-color" width="300px" height="70px">{{value}}</a></li>
                 {{/each}}
-                
-                
               </ul>
+              
             </section>                                               
           </div>
         </div>
