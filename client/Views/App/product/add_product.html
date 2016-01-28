@@ -5,46 +5,30 @@
 <input type="hidden" id="tags" value="{{myTags}}"/>	
 
 	<div class="form-group">
-		<label class="control-label col-sm-3" for="title">Title <span style="color:red">*</span></label>
+		<label class="control-label col-sm-3" for="title">{{_"Title"}} <span style="color:red">*</span></label>
 		<div class="col-sm-9">
-			<input type="title" name="title" id="title" class="form-control input-sm" placeholder="Title" value="{{title}}"  >
+			<input type="title" name="title" id="title" class="form-control input-sm" placeholder="{{_"Title"}}" value="{{title}}"  >
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-3" for="description">Description<span style="color:red"> *</span></label>
+		<label class="control-label col-sm-3" for="description">{{_"Description"}}<span style="color:red"> *</span></label>
 		<div class="col-sm-9">
 
-			<textarea rows="5" name="description" id="editor1" value="{{description}}" class="form-control input-sm" placeholder="Description"></textarea>
+			<textarea rows="5" name="description" id="editor1" value="{{description}}" class="form-control input-sm" placeholder="{{_"Description"}}"></textarea>
 
 
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-3" for="price">Priority <span style="color:red">*</span></label>
+		<label class="control-label col-sm-3" for="price">{{_"Priority"}} <span style="color:red">*</span></label>
 		<div class="col-sm-9">
-			<input type="text" name="priority" id="priority" class="form-control input-sm" placeholder="Priority" value="{{priority}}">
-		</div>
-	</div>
-	<!--<div class="form-group">
-		<label class="control-label col-sm-3" for="price">Price <span style="color:red">*</span></label>
-		<div class="col-sm-9">
-			<input type="text" name="price" id="price" class="form-control input-sm" placeholder="Price" value="{{price}}">
+			<input type="text" name="priority" id="priority" class="form-control input-sm" placeholder="{{_"Priority"}}" value="{{priority}}">
 		</div>
 	</div>
 
-	
-
 	<div class="form-group">
-		<label class="control-label col-sm-3" for="price">Point <span style="color:red">*</span></label>
+		<label class="control-label col-sm-3" for="Brand">{{_"Brand"}} <span style="color:red">*</span></label>
 		<div class="col-sm-9">
-			<input type="text" name="point" id="point" class="form-control input-sm" placeholder="Point" value="{{point}}">
-		</div>
-	</div> -->
-
-	<div class="form-group">
-		<label class="control-label col-sm-3" for="Brand">Brand <span style="color:red">*</span></label>
-		<div class="col-sm-9">
-			<!--<input type="text" name="brand" id="brand" class="form-control input-sm" placeholder="Brand" value="{{Brand}}">-->
 			<select class="form-control" id="brand">
 				<option value="{{Brand}}">{{Brand}}</option>
 				{{#each getBrand}}
@@ -55,7 +39,7 @@
 	</div>
 	
 	<div class="form-group">
-		<label class="control-label col-sm-3" for="category"> Categories <span style="color:red">*</span></label>
+		<label class="control-label col-sm-3" for="category"> {{_"Categories"}} <span style="color:red">*</span></label>
 		<div class="col-sm-9">
 			<select class="form-control" id="category">
 				<option value="{{category}}">{{catName category}}</option>
@@ -68,10 +52,10 @@
 	
 
 	<div class="form-group">
-		<label class="control-label col-sm-3" for="category"> Attribute <span style="color:red">*</span></label>
+		<label class="control-label col-sm-3" for="category"> {{_"Attribute"}} <span style="color:red">*</span></label>
 		<div class="col-sm-2">
 			<select class="form-control" id="parent_attr">
-				<option value="0">Select Attribute</option>
+				<option value="0">{{_"Select Attribute"}}</option>
 				{{#each getParentAttr}}
 					<option value="{{_id}}">{{name}}</option>
 				{{/each}}
@@ -90,28 +74,28 @@
 
 		
 		<div class="col-sm-1">
-			<input type="text" name="price_attr" id="price_attr" class="form-control input-sm" placeholder="Price">
+			<input type="text" name="price_attr" id="price_attr" class="form-control input-sm" placeholder="{{_"Price"}}">
 		</div>
 	
 
 	
 		
 		<div class="col-sm-1">
-			<input type="text" name="point_attr" id="point_attr" class="form-control input-sm" placeholder="Point">
+			<input type="text" name="point_attr" id="point_attr" class="form-control input-sm" placeholder="{{_"Point"}}">
 		</div>
 		<div class="col-sm-1">
-			<input type="text" name="barcode" id="barcode" class="form-control input-sm" placeholder="Barcode">
+			<input type="text" name="barcode" id="barcode" class="form-control input-sm" placeholder="{{_"Barcode"}}">
 		</div>
 	
 	
 		<div class="col-sm-1">
-			<input  value="Add" id="add_attr" class="btn btn-primary btn-block">
+			<input  value="{{_"Add"}}" id="add_attr" class="btn btn-primary btn-block">
 		</div>
 	</div>
 
 
 	<div class="form-group">
-								<label class="control-label col-sm-3" for="tag">Tag </label><br>
+								<label class="control-label col-sm-3" for="tag">{{_"Tag"}} </label><br>
 								<div class="col-sm-9">
 									{{#each parentTag}}
 									<div class="col-sm-2">
@@ -122,17 +106,17 @@
 											<option value="{{_id}}" id="{{../_id}}">{{title}}</option>
 										{{/each}}
 									 </select><br>
-									 <input  value="Add" id="tagAdd" class="btn btn-primary btn-block">
+									 <input  value="{{_"Add"}}" id="tagAdd" class="btn btn-primary btn-block">
 									</div>
 									{{/each}}
 								</div>
 							</div>
 	<div class="form-group">
 		<div class="row">
-			<label class="control-label col-sm-3" for="shop">Shop </label><br>
+			<label class="control-label col-sm-3" for="shop">{{_"Shop"}} </label><br>
 			<div class="col-sm-3">
 				<select class="form-control" name="myshop" id="myshop">
-					<option value="">Select Shop</option>
+					<option value="">{{_"Select Shop"}}</option>
 					{{#each getShop}}
 						<option value="{{_id}}">{{name}}</option>
 					{{/each}}
@@ -142,14 +126,14 @@
 				<input type="text" name="instock" id="instock" value="" class="form-control input-sm" placeholder="0">
 			</div>
 			<div class="col-sm-3">
-				<input type="button" value="Add" id="addshop" class="btn btn-primary">
+				<input type="button" value="{{_"Add"}}" id="addshop" class="btn btn-primary">
 			</div>
 		</div>
 		<div id="shophtml"></div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-2">
-			<input  value="Create" id="btnAdd" class="btn btn-primary btn-block">
+			<input  value="{{_"Create"}}" id="btnAdd" class="btn btn-primary btn-block">
 		</div>
 	</div>
 </form>
@@ -157,12 +141,12 @@
 <div id="recap-attribute">
 	<table>
 		<tr>
-			<th>Category</th>
-			<th>Attribut</th>
-			<th>Price</th>
-			<th>Point</th>
-			<th>Barcode</th>
-			<th>Action</th>
+			<th>{{_"Category"}}</th>
+			<th>{{_"Attribute"}}</th>
+			<th>{{_"Price"}}</th>
+			<th>{{_"Point"}}</th>
+			<th>{{_"Barcode"}}</th>
+			<th>{{_"Action"}}</th>
 		</tr>
 		
 
@@ -174,7 +158,7 @@
 				<td>{{price}}</td>
 				<td>{{point}}</td>
 				<td>{{barcode}}</td>
-				<td><a href="" class="deleteAttr" style="color:blue;">Delete</a></td>
+				<td><a href="" class="deleteAttr" style="color:blue;">{{_"Delete"}}</a></td>
 			</tr>
 		{{/each}}
 		</table>
@@ -182,15 +166,15 @@
 	<div id="recap-attribute">
 		<table>
 		<tr>
-			<th>Parent Tag</th>
-			<th>Tag</th>
-			<th>Action</th>
+			<th>{{_"Parent Tag"}}</th>
+			<th>{{_"Tag"}}</th>
+			<th>{{_"Action"}}</th>
 		</tr>
 		{{#each listTag}}
 		<tr>
 			<td>{{getParentNameTag parent}}</td>
 			<td>{{value}}</td>
-			<td><a href="" class="deleteTag" style="color:blue;">DELETE</a></td>
+			<td><a href="" class="deleteTag" style="color:blue;">{{_"DELETE"}}</a></td>
 		</tr>
 		{{/each}}
 		

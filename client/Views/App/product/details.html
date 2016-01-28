@@ -12,7 +12,7 @@
           
           <div class="choose_color col-xs-12  col-sm-12">
             <section class="sky-form" style="padding-left:15px;">
-              <button  id="btn_color" class="btn-default btn col-sm-3 col-xs-3">COLOR</button>
+              <button  id="btn_color" class="btn-default btn col-sm-3 col-xs-3">{{_"COLOR"}}</button>
               
               <ul id="ul_color" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" >
                 {{#each getColor s_id}}<li><a class="color1" href="#">
@@ -23,7 +23,7 @@
           </div><br>
           <div class="choose_size col-lg-12 col-xs-12 col-md-12 col-sm-12">
             <section class="sky-form" style="padding-left:15px;">
-              <button id="btn_size" style="margin-top:15px;" class="btn-default btn col-sm-3 col-xs-3">SIZE</button>
+              <button id="btn_size" style="margin-top:15px;" class="btn-default btn col-sm-3 col-xs-3">{{_"SIZE"}}</button>
               <ul id="ul_size" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" style="color:black; font-weight:bold; padding-top:15px;">
                 {{#each getSize _id}}
                 <li><a class="color" href="#"><img src="{{getImg productImage}}" alt="image-color" width="300px" height="70px">{{value}}</a></li>
@@ -41,15 +41,15 @@
         
         <div class="col-sm-12" style="padding:30px;" >
           <form role="form" id="cart" style="padding:0px;margin:0px;">
-            <label  >Select Shop</label>
+            <label>{{_"Select Shop"}}</label>
             <select class=" col-xs-12 col-sm-12" name="shop" required>
-              <option value="">Please Select</option>
+              <option value="">{{_"Please Select"}}</option>
               {{#each getShop shop}}
               <option value="{{_id}}">{{name}}</option>
               {{/each}}
             </select>
             
-            <input type="submit" class="btn_addtocard pull-left" value="Add to cart" style="margin-top:15px; background-color:#dd2a1b;">
+            <input type="submit" class="btn_addtocard pull-left" value="{{_"Add to cart"}}" style="margin-top:15px; background-color:#dd2a1b;">
           </form>
           <h2 class="pull-right">{{price}}</h2>
         </div>
@@ -110,15 +110,8 @@
         <div class="hold_product_detail">
           <div class="col-md-12 well">
             <div class="col-md-12">
-              <h1>ARTICLE ABOUT</h1>
+              <h1>{{_"ARTICLE ABOUT"}}</h1>
             </div>
-
-                                  <!-- {{#each articles title}}
-                                    {{>article}}
-                                  {{else}}
-                                    <i>No articles about {{title}}</i>
-                                  {{/each}}
-                                -->
                               </div>
                             </div>
                           </div>

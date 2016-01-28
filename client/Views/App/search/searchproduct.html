@@ -1,10 +1,10 @@
 <template name="searchproduct">
 	<article>
-		<h1>Products</h1>
+		<h1>{{_"Products"}}</h1>
 		<div class="container">
 			<div class="wrapper">
-			<p class="text-selling-top">{{nbproducts}} products results</p>
-				<p class="text-selling-second">Best selling <a href=""><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a></p>
+			<p class="text-selling-top">{{nbproducts}} {{_"Products results"}}</p>
+				<p class="text-selling-second">{{_"Best selling"}}<a href=""><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a></p>
 				<div class="row">
 					{{#each product}}
 					
@@ -13,7 +13,7 @@
 								<div class="thumbnail text-left">
 									<div class="clearfix" style="width: 100%;">
 										<a href="{{pathFor 'details' id=_id}}" title="{{title}}">
-											<img src="{{getImg image}}" class="img-responsive " width="200" height="200">
+											<img src="{{getImg image}}" class="img-responsive img-circle center-block" style="width:170px;height:170px;border-radius:50%;border:solid black 8px;">
 										</a>
 									</div>
 
@@ -37,10 +37,10 @@
 			</div>
 		</div>
 
-		<h1>Contents</h1>
+		<h1>{{_"Contents"}}</h1>
 		<div class="container">
 			<div class="hold_result">
-				<p>{{nbcontents}} contents results</p>
+				<p>{{nbcontents}} {{_"Contents results"}}</p>
 			</div>
 
 		</div>
@@ -49,7 +49,7 @@
 				<div class="mode-news webzine-title1">
 					<h2 class="text-center bold"><a href="#">{{title}}</a></h2>
 					<div class="mode-img"><a href="#">
-						<img src="{{getImg image}}" class="center-block img-responsive"></a>
+						<img src="{{getImg image}}" class="img-responsive img-circle center-block" style="width:170px;height:170px;border-radius:50%;border:solid black 8px;"></a>
 					</div>
 					<div class="mode-description">
 						<!-- <p class="center-block">{{{content}}}</p> -->

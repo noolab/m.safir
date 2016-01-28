@@ -1,5 +1,17 @@
 { 
 	"Manage Content": "مدیریت محتوای",
 	"Dashboard":"داشبورد",
-	"Add New":"اضافه کردن جدید"
+	"Add New":"اضافه کردن جدید",
+	"All":"همه",
+	"Webzine":"مجله",
+	"Tuto":"آموزش",
+	"Looks":"به نظر می رسد",
+	"Title": "عنوان",
+	"Video URL": "URL ویدیو",
+	"Content": "محتوا",
+	"Type": "نوع",
+	"Category": "دسته بندی",
+	"Select category": "دسته را انتخاب کنید",
+	"Image": "تصویر",
+	"Tools": "ابزار"
 }
