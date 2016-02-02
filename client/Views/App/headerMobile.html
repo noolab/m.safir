@@ -2,7 +2,7 @@
         <section id="page-wrapper">
             <section id="menu-wrapper">
                 <div id="menu-search">
-                    <input id="menu-search-input-text" type="text" placeholder="Search..." />
+                    <input id="menu-search-input-text" type="text" placeholder="{{_"Search..."}}" />
                     <input id="menu-search-input-submit" class="validSearch" type="submit" value="" />
                 </div>
 
@@ -136,7 +136,7 @@
                     <!--<h4>Contact widget</h4>-->
 
                     <ul>
-                        <li class="item"><a href="#" id="price_range">Price Range</a>
+                        <li class="item"><a href="#" id="price_range">{{_"Price Range"}}</a>
 
                         </li>
                             <!--panel price range -->
@@ -146,7 +146,7 @@
                                 </div>
                                 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000000" data-slider-step="5" data-slider-value="[0,100000000]" id="sl2" >
                             </div>
-                        <li class="item"><a href="#" id="brands">Brands</a></li>
+                        <li class="item"><a href="#" id="brands">{{_"Brands"}}</a></li>
                         <!-- panel brands -->
                             <div class="panel_brands">
                                 {{#each abc}}
@@ -233,7 +233,7 @@
                                         <li class="hr-item-cart">
                                             <div class="hr1">
                                                 <div class="col-lg-6">
-                                                    <p class="bolder">Sub Total:</p>
+                                                    <p class="bolder">{{_"Sub Total:"}}</p>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <p class="bolder text-right">{{subtotal}}</p>
@@ -245,7 +245,7 @@
                                         <li class="hr-item-cart1">
                                             <div class="hr2">
                                                 <div class="col-lg-6">
-                                                    <p class="bolder">Total:</p>
+                                                    <p class="bolder">{{_"Total:"}}</p>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <p class="bolder text-right">{{getTotol}}</p>
@@ -256,7 +256,7 @@
                                         <li class="hr-item-cart2">
                                             <div class="hr3">
                                                 <div class="a-checkout">
-                                                    <a href="/checkout"><p>CHECKOUT</p></a>
+                                                    <a href="/checkout"><p>{{_"CHECKOUT"}}</p></a>
                                                 </div>
                                             </div>
                                         </li> 
@@ -278,7 +278,7 @@
 
                     <div id="header-right">
                         <a href="" id="en" style="background: none !important; color: #FFF; padding-top: 12px; margin-left: 10px;padding-right:10px;">{{changeLanguage}}</a> 
-                        <a href="#" id="a-sidebar">REFINE<!--<img src="/img/icons/menu.png" alt="Sidebar" />--></a>
+                        <a href="#" id="a-sidebar">{{_"REFINE"}}<!--<img src="/img/icons/menu.png" alt="Sidebar" />--></a>
                     </div>
 
                 </section> <!-- #header -->
@@ -289,7 +289,7 @@
                             <div class="row">
                                 <div class="col-xs-4"><a href="#" id="refineCateg" class="active" >{{title}}<span></span></a></div>
 
-                                <div class="col-xs-4" ><a href="" id="refineAll" >All {{title}}<span></span></a></div>
+                                <div class="col-xs-4" ><a href="" id="refineAll" >{{_"All"}} {{title}}<span></span></a></div>
 
                                 <div class="col-xs-4"><a href="">{{title}}</a></div>
                             </div>
@@ -308,7 +308,7 @@
                             <div id="refineMenuAll">
                                 <div class="row">
                                     <ul>
-                                        <li><a href="/category/{{_id}}">All {{title}}</a></li>
+                                        <li><a href="/category/{{_id}}">{{_"All"}} {{title}}</a></li>
                                         {{#each getChildren _id}}
                                             <li>{{#if hasChildren _id}}
                                                 <a href="" class="refine_subAll">{{title}}</a>

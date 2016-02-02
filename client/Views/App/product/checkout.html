@@ -3,20 +3,20 @@
 <section class="shadow_bottom" id="checkout">
 	<div class="container">
 			
-			<h1 class="content-text-review">Checkout</h1>
+			<h1 class="content-text-review">{{_"Checkout"}}</h1>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-12">
 					<table class="table table-striped">
 					    <thead>
 					      <tr>
-					        <th>Image</th>
-					        <th>Product Name</th>
-					        <th>Shop</th>
-					        <th>Qty</th>
-					        <th>Price</th>
-					        <th>subtotal</th>
-					        <th>Tools</th>
+					        <th>{{_"Image"}}</th>
+					        <th>{{_"Product Name"}}</th>
+					        <th>{{_"Shop"}}</th>
+					        <th>{{_"Qty"}}</th>
+					        <th>{{_"Price"}}</th>
+					        <th>{{_"subtotal"}}</th>
+					        <th>{{_"Tools"}}</th>
 					      </tr>
 					    </thead>
 					    <tbody>
@@ -47,7 +47,7 @@
 					  	{{/each}}
 					  	<tr>
 					  		<td colspan="5" align="right">
-					  			<strong>Total</strong>
+					  			<strong>{{_"Total"}}</strong>
 					  		</td>
 					  		<td colspan="2" align="center">
 					  			<strong>{{getTotal}}</strong>
@@ -61,7 +61,7 @@
 
 				</div>
 					<div class="row">
-						<hr><div class="pull-right" style="padding-right:15px;"><input type="button"  class="btn btn-primary" id="btnAdd" style="background:#000;" value="Proceed Order"></div>
+						<hr><div class="pull-right" style="padding-right:15px;"><input type="button"  class="btn btn-primary" id="btnAdd" style="background:#000;" value="{{_"Proceed Order"}}"></div>
 					</div>
 				</div>
 				<div class="col-md-3">
