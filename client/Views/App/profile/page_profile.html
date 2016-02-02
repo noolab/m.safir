@@ -53,7 +53,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-xs-5 col-sm-4">LIFE STYLE</label>
+									<label class="col-xs-5 col-sm-4">{{_"LIFE STYLE"}}</label>
 									<div class="col-sm-6">
 										<span style="font-weight:bold">Nerd, hard worker , dreamer</span>
 									</div>
@@ -101,14 +101,14 @@
 						<input type="hidden" name="question" value="{{_id}}">
 						<p style="font-size:12px;" class="text-right" >{{name}}</p>
 						<div class="form-group">
-							<label>Answer</label>
+							<label>{{_"Answer"}}</label>
 							<input class="input_answer" id="answer[]" name="answer" value="{{getAnswer _id}}">
 						</div>
 					</div>
 					{{/each}}
 				</div>
 				<div class="col-8 pull-right">
-					<button type="button" class="btn btn-primary" id="btn-answer" style="font-size:14px;">Save Answer</button>
+					<button type="button" class="btn btn-primary" id="btn-answer" style="font-size:14px;">{{_"Save Answer"}}</button>
 				</div>
 				<br><br>
 				<!-- end -->
