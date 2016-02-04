@@ -13,26 +13,28 @@
           <div class="choose_color col-xs-12  col-sm-12">
             <section class="sky-form" style="padding-left:15px;">
               <button  id="btn_color" class="btn-default btn col-sm-3 col-xs-3">{{_"COLOR"}}</button>
-              
+           
               <ul id="ul_color" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" >
-                {{#each getColor s_id}}<li><a class="color1" href="#">
-                  <img src="{{getImg productImage}}" alt="image-color" width="300px" height="70px"></a></li>{{/each}}
+                {{#each getColor _id}}<li><a class="color1" href="#">
+                  <img src="{{getImg productImage}}" alt="image-color" width="100px" height="50px"></a></li>{{/each}}
               </ul>
+             
+
               
             </section>       
           </div><br>
           <div class="choose_size col-lg-12 col-xs-12 col-md-12 col-sm-12">
             <section class="sky-form" style="padding-left:15px;">
               <button id="btn_size" style="margin-top:15px;" class="btn-default btn col-sm-3 col-xs-3">{{_"SIZE"}}</button>
-              <ul id="ul_size" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" style="color:black; font-weight:bold; padding-top:15px;">
-                {{#each getSize _id}}
-                <li><a class="color" href="#"><img src="{{getImg productImage}}" alt="image-color" width="300px" height="70px">{{value}}</a></li>
-                {{/each}}
-              </ul>
-              
+           
+                    <ul id="ul_size" class="w_nav2 col-sm-9 col-xs-9 hide_color_size" style="color:black; font-weight:bold; padding-top:15px;">
+                      {{#each getSize _id}}
+                      <li><a class="color" href="#"><img src="{{getImg productImage}}"  width="30" height="50">{{value}}</a></li>
+                      {{/each}}
+                    </ul>
             </section>                                               
           </div>
-        </div>
+      </div>
         <!-- {{/with}} -->
         
         <div class="space-top-detail1" align="center">

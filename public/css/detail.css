@@ -1,6 +1,13 @@
+
 h4, h5, h6 {
     margin-bottom: 5px;
     margin-top: 10px;
+}
+.swiper-container {
+    height: 280px;
+}
+.center-block{
+    margin-top: 75px;
 }
 .shadow_bottom {
     box-shadow: 0 6px 5px 0 #d1cde4;

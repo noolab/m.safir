@@ -8,7 +8,11 @@
            </div>
            <div class="col-md-7">
 			  <h1 class="txt-color" >{{title}}</h1><br>
-			  <iframe  width="100%" height="auto" src="/videos/{{url}}" frameborder="0" allowfullscreen="allowfullscreen" data-link="{{url}}" scrolling="no" onload="resizeIframe(this)"></iframe>
+			 <!--  <iframe  width="100%" height="auto" src="/videos/{{url}}" id="mainVideo" frameborder="0" allowfullscreen="allowfullscreen" data-link="{{url}}" scrolling="no" onload="resizeIframe(this)"></iframe> -->
+        <video  width="100%" height="auto" id="mainVideo" controls>
+              <source src="/videos/{{url}}" type="video/mp4">
+            
+            </video>
 			  <div class="share-control" style="padding-top:10px; padding-bottom:50px">
 				  <div class="col-md-12 row share-control">
 				  	<p class="p-font-sm">{{{content}}}</p>
@@ -21,7 +25,8 @@
            {{#each getRelated}}
                <div class="row space-row-tuto div_hover">
 	             <div class="col-md-5">
-	             	<a href="/tutodetails/{{_id}}"><video  width="150" height="113"  controls>
+	             	<a href="/tutodetails/{{_id}}">
+                <video  width="150" height="113"  controls>
                     <source src="/videos/{{url}}" type="video/mp4">
                   </video></a>
 	             </div>
@@ -34,7 +39,25 @@
 			   </div>
 			   {{/each}}
            </div>
-
+          <!--  <div class="col-md-5" style="padding-top:40px;">
+            {{#each getRelated}}
+            <div class="row space-row-tuto div_hover">
+              <div class="col-md-5">
+                <a href="/tutodetails/{{_id}}" title="{{title}}">
+                  {{#with getImgTuTO _id}}
+                  <img src="{{getImg this}}" class="img-thumbnail" style="margin-bottom:15px; width:150px; height:113px" alt="{{title}}">
+                  {{/with}}
+                </a>   
+              </div>
+              <div class="col-md-7">
+                <h4 class="h4-bold-tuto" style="padding-top:15px;">{{title}}</h4>
+                <p class="p-font-sm">
+                  {{{content}}}
+                </p>
+              </div>
+            </div>
+            {{/each}}
+          </div> -->
 
 	   </div>
      </div>

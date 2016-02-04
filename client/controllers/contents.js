@@ -495,15 +495,32 @@ Template.tutodetails.helpers({
 			return p.image;
 	},
 	getTutodetails:function(id){
-
+		$("#mainVideo").load();
 		return contents.findOne({_id:id});
 	},
 	getRelated: function(){
-		var string=Session.get('Tuto');
-		var arraytuto=string.split(':');
-		console.log('typeId:'+arraytuto[0]+'category:'+arraytuto[1]);
-		return contents.find({typeid:arraytuto[0],category:arraytuto[1]},{limit:4});
-	},
+		function shuffle(o){
+            for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+            return o;
+        }
+        var myArray=[];
+        var resultRandom=[];
+       	var currentTuto=contents.findOne({"_id":this._id});
+       	var currentCategory=currentTuto.category;
+		var currenttypeid=currentTuto.typeid;
+		var result= contents.find({typeid:currenttypeid,category:currentCategory});
+		console.log(JSON.stringify+ result);
+        result.forEach(function(value){
+            myArray.push(value);
+        });
+        var arrayRandom=shuffle(myArray);
+        for(var ran=0;ran<4;ran++){
+            if(arrayRandom[ran]){
+               resultRandom.push(arrayRandom[ran]); 
+            }  
+        }
+        return resultRandom;
+      },
 	tuto : function(){
 		//var type=contents_type.findOne({"type":"Tuto"});
 		
