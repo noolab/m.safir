@@ -1,110 +1,88 @@
 <template name="tutodetails">
   <section class="shadow_bottom" >
-  {{#with getTutodetails _id}}
-      <div class="container" id="space_cont_top"  >		
-		  <div class="clearfix"></div>
-           <div class="space_cont_top">
-           <div class="col-md-12">
+    {{#with getTutodetails _id}}
+    <div class="container" id="space_cont_top"  >		
+      <div class="clearfix"></div>
+      <div class="space_cont_top">
+       <div class="col-md-12">
+       </div>
+       <div class="col-md-7">
+         <h1 class="txt-color" >{{title}}</h1><br>
+         <video  width="100%" height="auto" id="mainVideo" controls>
+          <source src="/videos/{{url}}" type="video/mp4">
+          </video>
+          <div class="share-control" style="padding-top:10px; padding-bottom:50px">
+            <div class="col-md-12 row share-control">
+             <p class="p-font-sm">{{{content}}}</p>
            </div>
-           <div class="col-md-7">
-			  <h1 class="txt-color" >{{title}}</h1><br>
-			 <!--  <iframe  width="100%" height="auto" src="/videos/{{url}}" id="mainVideo" frameborder="0" allowfullscreen="allowfullscreen" data-link="{{url}}" scrolling="no" onload="resizeIframe(this)"></iframe> -->
-        <video  width="100%" height="auto" id="mainVideo" controls>
+         </div> 	
+
+       </div>
+
+       <div class="col-md-5" style="padding-top:40px;">
+         {{#each getRelated}}
+         <div class="row space-row-tuto div_hover">
+          <div class="col-md-5">
+           <a href="/tutodetails/{{_id}}">
+            <video  width="150" height="113"  controls>
               <source src="/videos/{{url}}" type="video/mp4">
-            
-            </video>
-			  <div class="share-control" style="padding-top:10px; padding-bottom:50px">
-				  <div class="col-md-12 row share-control">
-				  	<p class="p-font-sm">{{{content}}}</p>
-				  </div>
-			  </div> 	
-		
-           </div>
-
-           <div class="col-md-5" style="padding-top:40px;">
-           {{#each getRelated}}
-               <div class="row space-row-tuto div_hover">
-	             <div class="col-md-5">
-	             	<a href="/tutodetails/{{_id}}">
-                <video  width="150" height="113"  controls>
-                    <source src="/videos/{{url}}" type="video/mp4">
-                  </video></a>
-	             </div>
-    				 <div class="col-md-7">
-    				  	<a href="/tutodetails/{{_id}}" style="color:black;"><h4 class="h4-bold-tuto">{{title}}</h4></a>
-    				  	<p class="p-font-sm">
-    				  	{{{content}}}
-    				  	</p>
-    				 </div>
-			   </div>
-			   {{/each}}
-           </div>
-          <!--  <div class="col-md-5" style="padding-top:40px;">
-            {{#each getRelated}}
-            <div class="row space-row-tuto div_hover">
-              <div class="col-md-5">
-                <a href="/tutodetails/{{_id}}" title="{{title}}">
-                  {{#with getImgTuTO _id}}
-                  <img src="{{getImg this}}" class="img-thumbnail" style="margin-bottom:15px; width:150px; height:113px" alt="{{title}}">
-                  {{/with}}
-                </a>   
-              </div>
-              <div class="col-md-7">
-                <h4 class="h4-bold-tuto" style="padding-top:15px;">{{title}}</h4>
-                <p class="p-font-sm">
-                  {{{content}}}
-                </p>
-              </div>
+              </video></a>
             </div>
-            {{/each}}
-          </div> -->
+            <div class="col-md-7">
+             <a href="/tutodetails/{{_id}}" style="color:black;"><h4 class="h4-bold-tuto">{{title}}</h4></a>
+             <p class="p-font-sm">
+               {{{content}}}
+             </p>
+           </div>
+         </div>
+         {{/each}}
+       </div>
 
-	   </div>
-     </div>
-     {{/with}}
+        </div>
+      </div>
+      {{/with}}
     </section>
     <br>
     <!-- {{> commentSubmit}} -->
     <section class="shadow_bottom" id="produst_listing">
-  <div class="container">
-    <div class="row">
-      <h1 class="content-text-review">{{_ "REVIEWS & FEEDBACKS"}}</h1>
-      <div class="clearfix"></div>
-      <div class="col-md-12">
-        <div class="hold_btn_filter_view">
-          <div class="pull-right">
-            <button class="btn btn-filter-view" type="button" id="input">
-              <i class="fa fa-search"></i> {{_ "FILTER REVIEWS"}}</button>  
+      <div class="container">
+        <div class="row">
+          <h1 class="content-text-review">{{_ "REVIEWS & FEEDBACKS"}}</h1>
+          <div class="clearfix"></div>
+          <div class="col-md-12">
+            <div class="hold_btn_filter_view">
+              <div class="pull-right">
+                <button class="btn btn-filter-view" type="button" id="input">
+                  <i class="fa fa-search"></i> {{_ "FILTER REVIEWS"}}</button>  
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          
-          {{#if currentUser}}
-          {{>addreview}}
-          {{/if}}
-          {{#each getReviews review filterReview removeFilter}}
-          {{>review}}
-          {{else}}
-          <i>No reviews</i>
-          {{/each}}
+            <div class="col-md-12">
+              {{#if currentUser}}
+              {{>addreview}}
+              {{/if}}
+              {{#each getReviews review filterReview removeFilter}}
+              {{>review}}
+              {{else}}
+              <i>No reviews</i>
+              {{/each}}
 
-          <div class="pull-right">
-              <h3 id="show1">{{_ "MORE REVIEWS"}} &nbsp; <i class="fa fa-angle-down" id="btnMore"></i></h3>   
-          </div>
-          <div class="wrapper_forum">
-            <div class="filter_set">
-              
+              <div class="pull-right">
+                <h3 id="show1">{{_ "MORE REVIEWS"}} &nbsp; <i class="fa fa-angle-down" id="morereview"></i></h3>   
+              </div>
+              <div class="wrapper_forum">
+                <div class="filter_set">
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-<script  type="text/javascript">
-  function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
-</script>
- <!-- end contain -->
-</template>
+      </section>
+      <script  type="text/javascript">
+      function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+      }
+      </script>
+      <!-- end contain -->
+    </template>

@@ -139,10 +139,6 @@ Template.updateContent.events({
 
 		}
  	},
- 	
-  	'click #remove':function(e){
-
-   }
 });
 
 Template.updateContent.helpers({
@@ -388,72 +384,6 @@ Template.managecontent.events({
 		return contents.remove({_id:id});
 	}
 });
-/*
-Template.showwebzine.events({
-'click #remove':function(){
-		var id = this._id;
-		return contents.remove({_id:id});
-	}
-});
-
-Template.showtuto.events({
-'click #remove':function(){
-		var id = this._id;
-		return contents.remove({_id:id});
-	}
-});
-Template.showlooks.events({
-'click #remove':function(){
-		var id = this._id;
-		return contents.remove({_id:id});
-	}
-});
-
-//show Webzine
-Template.showwebzine.helpers({
-	getWebzine: function(){
-		return contents.find({"type":"Webzine"});
-	},
-	getTypename: function(){
-		var id =this.typeid;
-		return contents_type.findOne({_id:id}).type;
-	},
-	getCatname: function(){
-		var id = this.category;
-		return categories.findOne({_id:id}).title;
-	}
-});
-//show Tuto
-Template.showtuto.helpers({
-	getTuto: function(){
-		return contents.find({"type":"Tuto"});
-	},
-	getTypename: function(){
-		var id =this.typeid;
-		return contents_type.findOne({_id:id}).type;
-	},
-	getCatname: function(){
-		var id = this.category;
-		return categories.findOne({_id:id}).title;
-	}
-});
-//show Looks
-Template.showlooks.helpers({
-	getLooks: function(){
-		return contents.find({"type":"Looks"});
-	},
-	getTypename: function(){
-		var id =this.typeid;
-		return contents_type.findOne({_id:id}).type;
-	},
-	getCatname: function(){
-		var id = this.category;
-		return categories.findOne({_id:id}).title;
-	}
-});
-
-*/
-
 Template.tutonew.helpers({
 	getTutoCategory:function(){
 		//var type=contents_type.findOne({"type":"Tuto"});
@@ -559,7 +489,6 @@ Template.tutodetails.events({
 			alert("You have to be logged to submit a review!");
 			return;
 		}
-
 		var title=tpl.$("#title").val();
 		var text=tpl.$("#comment").val();
 		var grade=tpl.$("#sel1").val();
@@ -567,7 +496,7 @@ Template.tutodetails.events({
 		Meteor.call('addReviewTuto',title,text,grade,userid,this._id);
 		alert("Review added successfully!")
 	},
-	'click #btnMore':function(e){
+	'click #morereview':function(e){
 			e.preventDefault();
 			//alert();
 			var last = Session.get('numberOfReviews');
@@ -575,6 +504,16 @@ Template.tutodetails.events({
 			var update = Session.set('numberOfReviews',sum);
 			return update;
 	},
+	getImage: function(id){
+            var img = images.findOne({_id:id});
+            if(img){
+                console.log(img.copies.images.key);
+                return img.copies.images.key;
+            }
+            else{
+                return;
+            }
+    }
 });
 
 
