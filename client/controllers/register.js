@@ -42,7 +42,27 @@ Template.register.events({
 				}
 			});
 		}
-    	
+    },
+    'change #email':function(e){
+    	e.preventDefault();
+    	var arr = [];
+    	var user = Meteor.users.find();
+    	user.forEach(function(entry){
+    		var email = entry.emails[0].address;
+    		arr.push(email);
+    	});
+    	var email = $('#email').val();
+    	var same = arr.indexOf(email);
+    	if(same>=0){
+    		Session.set("Duplicate","Duplicate email address!");
+    	}else{
+    		Session.clear();
+    	}
     }
+});
+Template.register.helpers({
+	Duplicate:function(){
+		return Session.get("Duplicate");
+	}
 });
 
