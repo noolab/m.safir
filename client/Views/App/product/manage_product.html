@@ -29,7 +29,9 @@
 										<th class="text-center" style="width:35%">{{_"Title"}}</th>
 										<th class="text-center" style="width:10%">{{_"Price"}}</th>
 										<th class="text-center" style="width:10%">{{_"Point"}}</th>
+										<th class="text-center" style="width:15%">{{_"Attribute image"}}</th>
 										<th class="text-center" style="width:15%">{{_"Image"}}</th>
+
 										<th class="text-center" style="width:15%">{{_"Category"}}</th>
 										<th class="text-center" style="width:15%" colspan="4">{{_"Tools"}}</th>
 									</tr>
@@ -41,7 +43,13 @@
 										<td>{{title}}</td>
 										<td>{{price}}</td>
 										<td>{{point}}</td>
-										<td><img style="width:50px; height:50px" src="/upload/{{getImg image}}"></td>
+										<td>
+											{{#each getImgeAttribute oldId}}
+											<img style="width:50px; height:50px" src="{{getImg productImage}}">
+											{{/each}}
+										</td>
+										
+										<td><img style="width:50px; height:50px" src="{{getImg image}}"></td>
 										<td>{{catName category}}</td>
 										{{#if checkStatus status}}
 										<td><a class="glyphicon glyphicon-ok center-block" href="" id="publish"></a></td>

@@ -1114,6 +1114,11 @@ Template.manageproduct.helpers({
 		else
 			return [p.image];
 	},
+	getImgeAttribute:function(oldId){
+		var imageAttr = attribute.find({"product":oldId});
+		//console.log(imageAttr)+ "hii";
+		return imageAttr;
+	},
 	managePro: function(){
 		var arr=[];
 		var number=1;
@@ -1178,7 +1183,14 @@ Template.manageproduct.helpers({
 	shopIn: function(nameIn){
 		var result = shops.findOne({_id:nameIn});
 		return result.instock;
-	}
+	},
+	getListImg: function(product){
+		var p=products.findOne({_id:product});
+		if(p.image instanceof Array)
+			return p.image;
+		else
+			return [p.image];
+	},
 });
 
 Template.details.helpers({
