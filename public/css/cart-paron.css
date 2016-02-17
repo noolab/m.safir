@@ -68,12 +68,23 @@ p.bolder{
 .hr1{border:1px solid #000000;}
 .hr2{border-bottom:2px solid #000000;}
 .hr3{border-top:2px solid #000000;}
-.a-checkout{
+ .a-checkout{
   background-color: #cc1417;
   color: #fff;
   font-weight: bold;
   margin: 10px 18px;
-  text-align: center;}
+  text-align: center;
+  background: #ff0505;
+  border: none;
+  padding:2px;
+  background: -moz-linear-gradient(top, #ff0505 0%, #8f0222 99%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0505), color-stop(99%,#8f0222));
+  background: -webkit-linear-gradient(top, #ff0505 0%,#8f0222 99%);
+  background: -o-linear-gradient(top, #ff0505 0%,#8f0222 99%);
+  background: -ms-linear-gradient(top, #ff0505 0%,#8f0222 99%);
+  background: linear-gradient(to bottom, #ff0505 0%,#8f0222 99%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0505', endColorstr='#8f0222',GradientType=0 );
+}
 .hidlike{
   display: none !important;
 }

@@ -291,9 +291,9 @@
 
                                 <div class="col-xs-4" ><a href="" id="refineAll" >{{_"All"}} {{title}}<span></span></a></div>
 
-                                <div class="col-xs-4"><a href="">{{title}}</a></div>
+                                <div class="col-xs-4" id="a"><a href="">{{title}}</a></div>
                             </div>
-                            <div id="refineMenu">
+                            <div id="refineMenu" style="display:none;">
                                 <div class="row">
                                     <ul>
                                         {{#each getBrothers this}}
@@ -305,7 +305,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="refineMenuAll">
+                            <div id="refineMenuAll" style="display:none;">
                                 <div class="row">
                                     <ul>
                                         <li><a href="/category/{{_id}}">{{_"All"}} {{title}}</a></li>
@@ -317,7 +317,7 @@
                                                         {{#if hasChildren _id}}
                                                             {{#each getChildren _id}}
                                                                 <li>  -  <a href="" class="refine_subAll">{{title}}</a>
-                                               <div class="hold_sub_dropdown" width="300px">
+                                               <div class="hold_sub_dropdown" id="b" width="300px">
                                                     <ul class="sub_dropdown">
                                                         {{#if hasChildren _id}}
                                                             {{#each getChildren _id}}
@@ -364,11 +364,11 @@
             </section> <!-- #content-wrapper -->
         </section> <!-- #page-wrapper -->
         
-    <script>// For refind menu
-    $("#refineMenuAll").click(function() {
-      $("#refineMenu").toggleClass("hidden");
-      $(this).addClass("hidden");
-    });
-    </script>
+     <script>// For refind menu
+    // $("#refineMenuAll").click(function() {
+    //   $("#refineMenu").toggleClass("hidden");
+    //   $(this).addClass("hidden");
+    // });
+    // </script>
 
 </template>
